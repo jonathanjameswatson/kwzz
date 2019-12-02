@@ -26,7 +26,7 @@ export default {
    ** Global CSS
    ** Doc: https://nuxtjs.org/api/configuration-css
    */
-  css: [],
+  css: ['~/assets/scss/main.scss'],
 
   /*
    ** Plugins to load before mounting the App
@@ -43,7 +43,8 @@ export default {
     '@nuxt/http',
     // TODO: Remove it if you want to eject from codeSandbox
     './codesandbox',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    ['nuxt-buefy', { css: false }]
   ],
 
   /*

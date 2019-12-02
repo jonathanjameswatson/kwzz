@@ -1,0 +1,17 @@
+@import '~bulma/sass/utilities/initial-variables';
+
+$purple: #962865;
+
+$primary: $purple;
+
+// literata
+
+@import '~bulma';
+
+.navbar-item img {
+  max-height: 64px;
+}
+
+.navbar-burger {
+  height: auto;
+}

@@ -28,6 +28,7 @@
     "nuxt": "^2.5.1",
     "nuxt-buefy": "0.3.19",
     "reqlim": "^0.0.0",
+    "sass-loader": "8.0.0",
     "sql-template-strings": "2.2.2",
     "sqlite": "3.0.3"
   },
