@@ -1,10 +1,11 @@
 @import '~bulma/sass/utilities/initial-variables';
+@import url('https://fonts.googleapis.com/css?family=Literata&display=swap');
 
 $purple: #962865;
+$family-serif: 'Literata', serif;
 
 $primary: $purple;
-
-// literata
+$family-primary: $family-serif;
 
 @import '~bulma';
 

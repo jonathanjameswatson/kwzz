@@ -8,6 +8,7 @@
           </figure>
         </b-navbar-item>
       </template>
+
       <template slot="start">
         <b-navbar-item tag="div">
           <b-field label="Search" horizontal>
