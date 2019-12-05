@@ -1,3 +1,5 @@
+import api from './api'
+
 export default {
   /*
    ** Rendering mode
@@ -44,8 +46,18 @@ export default {
     // TODO: Remove it if you want to eject from codeSandbox
     './codesandbox',
     '@nuxtjs/pwa',
-    ['nuxt-buefy', { css: false }]
+    ['nuxt-buefy', { css: false }],
+    '@nuxtjs/axios',
   ],
+
+  axios: {
+    proxy: true,
+    debug: true
+  },
+
+  proxy: {
+    '/api': 'http://localhost:3000/api'
+  }, 
 
   /*
    ** HTTP module configuration
@@ -63,5 +75,12 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
-  }
-};
+  },
+
+  serverMiddleware: [
+    {
+      path: '/api',
+      handler: api
+    }
+  ]
+}
