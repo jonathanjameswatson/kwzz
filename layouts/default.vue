@@ -20,8 +20,8 @@
       <template slot="end">
         <b-navbar-item tag="div">
           <div class="buttons">
-            <b-button type="is-primary" rounded outlined>Register</b-button>
-            <b-button type="is-primary" rounded outlined>Sign in</b-button>
+            <k-link broken link="/auth/register">Register</k-link>
+            <k-link broken link="/auth/signin">Sign in</k-link>
           </div>
         </b-navbar-item>
       </template>
@@ -32,3 +32,13 @@
     </div>
   </div>
 </template>
+
+<script>
+import kLink from '~/components/kLink'
+
+export default {
+  components: {
+    kLink
+  }
+}
+</script>
