@@ -18,10 +18,15 @@
       </template>
 
       <template slot="end">
-        <b-navbar-item tag="div">
+        <b-navbar-item tag="div" v-if="this.$auth.loggedIn">
+          <div class="buttons">
+            <b-button type="is-primary" rounded outlined @click="signOut">Sign out</b-button>
+          </div>
+        </b-navbar-item>
+        <b-navbar-item tag="div" v-else>
           <div class="buttons">
             <k-link broken link="/auth/register">Register</k-link>
-            <k-link broken link="/auth/signin">Sign in</k-link>
+            <b-button type="is-primary" rounded outlined @click="signIn">Sign in</b-button>
           </div>
         </b-navbar-item>
       </template>
@@ -34,11 +39,24 @@
 </template>
 
 <script>
-import kLink from '~/components/kLink'
+import kLink from "~/components/kLink";
 
 export default {
   components: {
     kLink
+  },
+  methods: {
+    signIn() {
+      return this.$auth.loginWith("local", {
+        data: {
+          username: "",
+          password: ""
+        }
+      });
+    },
+    signOut() {
+      this.$auth.logout();
+    }
   }
-}
+};
 </script>

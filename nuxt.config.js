@@ -1,4 +1,4 @@
-import api from './api'
+import api from './api';
 
 export default {
   /*
@@ -48,6 +48,7 @@ export default {
     '@nuxtjs/pwa',
     ['nuxt-buefy', { css: false }],
     '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
 
   axios: {
@@ -55,9 +56,33 @@ export default {
     debug: true
   },
 
-  proxy: {
-    '/api': 'http://localhost:3000/api'
-  }, 
+  proxy: ['http://localhost:3000/api'],
+
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/',
+      home: '/'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/api/user/signin',
+            method: 'post',
+            propertyName: 'token.accessToken'
+          },
+          logout: false,
+          user: {
+            url: '/api/user',
+            method: 'get',
+            propertyName: 'user'
+          }
+        }
+      }
+    }
+  },
 
   /*
    ** HTTP module configuration
@@ -83,4 +108,4 @@ export default {
       handler: api
     }
   ]
-}
+};
