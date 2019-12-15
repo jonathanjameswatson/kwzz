@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import SetOfQuizzes from "~/components/setOfQuizzes";
-import kLink from "~/components/kLink";
+import SetOfQuizzes from '~/components/setOfQuizzes'
+import kLink from '~/components/kLink'
 
 export default {
   components: {
     SetOfQuizzes,
     kLink
   }
-};
+}
 </script>

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import kLink from "~/components/kLink";
+import kLink from '~/components/kLink'
 
 export default {
   components: {
@@ -33,8 +33,8 @@ export default {
     },
     searchString: {
       type: String,
-      default: ""
+      default: ''
     }
   }
-};
+}
 </script>
