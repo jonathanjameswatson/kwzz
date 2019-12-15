@@ -7,6 +7,8 @@ $family-serif: 'Literata', serif;
 $primary: $purple;
 $family-primary: $family-serif;
 
+$card-shadow: none;
+
 @import '~bulma';
 
 .navbar-item img {
@@ -15,4 +17,9 @@ $family-primary: $family-serif;
 
 .navbar-burger {
   height: auto;
+}
+
+.card {
+  border-radius: $radius-large;
+  border: 1px solid $primary;
 }

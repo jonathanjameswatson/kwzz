@@ -47,10 +47,10 @@ export default {
   },
   methods: {
     signIn() {
-      return this.$auth.loginWith("local", {
+      return this.$auth.loginWith('local', {
         data: {
-          username: "",
-          password: ""
+          username: '',
+          password: ''
         }
       });
     },
