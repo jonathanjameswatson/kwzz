@@ -1,4 +1,4 @@
-import api from './api';
+import api from './api'
 
 export default {
   /*
@@ -63,7 +63,7 @@ export default {
       login: '/',
       logout: '/',
       callback: '/',
-      home: '/'
+      home: '/home'
     },
     strategies: {
       local: {
@@ -82,6 +82,10 @@ export default {
         }
       }
     }
+  },
+
+  router: {
+    middleware: ['auth']
   },
 
   /*
@@ -108,4 +112,4 @@ export default {
       handler: api
     }
   ]
-};
+}
