@@ -3,6 +3,8 @@ import cookieParser from 'cookie-parser'
 import jwt from 'express-jwt'
 
 import db from './db.js'
+import quiz from './routes/quiz.js'
+import result from './routes/result.js'
 import user from './routes/user.js'
 
 // Create the api
@@ -24,6 +26,8 @@ api.use(
   })
 )
 
+api.use('/quiz', quiz)
+api.use('/result', result)
 api.use('/user', user)
 
 // Export the api
