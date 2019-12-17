@@ -8,12 +8,14 @@ router.post('/register', (req, res, next) => {})
 
 // This route will verify the user and give them a JWT
 router.post('/signin', (req, res) => {
+  const secret = process.env.JWT_SECRET || 'jwtSecret'
+
   const accessToken = jsonwebtoken.sign(
     {
       username: 'testuser',
       id: '0'
     },
-    'jwtSecret'
+    secret
   )
 
   res.json({

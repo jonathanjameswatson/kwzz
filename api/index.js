@@ -20,7 +20,7 @@ db.initialise()
 api.use(
   '/',
   jwt({
-    secret: 'jwtSecret'
+    secret: process.env.JWT_SECRET || 'jwtSecret'
   }).unless({
     path: ['/api/user/register', '/api/user/signin']
   })
