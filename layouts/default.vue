@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import kLink from "~/components/kLink";
+import kLink from "~/components/kLink"
 
 export default {
   components: {
