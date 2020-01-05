@@ -1,10 +1,20 @@
 <template>
   <div class="columns is-multiline">
-    <div class="column is-4" v-for="i in limit" :key="i">
+    <div class="column is-4" v-for="quiz in quizzes" :key="quiz.Id">
       <div class="card">
         <div class="card-content">
-          <p class="title">Quiz Title</p>
-          <k-link broken link="/">Play</k-link>
+          <p class="title">{{ quiz.Title }}</p>
+          <div class="buttons">
+            <template v-if="quiz.Owner === $auth.user.id">
+              <k-link
+                v-if="quiz.IsPublished === '1'"
+                broken
+                :link="`/quiz/${quiz.id}/players`"
+              >Players</k-link>
+              <k-link v-else broken :link="`/quiz/${quiz.id}/edit`">Edit</k-link>
+            </template>
+            <k-link v-if="quiz.IsPublished === '1'" broken :link="`/quiz/${quiz.id}/play`">Play</k-link>
+          </div>
         </div>
       </div>
     </div>
@@ -34,6 +44,30 @@ export default {
     searchString: {
       type: String,
       default: ''
+    }
+  },
+  data() {
+    return {
+      quizzes: [
+        {
+          Id: '0',
+          Title: 'Test quiz 1',
+          Owner: '0',
+          IsPublished: '1'
+        },
+        {
+          Id: '1',
+          Title: 'Test quiz 2',
+          Owner: '1',
+          IsPublished: '1'
+        },
+        {
+          Id: '2',
+          Title: 'Test quiz 3',
+          Owner: '0',
+          IsPublished: '0'
+        }
+      ]
     }
   }
 }
