@@ -1,12 +1,14 @@
 <template>
   <div class="section">
-    <h1 class="title">Public Quizzes</h1>
+    <h1 class="title">All Quizzes</h1>
     <set-of-quizzes/>
-    <k-link link="/search" broken>View more</k-link>
+    <k-link link="/search">View more</k-link>
+
     <hr class="hr">
+
     <h1 class="title">My Quizzes</h1>
-    <set-of-quizzes/>
-    <k-link link="/search?isuser=true" broken>View more</k-link>
+    <set-of-quizzes :is-user="true"/>
+    <k-link link="/search?isUser=true">View more</k-link>
   </div>
 </template>
 

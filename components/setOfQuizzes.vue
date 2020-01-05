@@ -5,15 +5,15 @@
         <div class="card-content">
           <p class="title">{{ quiz.Title }}</p>
           <div class="buttons">
-            <template v-if="quiz.Owner === $auth.user.id">
+            <template v-if="quiz.Owner.toString() === $auth.user.id">
               <k-link
-                v-if="quiz.IsPublished === '1'"
+                v-if="quiz.IsPublished === 1"
                 broken
                 :link="`/quiz/${quiz.id}/players`"
               >Players</k-link>
               <k-link v-else broken :link="`/quiz/${quiz.id}/edit`">Edit</k-link>
             </template>
-            <k-link v-if="quiz.IsPublished === '1'" broken :link="`/quiz/${quiz.id}/play`">Play</k-link>
+            <k-link v-if="quiz.IsPublished === 1" broken :link="`/quiz/${quiz.id}/play`">Play</k-link>
           </div>
         </div>
       </div>
@@ -48,27 +48,20 @@ export default {
   },
   data() {
     return {
-      quizzes: [
-        {
-          Id: '0',
-          Title: 'Test quiz 1',
-          Owner: '0',
-          IsPublished: '1'
-        },
-        {
-          Id: '1',
-          Title: 'Test quiz 2',
-          Owner: '1',
-          IsPublished: '1'
-        },
-        {
-          Id: '2',
-          Title: 'Test quiz 3',
-          Owner: '0',
-          IsPublished: '0'
-        }
-      ]
+      quizzes: []
     }
+  },
+  async mounted() {
+    const { quizzes } = await this.$axios.$get('/api/quiz', {
+      params: {
+        offset: this.offset,
+        limit: this.limit,
+        isUser: this.isUser,
+        searchString: this.searchString
+      }
+    })
+
+    this.quizzes = quizzes
   }
 }
 </script>

@@ -1,5 +1,6 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
 import jwt from 'express-jwt'
 
 import db from './db.js'
@@ -12,6 +13,9 @@ const api = express()
 
 // Add cookieParser for JWT
 api.use(cookieParser())
+
+// Add bodyparser to see the contents of request bodies
+api.use(bodyParser.json())
 
 // Initialise database
 db.initialise()

@@ -12,7 +12,14 @@
       <template slot="start">
         <b-navbar-item tag="div">
           <b-field label="Search" horizontal>
-            <b-input type="search" icon="magnify"/>
+            <b-input
+              type="search"
+              icon="magnify"
+              icon-clickable
+              v-model="searchString"
+              @keyup.enter.native="search"
+              @icon-click="search"
+            />
           </b-field>
         </b-navbar-item>
       </template>
@@ -39,24 +46,35 @@
 </template>
 
 <script>
-import kLink from "~/components/kLink"
+import kLink from '~/components/kLink'
 
 export default {
   components: {
     kLink
   },
+  data() {
+    return {
+      searchString: ''
+    }
+  },
   methods: {
+    search() {
+      this.$router.push({
+        path: '/search',
+        query: { searchString: this.searchString }
+      })
+    },
     signIn() {
       return this.$auth.loginWith('local', {
         data: {
           username: '',
           password: ''
         }
-      });
+      })
     },
     signOut() {
-      this.$auth.logout();
+      this.$auth.logout()
     }
   }
-};
+}
 </script>

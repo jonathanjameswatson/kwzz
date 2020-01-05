@@ -8,6 +8,8 @@ export default {
 
     // Create database
     await db.exec(`
+    DROP TABLE IF EXISTS quiz;
+
     CREATE TABLE quiz (
       Id INTEGER NOT NULL PRIMARY KEY,
       Title TEXT NOT NULL,
@@ -18,8 +20,9 @@ export default {
       PublishedTimestamp DATETIME
     );
 
-    INSERT INTO quiz(Title) VALUES ('Test quiz 1');
-    INSERT INTO quiz(Title) VALUES ('Test quiz 2');
+    INSERT INTO quiz(Title, Owner, IsPublished) VALUES ('Test quiz 1', 0, 1);
+    INSERT INTO quiz(Title, Owner, IsPublished) VALUES ('Test quiz 2', 1, 1);
+    INSERT INTO quiz(Title, Owner, IsPublished) VALUES ('Test quiz 3', 0, 0);
     `)
 
     await db.close()
@@ -27,6 +30,6 @@ export default {
 
   // Returns database as a promise
   get() {
-    return sqlite.open('./api/database.sqlite', { Promise, cached: true })
+    return sqlite.open('./api/database.sqlite')
   }
 }
