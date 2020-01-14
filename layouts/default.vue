@@ -19,6 +19,8 @@
               v-model="searchString"
               @keyup.enter.native="search"
               @icon-click="search"
+              maxlength="50"
+              :has-counter="false"
             />
           </b-field>
         </b-navbar-item>

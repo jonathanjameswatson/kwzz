@@ -29,3 +29,14 @@ $card-shadow: none;
 .control.has-icons-right .icon {
   pointer-events: auto !important;
 }
+
+.b-table {
+  .table {
+    td {
+      vertical-align: middle;
+      .b-checkbox {
+        vertical-align: middle;
+      }
+    }
+  }
+}

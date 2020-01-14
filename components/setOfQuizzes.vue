@@ -11,7 +11,7 @@
                 broken
                 :link="`/quiz/${quiz.id}/players`"
               >Players</k-link>
-              <k-link v-else broken :link="`/quiz/${quiz.id}/edit`">Edit</k-link>
+              <k-link v-else :link="`/quiz/${quiz.id}/edit`">Edit</k-link>
             </template>
             <k-link v-if="quiz.IsPublished === 1" broken :link="`/quiz/${quiz.id}/play`">Play</k-link>
           </div>
