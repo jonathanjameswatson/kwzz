@@ -18,12 +18,7 @@ export default {
       IsPublished INTEGER NOT NULL DEFAULT 0 CHECK (IsPublished IN (0,1)),
       MadeTimestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PublishedTimestamp DATETIME
-    );
-
-    INSERT INTO quiz(Title, Owner, IsPublished) VALUES ('Test quiz 1', 0, 1);
-    INSERT INTO quiz(Title, Owner, IsPublished) VALUES ('Test quiz 2', 1, 1);
-    INSERT INTO quiz(Title, Owner, IsPublished) VALUES ('Test quiz 3', 0, 0);
-    `)
+    );`)
 
     await db.close()
   },

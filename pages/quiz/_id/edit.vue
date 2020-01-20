@@ -213,7 +213,17 @@ export default {
         this.questions[startI]
       )
     },
-    save() {},
+    async save() {
+      const { id } = await this.$axios.$put(`/api/quiz/${this.id}`, {
+        title: this.title,
+        questions: this.questions
+      })
+      if (id !== null) {
+        this.$router.push({
+          path: `/quiz/${id}/edit`
+        })
+      }
+    },
     publish() {}
   }
 }

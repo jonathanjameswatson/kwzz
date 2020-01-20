@@ -89,10 +89,46 @@ router.get(
 
 // This route will update a quiz if an ID is given
 // or create the quiz and give it an ID
-router.put('/', (req, res, next) => {})
+router.put(
+  '/:id',
+  asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+    const { title, questions } = req.body
+
+    const questionsJson = JSON.stringify(questions)
+
+    const db = await database.get()
+
+    if (id === '0') {
+      const { lastID } = await db.run(SQL`
+      INSERT INTO quiz
+      (Title, Questions, Owner)
+      VALUES
+      (${title}, ${questionsJson}, ${req.user.id})`)
+
+      res.json({
+        id: lastID
+      })
+    } else {
+      await db.run(SQL`
+      UPDATE quiz
+      SET Title = ${title},
+        Questions = ${questionsJson}
+      WHERE Owner = ${req.user.id}
+        AND Id = ${id}
+        AND IsPublished = 0`)
+
+      res.json({
+        id: null
+      })
+    }
+
+    await db.close()
+  })
+)
 
 // This route will publish the quiz at the given ID
-router.post('/', (req, res, next) => {})
+router.post('/:id', (req, res, next) => {})
 
 // This route will fetch all questions for a quiz
 // at a given ID

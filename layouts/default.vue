@@ -24,6 +24,11 @@
             />
           </b-field>
         </b-navbar-item>
+        <b-navbar-item tag="div">
+          <k-link link="/quiz/0/edit" v-if="this.$auth.loggedIn">
+            Create a quiz
+          </k-link>
+        </b-navbar-item>
       </template>
 
       <template slot="end">
