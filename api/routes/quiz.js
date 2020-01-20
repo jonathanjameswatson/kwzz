@@ -40,7 +40,52 @@ router.get(
 )
 
 // This route will fetch a single quiz from its ID
-router.get('/:id', (req, res, next) => {})
+router.get(
+  '/:id',
+  asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+
+    if (id === '0') {
+      res.json({
+        title: 'Untitled Quiz',
+        questions: [
+          {
+            question: '',
+            type: 'Single answer question',
+            shuffle: true,
+            answers: [
+              {
+                answer: '',
+                isCorrect: true
+              },
+              {
+                answer: '',
+                isCorrect: false
+              }
+            ],
+            topics: []
+          }
+        ]
+      })
+    } else {
+      const db = await database.get()
+
+      const quiz = await db.get(SQL`
+        SELECT Title, Questions
+        FROM quiz
+        WHERE Owner = ${req.user.id}
+          AND Id = ${id}
+          AND IsPublished = 0`)
+
+      res.json({
+        title: quiz.Title,
+        questions: JSON.parse(quiz.Questions)
+      })
+
+      await db.close()
+    }
+  })
+)
 
 // This route will update a quiz if an ID is given
 // or create the quiz and give it an ID

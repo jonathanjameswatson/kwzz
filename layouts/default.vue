@@ -27,13 +27,11 @@
       </template>
 
       <template slot="end">
-        <b-navbar-item tag="div" v-if="this.$auth.loggedIn">
-          <div class="buttons">
+        <b-navbar-item tag="div">
+          <div class="buttons" v-if="this.$auth.loggedIn">
             <b-button type="is-primary" rounded outlined @click="signOut">Sign out</b-button>
           </div>
-        </b-navbar-item>
-        <b-navbar-item tag="div" v-else>
-          <div class="buttons">
+          <div class="buttons" v-else>
             <k-link broken link="/auth/register">Register</k-link>
             <b-button type="is-primary" rounded outlined @click="signIn">Sign in</b-button>
           </div>
