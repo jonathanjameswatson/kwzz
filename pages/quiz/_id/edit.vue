@@ -224,7 +224,17 @@ export default {
         })
       }
     },
-    publish() {}
+    async publish() {
+      const { done } = await this.$axios.$post(`/api/quiz/${this.id}`)
+      if (done) {
+        this.$router.push({
+          path: `/search`,
+          query: {
+            isUser: 'true'
+          }
+        })
+      }
+    }
   }
 }
 </script>

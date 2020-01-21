@@ -101,22 +101,22 @@ router.put(
 
     if (id === '0') {
       const { lastID } = await db.run(SQL`
-      INSERT INTO quiz
-      (Title, Questions, Owner)
-      VALUES
-      (${title}, ${questionsJson}, ${req.user.id})`)
+        INSERT INTO quiz
+        (Title, Questions, Owner)
+        VALUES
+        (${title}, ${questionsJson}, ${req.user.id})`)
 
       res.json({
         id: lastID
       })
     } else {
       await db.run(SQL`
-      UPDATE quiz
-      SET Title = ${title},
-        Questions = ${questionsJson}
-      WHERE Owner = ${req.user.id}
-        AND Id = ${id}
-        AND IsPublished = 0`)
+        UPDATE quiz
+        SET Title = ${title},
+          Questions = ${questionsJson}
+        WHERE Owner = ${req.user.id}
+          AND Id = ${id}
+          AND IsPublished = 0`)
 
       res.json({
         id: null
@@ -128,7 +128,27 @@ router.put(
 )
 
 // This route will publish the quiz at the given ID
-router.post('/:id', (req, res, next) => {})
+router.post(
+  '/:id',
+  asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+
+    const db = await database.get()
+
+    await db.run(SQL`
+    UPDATE quiz
+    SET IsPublished = 1
+    WHERE Owner = ${req.user.id}
+      AND Id = ${id}
+      AND IsPublished = 0`)
+
+    res.json({
+      done: true
+    })
+
+    await db.close()
+  })
+)
 
 // This route will fetch all questions for a quiz
 // at a given ID
