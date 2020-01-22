@@ -31,12 +31,6 @@ export default {
   css: ['~/assets/scss/main.scss'],
 
   /*
-   ** Plugins to load before mounting the App
-   ** Doc: https://nuxtjs.org/guide/plugins
-   */
-  plugins: [],
-
-  /*
    ** Nuxt.js modules
    ** Doc: https://nuxtjs.org/guide/modules
    */
@@ -60,9 +54,9 @@ export default {
 
   auth: {
     redirect: {
-      login: '/',
+      login: '/auth/signin',
       logout: '/',
-      callback: '/',
+      callback: '/loading',
       home: '/home'
     },
     strategies: {
@@ -86,24 +80,6 @@ export default {
 
   router: {
     middleware: ['auth']
-  },
-
-  /*
-   ** HTTP module configuration
-   */
-  http: {
-    // See https://http.nuxtjs.org/api/#options
-  },
-
-  /*
-   ** Build configuration
-   ** Doc: https://nuxtjs.org/api/configuration-build
-   */
-  build: {
-    /*
-     ** You can extend webpack config here
-     */
-    extend(config, ctx) {}
   },
 
   serverMiddleware: [

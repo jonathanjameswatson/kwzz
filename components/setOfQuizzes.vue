@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+    <b-loading :active="loading"/>
   </div>
 </template>
 
@@ -48,7 +49,8 @@ export default {
   },
   data() {
     return {
-      quizzes: []
+      quizzes: [],
+      loading: true
     }
   },
   async mounted() {
@@ -62,6 +64,7 @@ export default {
     })
 
     this.quizzes = quizzes
+    this.loading = false
   }
 }
 </script>

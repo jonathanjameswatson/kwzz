@@ -11,7 +11,7 @@
 
       <template slot="start">
         <b-navbar-item tag="div">
-          <b-field label="Search" horizontal>
+          <b-field>
             <b-input
               type="search"
               icon="magnify"
@@ -21,24 +21,24 @@
               @icon-click="search"
               maxlength="50"
               :has-counter="false"
+              placeholder="Search"
+              rounded
             />
           </b-field>
         </b-navbar-item>
         <b-navbar-item tag="div">
-          <k-link link="/quiz/0/edit" v-if="this.$auth.loggedIn">
-            Create a quiz
-          </k-link>
+          <k-link link="/quiz/0/edit" v-if="this.$auth.loggedIn">Create a quiz</k-link>
         </b-navbar-item>
       </template>
 
       <template slot="end">
         <b-navbar-item tag="div">
           <div class="buttons" v-if="this.$auth.loggedIn">
-            <b-button type="is-primary" rounded outlined @click="signOut">Sign out</b-button>
+            <b-button type="is-primary" rounded outlined @click="signOut" key="signout">Sign out</b-button>
           </div>
           <div class="buttons" v-else>
-            <k-link broken link="/auth/register">Register</k-link>
-            <b-button type="is-primary" rounded outlined @click="signIn">Sign in</b-button>
+            <k-link broken link="/auth/register" key="register">Register</k-link>
+            <b-button type="is-primary" rounded outlined @click="signIn" key="signin">Sign in</b-button>
           </div>
         </b-navbar-item>
       </template>

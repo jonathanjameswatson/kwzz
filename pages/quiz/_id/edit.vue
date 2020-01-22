@@ -83,7 +83,7 @@
                       outlined
                       icon-right="minus"
                       size="is-small"
-                      @click="removeAnswer(i, props.row.i)"
+                      @click="removeAnswer(i, props.index)"
                     />
                   </span>
                 </b-table-column>
@@ -100,13 +100,6 @@
                   >Add answer</b-button>
                   <b-button
                     type="is-primary"
-                    icon-right="minus"
-                    rounded
-                    outlined
-                    @click="removeQuestion(i)"
-                  >Delete question</b-button>
-                  <b-button
-                    type="is-primary"
                     icon-right="arrow-up"
                     rounded
                     outlined
@@ -119,6 +112,13 @@
                     outlined
                     @click="swapQuestions(i)"
                   >Move down</b-button>
+                  <b-button
+                    type="is-primary"
+                    icon-right="minus"
+                    rounded
+                    outlined
+                    @click="removeQuestion(i)"
+                  >Delete question</b-button>
                 </div>
               </template>
             </b-table>
@@ -143,6 +143,7 @@
         rounded
         outlined
         @click="save()"
+        :disabled="saved"
       >Save quiz</b-button>
       <k-link icon-right="eye" link="view">View quiz</k-link>
       <b-button
@@ -151,6 +152,7 @@
         rounded
         outlined
         @click="publish()"
+        :disabled="!saved || id === '0'"
       >Publish quiz</b-button>
     </div>
   </div>
@@ -166,7 +168,8 @@ export default {
     return {
       title: quiz.title,
       questions: quiz.questions,
-      id
+      id,
+      saved: true
     }
   },
   components: { kLink },
@@ -223,6 +226,7 @@ export default {
           path: `/quiz/${id}/edit`
         })
       }
+      this.saved = true
     },
     async publish() {
       const { done } = await this.$axios.$post(`/api/quiz/${this.id}`)
@@ -233,6 +237,16 @@ export default {
             isUser: 'true'
           }
         })
+      }
+    }
+  },
+  watch: {
+    questions: {
+      deep: true,
+      handler() {
+        if (this.saved) {
+          this.saved = false
+        }
       }
     }
   }
