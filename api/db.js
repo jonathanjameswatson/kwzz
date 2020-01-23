@@ -7,10 +7,9 @@ export default {
     const db = await sqlite.open('./api/database.sqlite')
 
     // Create database
+    //    DROP TABLE IF EXISTS quiz;
     await db.exec(`
-    DROP TABLE IF EXISTS quiz;
-
-    CREATE TABLE quiz (
+    CREATE TABLE IF NOT EXISTS quiz (
       Id INTEGER NOT NULL PRIMARY KEY,
       Title TEXT NOT NULL,
       Questions TEXT,

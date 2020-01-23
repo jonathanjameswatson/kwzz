@@ -18,7 +18,7 @@ api.use(cookieParser())
 api.use(bodyParser.json())
 
 // Initialise database
-// db.initialise()
+db.initialise()
 
 // Require JWT authentication for all routes except some
 api.use(
