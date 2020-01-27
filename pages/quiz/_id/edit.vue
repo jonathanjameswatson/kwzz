@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <b-field label="Quiz title">
-      <b-input size="is-large" maxlength="50" v-model="title"/>
+      <b-input size="is-large" maxlength="50" v-model="title" required/>
     </b-field>
 
     <div class="columns is-multiline">
@@ -47,13 +47,14 @@
               <b-taginput
                 ellipsis
                 icon="label"
-                placeholder="Add a tag and press enter"
+                placeholder="Add a topic and press enter"
                 type="is-primary"
                 expanded
                 maxlength="30"
                 maxtags="10"
                 :has-counter="false"
                 v-model="question.topics"
+                rounded
               />
 
               <b-checkbox-button type="is-primary" v-model="question.shuffle">Shuffle answers?</b-checkbox-button>
@@ -61,7 +62,13 @@
 
             <b-table :data="question.answers">
               <template slot-scope="props">
-                <b-table-column field="isCorrect" label="Correct?" width="0" centered>
+                <b-table-column
+                  field="isCorrect"
+                  label="Correct?"
+                  width="0"
+                  centered
+                  :visible="question.type !== 'Text answer question'"
+                >
                   <b-checkbox size="is-medium" type="is-dark" v-model="props.row.isCorrect"/>
                 </b-table-column>
 
@@ -82,7 +89,7 @@
                       type="is-primary"
                       outlined
                       icon-right="minus"
-                      size="is-small"
+                      size="is-default"
                       @click="removeAnswer(i, props.index)"
                     />
                   </span>
@@ -129,7 +136,7 @@
 
     <hr>
 
-    <div class="buttons">
+    <div class="buttons" ref="bottom">
       <b-button
         type="is-primary"
         icon-right="plus"
@@ -145,7 +152,7 @@
         @click="save()"
         :disabled="saved"
       >Save quiz</b-button>
-      <k-link icon-right="eye" link="view">View quiz</k-link>
+      <k-link icon-right="eye" link="view" :broken="id === '0'">View quiz</k-link>
       <b-button
         type="is-primary"
         icon-right="publish"
@@ -175,6 +182,15 @@ export default {
   components: { kLink },
   methods: {
     addQuestion() {
+      if (this.questions.length === 30) {
+        this.$buefy.toast.open({
+          message:
+            'You have reached the maximum number of questions for this quiz.',
+          position: 'is-bottom',
+          type: 'is-danger'
+        })
+        return false
+      }
       this.questions.push({
         question: '',
         type: 'Single answer question',
@@ -191,8 +207,18 @@ export default {
         ],
         topics: []
       })
+      this.$refs.bottom.scrollIntoView()
     },
     addAnswer(i) {
+      if (this.questions[i].answers.length === 10) {
+        this.$buefy.toast.open({
+          message:
+            'You have reached the maximum number of answers for this question.',
+          position: 'is-bottom',
+          type: 'is-danger'
+        })
+        return false
+      }
       this.questions[i].answers.push({
         answer: '',
         isCorrect: false
@@ -229,7 +255,40 @@ export default {
       this.saved = true
     },
     async publish() {
+      const tests = {
+        'The title must not be empty': this.title === '',
+        'There must not be any questions that are empty': this.questions.some(
+          (question) => question.question === ''
+        ),
+        'There must be at least one question': this.questions.length === 0,
+        'Each question must have at least one answer': this.questions.some(
+          (question) => question.answers.length === 0
+        ),
+        'Each single or multiple answer question must have at least one correct answer': this.questions.some(
+          (question) =>
+            question.type !== 'Text answer question' &&
+            !question.answers.some((answer) => answer.isCorrect)
+        ),
+        'There must not be any answers that are empty': this.questions.some(
+          (question) => question.answers.some((answer) => answer.answer === '')
+        )
+      }
+
+      const passedTests = Object.keys(tests).filter((test) => tests[test])
+
+      if (passedTests.length !== 0) {
+        this.$buefy.dialog.alert({
+          title: 'Error',
+          message: passedTests.join('<br>'),
+          type: 'is-danger',
+          ariaRole: 'alertdialog',
+          ariaModal: true
+        })
+        return false
+      }
+
       const { done } = await this.$axios.$post(`/api/quiz/${this.id}`)
+
       if (done) {
         this.$router.push({
           path: `/search`,
@@ -247,6 +306,11 @@ export default {
         if (this.saved) {
           this.saved = false
         }
+      }
+    },
+    title() {
+      if (this.saved) {
+        this.saved = false
       }
     }
   }

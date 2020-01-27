@@ -1,3 +1,3 @@
 <template>
-  <b-loading :astive="true"/>
+  <b-loading :active="true"/>
 </template>

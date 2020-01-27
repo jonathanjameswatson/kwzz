@@ -8,23 +8,6 @@ export default {
   mode: 'universal',
 
   /*
-   ** Headers of the page
-   ** Doc: https://vue-meta.nuxtjs.org/api/#metainfo-properties
-   */
-  head: {
-    title: 'kwzz',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'A quiz website'
-      }
-    ]
-  },
-
-  /*
    ** Global CSS
    ** Doc: https://nuxtjs.org/api/configuration-css
    */
@@ -35,8 +18,6 @@ export default {
    ** Doc: https://nuxtjs.org/guide/modules
    */
   modules: [
-    // Doc: https://http.nuxtjs.org
-    '@nuxt/http',
     // TODO: Remove it if you want to eject from codeSandbox
     './codesandbox',
     '@nuxtjs/pwa',
@@ -46,8 +27,7 @@ export default {
   ],
 
   axios: {
-    proxy: true,
-    debug: true
+    proxy: true
   },
 
   proxy: ['http://localhost:3000/api'],
@@ -75,7 +55,8 @@ export default {
           }
         }
       }
-    }
+    },
+    localStorage: false
   },
 
   router: {
@@ -87,5 +68,19 @@ export default {
       path: '/api',
       handler: api
     }
-  ]
+  ],
+
+  loading: { color: '#962865' },
+
+  pwa: {
+    meta: {
+      ogHost: 'https://kwzz.xyz',
+      twitterCard: 'summary',
+      twitterSite: 'https://kwzz.xyz',
+      nativeUI: true
+    },
+    manifest: {
+      display: 'fullscreen'
+    }
+  }
 }

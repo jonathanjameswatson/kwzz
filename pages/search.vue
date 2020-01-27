@@ -6,7 +6,7 @@
       :offset="offset"
       :isUser="isUser"
       :searchString="searchString"
-      :key="`${searchString}${page}`"
+      :key="`${searchString}${offset}`"
     />
   </div>
 </template>
