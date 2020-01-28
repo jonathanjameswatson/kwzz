@@ -1,5 +1,5 @@
 <template>
-  <div class="columns is-multiline">
+  <div class="columns is-multiline is-vcentered">
     <div class="column is-4" v-for="quiz in quizzes" :key="quiz.Id">
       <div class="card">
         <div class="card-content">
