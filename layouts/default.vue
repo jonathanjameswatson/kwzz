@@ -9,7 +9,7 @@
         </b-navbar-item>
       </template>
 
-      <template slot="start">
+      <template slot="start" v-if="this.$auth.loggedIn">
         <b-navbar-item tag="div">
           <b-field>
             <b-input
@@ -27,7 +27,7 @@
           </b-field>
         </b-navbar-item>
         <b-navbar-item tag="div">
-          <k-link link="/quiz/0/edit" v-if="this.$auth.loggedIn">Create a quiz</k-link>
+          <k-link link="/quiz/0/edit">Create a quiz</k-link>
         </b-navbar-item>
       </template>
 

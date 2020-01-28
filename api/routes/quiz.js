@@ -22,6 +22,7 @@ router.get(
         FROM quiz
         WHERE Owner = ${req.user.id}
           AND Title LIKE ${`%${searchString}%`}
+          ORDER BY MAX(MadeTimestamp, IFNULL(PublishedTimestamp, 0)) DESC
         LIMIT ${limit} OFFSET ${offset}`)
     } else {
       quizzes = await db.all(SQL`
@@ -30,6 +31,7 @@ router.get(
         WHERE (IsPublished = 1
           OR Owner = ${req.user.id})
           AND Title LIKE ${`%${searchString}%`}
+        ORDER BY MAX(MadeTimestamp, IFNULL(PublishedTimestamp, 0)) DESC
         LIMIT ${limit} OFFSET ${offset}`)
     }
 
@@ -137,7 +139,8 @@ router.post(
 
     await db.run(SQL`
     UPDATE quiz
-    SET IsPublished = 1
+    SET IsPublished = 1,
+      PublishedTimestamp = CURRENT_TIMESTAMP
     WHERE Owner = ${req.user.id}
       AND Id = ${id}
       AND IsPublished = 0`)
