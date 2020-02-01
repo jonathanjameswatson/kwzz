@@ -7,7 +7,6 @@ export default {
     const db = await sqlite.open('./api/database.sqlite')
 
     // Create database
-    //    DROP TABLE IF EXISTS quiz;
     await db.exec(`
     CREATE TABLE IF NOT EXISTS quiz (
       Id INTEGER NOT NULL PRIMARY KEY,
@@ -17,6 +16,26 @@ export default {
       IsPublished INTEGER NOT NULL DEFAULT 0 CHECK (IsPublished IN (0,1)),
       MadeTimestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PublishedTimestamp DATETIME
+    );
+
+    CREATE TABLE IF NOT EXISTS result (
+      Id INTEGER NOT NULL PRIMARY KEY,
+      Quiz INTEGER NOT NULL,
+      User INTEGER NOT NULL DEFAULT 0,
+      Answers TEXT,
+      Score INTEGER,
+      TimeTaken INTEGER,
+      Improvement INTEGER,
+      MadeTimestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(Quiz) REFERENCES quiz(Id)
+    );
+
+    CREATE TABLE IF NOT EXISTS topicResult (
+      Id INTEGER NOT NULL PRIMARY KEY,
+      Result INTEGER NOT NULL,
+      Topic TEXT NOT NULL,
+      Score INTEGER,
+      FOREIGN KEY(Result) REFERENCES result(Id)
     );`)
 
     await db.close()
