@@ -26,6 +26,8 @@ export default {
     '@nuxtjs/auth'
   ],
 
+  plugins: ['~plugins/filters.js'],
+
   axios: {
     proxy: true
   },

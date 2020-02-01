@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler'
 import SQL from 'sql-template-strings'
 
 import database from '../db.js'
+import { shuffle } from '../utilities.js'
 
 const router = new express.Router()
 
@@ -22,7 +23,7 @@ router.get(
         FROM quiz
         WHERE Owner = ${req.user.id}
           AND Title LIKE ${`%${searchString}%`}
-          ORDER BY MAX(MadeTimestamp, IFNULL(PublishedTimestamp, 0)) DESC
+        ORDER BY MAX(MadeTimestamp, IFNULL(PublishedTimestamp, 0)) DESC
         LIMIT ${limit} OFFSET ${offset}`)
     } else {
       quizzes = await db.all(SQL`
@@ -138,12 +139,12 @@ router.post(
     const db = await database.get()
 
     await db.run(SQL`
-    UPDATE quiz
-    SET IsPublished = 1,
-      PublishedTimestamp = CURRENT_TIMESTAMP
-    WHERE Owner = ${req.user.id}
-      AND Id = ${id}
-      AND IsPublished = 0`)
+      UPDATE quiz
+      SET IsPublished = 1,
+        PublishedTimestamp = CURRENT_TIMESTAMP
+      WHERE Owner = ${req.user.id}
+        AND Id = ${id}
+        AND IsPublished = 0`)
 
     res.json({
       done: true
@@ -155,6 +156,46 @@ router.post(
 
 // This route will fetch all questions for a quiz
 // at a given ID
-router.get('/:id/questions', (req, res, next) => {})
+router.get(
+  '/:id/questions',
+  asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+
+    const db = await database.get()
+
+    const quiz = await db.get(SQL`
+      SELECT Title, Questions
+      FROM quiz
+      WHERE Id = ${id}
+        AND (Owner = ${req.user.id} OR IsPublished = 1)`)
+
+    const questions = JSON.parse(quiz.Questions)
+
+    const justQuestions = questions.map((question) => {
+      if (question.type !== 'Text answer question') {
+        const newAnswers = question.answers.map((answer) => answer.answer)
+
+        if (false) {
+          // !question.shuffle) {
+          shuffle(newAnswers)
+        }
+
+        return {
+          question: question.question,
+          type: question.type,
+          answers: newAnswers
+        }
+      }
+      return {
+        question: question.question,
+        type: question.type
+      }
+    })
+
+    res.json({ title: quiz.Title, questions: justQuestions })
+
+    await db.close()
+  })
+)
 
 export default router
