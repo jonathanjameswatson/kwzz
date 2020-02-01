@@ -13,7 +13,7 @@
               >Players</k-link>
               <k-link v-else :link="`/quiz/${quiz.Id}/edit`">Edit</k-link>
             </template>
-            <k-link v-if="quiz.IsPublished === 1" broken :link="`/quiz/${quiz.Id}/play`">Play</k-link>
+            <k-link v-if="quiz.IsPublished === 1" :link="`/quiz/${quiz.Id}/play`">Play</k-link>
           </div>
         </div>
       </div>

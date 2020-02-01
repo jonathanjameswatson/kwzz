@@ -20,14 +20,20 @@
             <b-field grouped group-multiline>
               <div class="control">
                 <b-dropdown aria-role="list" v-model="question.type">
-                  <b-button
-                    type="is-primary"
-                    icon-right="menu-down"
-                    rounded
-                    outlined
+                  <b-tooltip
+                    label="Single answer requires one correct answer to be picked. Multiple answer requires each correct answer to be picked. Text answer requires one answer to be typed in."
+                    multilined
+                    animated
+                    type="is-dark"
                     slot="trigger"
-                    maxlength="30"
-                  >{{ question.type }}</b-button>
+                  >
+                    <b-button
+                      type="is-primary"
+                      icon-right="menu-down"
+                      rounded
+                      outlined
+                    >{{ question.type }}</b-button>
+                  </b-tooltip>
 
                   <b-dropdown-item
                     aria-role="listitem"
@@ -57,7 +63,10 @@
                 rounded
               />
 
-              <b-checkbox-button type="is-primary" v-model="question.shuffle">Shuffle answers?</b-checkbox-button>
+              <b-checkbox-button type="is-primary" v-model="question.shuffle">
+                <b-icon :icon="question.shuffle ? 'close' : 'check'"/>
+                <span>Shuffle answers?</span>
+              </b-checkbox-button>
             </b-field>
 
             <b-table :data="question.answers">
