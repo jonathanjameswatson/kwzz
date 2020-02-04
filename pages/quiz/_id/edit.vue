@@ -161,7 +161,10 @@
         @click="save()"
         :disabled="saved"
       >Save quiz</b-button>
-      <k-link icon-right="eye" link="play" :broken="true">View quiz</k-link>
+      <k-link link="play" :broken="id === '0'">
+        <span>View quiz</span>
+        <b-icon icon="eye" size="is-small"/>
+      </k-link>
       <b-button
         type="is-primary"
         icon-right="publish"

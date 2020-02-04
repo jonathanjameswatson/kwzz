@@ -49,7 +49,7 @@ router.post(
         )
       } else {
         isCorrect = questions[i].answers.some(
-          (possibleAnswer) => (possibleAnswer.answer = answer)
+          (possibleAnswer) => possibleAnswer.answer === answer
         )
       }
 
@@ -138,7 +138,53 @@ router.get(
 )
 
 // This route will fetch an attempt from its ID
-router.get('/attempt/:id', (req, res, next) => {})
+router.get(
+  '/attempt/:id',
+  asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+
+    const db = await database.get()
+
+    const results = await db.get(SQL`
+      SELECT Answers, Quiz, (SELECT Questions FROM quiz WHERE quiz.Id=result.Quiz) Questions
+      FROM result
+      WHERE Id = ${id}
+        AND (User = ${req.user.id}
+        OR (SELECT Owner FROM quiz WHERE Id=${id}) = ${req.user.id})
+      ORDER BY MadeTimestamp DESC`)
+
+    const answers = JSON.parse(results.Answers)
+    const questions = JSON.parse(results.Questions)
+
+    const correctAnswers = answers.map((answer, i) => {
+      let correctAnswer = true
+      if (!answer.isCorrect) {
+        if (questions[i].type === 'Single answer question') {
+          correctAnswer = questions[i].answers.findIndex(
+            (possibleAnswer) => possibleAnswer.isCorrect
+          )
+        } else if (questions[i].type === 'Multiple answer question') {
+          correctAnswer = questions[i].answers
+            .map((possibleAnswer, i) => (possibleAnswer.isCorrect ? i : null))
+            .filter((possibleAnswer) => possibleAnswer !== null)
+        } else {
+          correctAnswer = questions[i].answers.find(
+            (possibleAnswer) => possibleAnswer.isCorrect
+          ).answer
+        }
+      }
+
+      return {
+        userAnswer: answer.answer,
+        correctAnswer
+      }
+    })
+
+    res.json({ attempt: correctAnswers, quizId: results.Quiz })
+
+    await db.close()
+  })
+)
 
 // This route will publish the list of all results
 // from all players on a quiz from its ID

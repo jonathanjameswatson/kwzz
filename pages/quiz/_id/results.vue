@@ -30,6 +30,9 @@
             </div>
 
             <b-table v-if="result.topics.length !== 0" :data="result.topics" :columns="columns"/>
+
+            <br>
+            <k-link :link="`/quiz/results/${result.Id}`">View answers</k-link>
           </div>
         </div>
       </div>
@@ -38,12 +41,15 @@
 </template>
 
 <script>
+import kLink from '~/components/kLink'
+
 export default {
   async asyncData({ params, $axios }) {
     const id = params.id
     const { results } = await $axios.$get(`/api/result/quiz/${id}`)
     return {
       results,
+      id,
       columns: [
         {
           field: 'Topic',
@@ -57,6 +63,7 @@ export default {
         }
       ]
     }
-  }
+  },
+  components: { kLink }
 }
 </script>
