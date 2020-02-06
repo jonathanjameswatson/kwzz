@@ -9,8 +9,8 @@ $family-primary: $family-serif;
 
 $card-shadow: none;
 
-@import '~/node_modules/buefy/dist/buefy.min.css';
 @import '~bulma';
+@import "~buefy/src/scss/buefy";
 
 .navbar-item img {
   max-height: 64px;
@@ -25,10 +25,6 @@ $card-shadow: none;
   border: 1px solid $primary;
 }
 
-.control.has-icons-left .icon {
-  pointer-events: auto !important;
-}
-
 .b-table {
   .table {
     td {
@@ -38,4 +34,9 @@ $card-shadow: none;
       }
     }
   }
+}
+
+.centered-page {
+  min-height: calc(100vh - 64px - 1rem) !important;
+  align-items: center;
 }

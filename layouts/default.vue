@@ -37,8 +37,8 @@
             <b-button type="is-primary" rounded outlined @click="signOut" key="signout">Sign out</b-button>
           </div>
           <div class="buttons" v-else>
-            <k-link broken link="/auth/register" key="register">Register</k-link>
-            <b-button type="is-primary" rounded outlined @click="signIn" key="signin">Sign in</b-button>
+            <k-link link="/auth/register" key="register">Register</k-link>
+            <k-link link="/auth/signin" key="signin">Sign in</k-link>
           </div>
         </b-navbar-item>
       </template>
@@ -67,14 +67,6 @@ export default {
       this.$router.push({
         path: '/search',
         query: { searchString: this.searchString }
-      })
-    },
-    signIn() {
-      return this.$auth.loginWith('local', {
-        data: {
-          username: '',
-          password: ''
-        }
       })
     },
     signOut() {

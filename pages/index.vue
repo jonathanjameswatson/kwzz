@@ -12,7 +12,7 @@
       <div class="tile is-parent is-5">
         <div class="tile is-child">
           <figure class="image is-3by2">
-            <img src="~/assets/kwzz.png" alt="Preview Image">
+            <img src="~/assets/kwzz.png" alt="Preview Image" draggable="false">
           </figure>
         </div>
       </div>

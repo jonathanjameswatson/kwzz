@@ -24,7 +24,6 @@
                     label="Single answer requires one correct answer to be picked. Multiple answer requires each correct answer to be picked. Text answer requires one answer to be typed in."
                     multilined
                     animated
-                    type="is-dark"
                     slot="trigger"
                   >
                     <b-button
@@ -63,7 +62,7 @@
                 rounded
               />
 
-              <b-checkbox-button type="is-primary" v-model="question.shuffle">
+              <b-checkbox-button type="is-primary" v-model="question.shuffle" v-show="false">
                 <b-icon :icon="question.shuffle ? 'close' : 'check'"/>
                 <span>Shuffle answers?</span>
               </b-checkbox-button>
@@ -78,7 +77,7 @@
                   centered
                   :visible="question.type !== 'Text answer question'"
                 >
-                  <b-checkbox size="is-medium" type="is-dark" v-model="props.row.isCorrect"/>
+                  <b-checkbox size="is-medium" v-model="props.row.isCorrect"/>
                 </b-table-column>
 
                 <b-table-column field="answer" label="Answer">
@@ -92,7 +91,7 @@
                   />
                 </b-table-column>
 
-                <b-table-column field="delete" label="Delete" width="0" centered>
+                <b-table-column label="Delete" width="0" centered>
                   <span>
                     <b-button
                       type="is-primary"

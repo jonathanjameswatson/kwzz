@@ -2,15 +2,15 @@
   <div class="hero centered-page is-fullheight">
     <div class="hero-body has-text-centered">
       <div class="container">
-        <h1 class="title">Sign in</h1>
-        <form v-on:submit.prevent="signIn">
+        <h1 class="title">Register</h1>
+        <form v-on:submit.prevent="register">
           <b-field label="Username">
             <b-input
               rounded
               autofocus
               v-model="username"
-              maxlength="50"
               required
+              maxlength="50"
               :has-counter="false"
             />
           </b-field>
@@ -20,13 +20,24 @@
               type="password"
               password-reveal
               v-model="password"
-              maxlength="50"
               required
+              maxlength="50"
+              :has-counter="false"
+            />
+          </b-field>
+          <b-field label="Verify password">
+            <b-input
+              rounded
+              type="password"
+              password-reveal
+              v-model="verifyPassword"
+              required
+              maxlength="50"
               :has-counter="false"
             />
           </b-field>
           <br>
-          <b-button type="is-primary" rounded outlined native-type="submit">Sign in</b-button>
+          <b-button type="is-primary" rounded outlined native-type="submit">Register</b-button>
           <br>
           <br>
           <b-message :active="error !== ''" type="is-danger" has-icon>{{ error }}</b-message>
@@ -46,12 +57,23 @@ export default {
     return {
       username: '',
       password: '',
+      verifyPassword: '',
       error: ''
     }
   },
   methods: {
-    async signIn() {
+    async register() {
+      if (this.password !== this.verifyPassword) {
+        this.error = 'The inputted passwords are not the same.'
+        return false
+      }
+
       try {
+        await this.$axios.post('api/user/register', {
+          username: this.username,
+          password: this.password
+        })
+
         return await this.$auth.loginWith('local', {
           data: {
             username: this.username,

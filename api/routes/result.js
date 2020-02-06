@@ -188,6 +188,24 @@ router.get(
 
 // This route will publish the list of all results
 // from all players on a quiz from its ID
-router.get('/players/:id', (req, res, next) => {})
+router.get(
+  '/players/:id',
+  asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+
+    const db = await database.get()
+
+    const attempts = await db.all(SQL`
+      SELECT Id, Score, TimeTaken, (SELECT Username FROM user WHERE user.Id=result.User) Username
+      FROM result
+      WHERE Quiz = ${id}
+        AND (SELECT Owner FROM quiz WHERE Id=${id}) = ${req.user.id}
+      ORDER BY MadeTimestamp DESC`)
+
+    res.json({ attempts })
+
+    await db.close()
+  })
+)
 
 export default router

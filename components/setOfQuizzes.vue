@@ -5,12 +5,8 @@
         <div class="card-content">
           <p class="title">{{ quiz.Title }}</p>
           <div class="buttons">
-            <template v-if="quiz.Owner.toString() === $auth.user.id">
-              <k-link
-                v-if="quiz.IsPublished === 1"
-                broken
-                :link="`/quiz/${quiz.Id}/players`"
-              >Players</k-link>
+            <template v-if="quiz.Owner === $auth.user.id">
+              <k-link v-if="quiz.IsPublished === 1" :link="`/quiz/${quiz.Id}/players`">Players</k-link>
               <k-link v-else :link="`/quiz/${quiz.Id}/edit`">Edit</k-link>
             </template>
             <k-link v-if="quiz.IsPublished === 1" :link="`/quiz/${quiz.Id}/play`">Play</k-link>
