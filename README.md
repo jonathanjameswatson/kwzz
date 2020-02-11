@@ -13,9 +13,9 @@ With kwzz, quizzes can be made quickly and easily and shared so that anyone play
 
 ## Setup
 
-Install [Node](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) and then
+Make sure you have [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) installed.
 ``` bash
-$ git clone https://github.com/jonathanjameswatson/kwzz.git
+$ git clone https://github.com/jonathanjameswatson/kwzz.git # or clone your own fork
 $ cd kwzz
 $ yarn install
 ```
