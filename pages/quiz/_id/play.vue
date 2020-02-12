@@ -83,6 +83,8 @@ export default {
   },
   methods: {
     async submit() {
+      const loading = this.$buefy.loading.open()
+
       const { done } = await this.$axios.$post(`/api/result/${this.id}`, {
         answers: this.answers,
         timeTaken: new Date().getTime() - this.startTime
@@ -91,6 +93,8 @@ export default {
       if (done) {
         this.$router.push({ path: `results` })
       }
+
+      loading.close()
     }
   }
 }

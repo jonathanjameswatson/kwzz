@@ -254,6 +254,7 @@ export default {
       )
     },
     async save() {
+      this.saved = true
       const { id } = await this.$axios.$put(`/api/quiz/${this.id}`, {
         title: this.title,
         questions: this.questions
@@ -263,7 +264,6 @@ export default {
           path: `/quiz/${id}/edit`
         })
       }
-      this.saved = true
     },
     async publish() {
       const tests = {

@@ -41,6 +41,7 @@
           <br>
           <br>
           <b-message :active="error !== ''" type="is-danger" has-icon>{{ error }}</b-message>
+          <b-loading :active="loading"/>
         </form>
       </div>
     </div>
@@ -58,7 +59,8 @@ export default {
       username: '',
       password: '',
       verifyPassword: '',
-      error: ''
+      error: '',
+      loading: false
     }
   },
   methods: {
@@ -67,6 +69,8 @@ export default {
         this.error = 'The inputted passwords are not the same.'
         return false
       }
+
+      this.loading = true
 
       try {
         await this.$axios.post('api/user/register', {
@@ -82,6 +86,7 @@ export default {
         })
       } catch (e) {
         this.error = e.response.data.error.message
+        this.loading = false
       }
     }
   }

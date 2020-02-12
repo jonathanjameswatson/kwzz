@@ -30,6 +30,7 @@
           <br>
           <br>
           <b-message :active="error !== ''" type="is-danger" has-icon>{{ error }}</b-message>
+          <b-loading :active="loading"/>
         </form>
       </div>
     </div>
@@ -46,11 +47,14 @@ export default {
     return {
       username: '',
       password: '',
-      error: ''
+      error: '',
+      loading: false
     }
   },
   methods: {
     async signIn() {
+      this.loading = true
+
       try {
         return await this.$auth.loginWith('local', {
           data: {
@@ -60,6 +64,7 @@ export default {
         })
       } catch (e) {
         this.error = e.response.data.error.message
+        this.loading = false
       }
     }
   }
