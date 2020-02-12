@@ -1,22 +1,10 @@
 import api from './api'
 
 export default {
-  /*
-   ** Rendering mode
-   ** Doc: https://nuxtjs.org/api/configuration-mode
-   */
   mode: 'universal',
 
-  /*
-   ** Global CSS
-   ** Doc: https://nuxtjs.org/api/configuration-css
-   */
   css: ['~/assets/scss/main.scss'],
 
-  /*
-   ** Nuxt.js modules
-   ** Doc: https://nuxtjs.org/guide/modules
-   */
   modules: [
     // TODO: Remove it if you want to eject from codeSandbox
     './codesandbox',
@@ -77,7 +65,7 @@ export default {
   pwa: {
     meta: {
       description:
-        "kwzz is a new quiz website built to help people create, share and play. Quizzes can be made quickly and easily with kwzz and shared so that anyone play it and test their knowledge. Once a user has played a quiz, they can easily review their results and recieve feedback on the topics they did poorly on. Creators of quizzes can also review attempts to their quizzes to help them know other user's knowledge.",
+        "kwzz is a new quiz website built to help people create, share and play. Quizzes can be made quickly and easily with kwzz and shared so that anyone play them. Once a user has played a quiz, they can easily review their results and recieve feedback on the topics they did poorly on. Creators of quizzes can also review attempts to their quizzes to help them know other user's knowledge.",
       ogHost: 'https://kwzz.xyz',
       twitterCard: 'summary',
       twitterSite: 'https://kwzz.xyz',

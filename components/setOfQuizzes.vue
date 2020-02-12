@@ -50,7 +50,7 @@ export default {
     }
   },
   async mounted() {
-    const { quizzes } = await this.$axios.$get('/api/quiz', {
+    const { quizzes, total } = await this.$axios.$get('/api/quiz', {
       params: {
         offset: this.offset,
         limit: this.limit,
@@ -61,6 +61,7 @@ export default {
 
     this.quizzes = quizzes
     this.loading = false
+    this.$emit('total', total)
   }
 }
 </script>

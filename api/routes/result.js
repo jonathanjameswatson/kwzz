@@ -150,7 +150,7 @@ router.get(
       FROM result
       WHERE Id = ${id}
         AND (User = ${req.user.id}
-        OR (SELECT Owner FROM quiz WHERE Id=${id}) = ${req.user.id})
+        OR (SELECT Owner FROM quiz WHERE quiz.Id=result.Quiz) = ${req.user.id})
       ORDER BY MadeTimestamp DESC`)
 
     const answers = JSON.parse(results.Answers)

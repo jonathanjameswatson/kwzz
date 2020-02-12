@@ -36,7 +36,9 @@ router.get(
         LIMIT ${limit} OFFSET ${offset}`)
     }
 
-    res.json({ quizzes })
+    const { total } = await db.get('SELECT COUNT(1) AS total FROM quiz')
+
+    res.json({ quizzes, total })
 
     await db.close()
   })

@@ -7,7 +7,9 @@
       :isUser="isUser"
       :searchString="searchString"
       :key="`${searchString}${offset}`"
+      @total="setTotal"
     />
+    <b-pagination :total="total" :per-page="limit" :current.sync="page" @change="setPage"/>
   </div>
 </template>
 
@@ -17,25 +19,41 @@ import SetOfQuizzes from '~/components/setOfQuizzes'
 export default {
   watchQuery: true,
   asyncData({ query }) {
-    const { page, searchString } = query
-    let { isUser } = query
+    const { searchString } = query
+    let { page, isUser } = query
 
     if (isUser) {
       isUser = true
+    } else {
+      isUser = false
+    }
+
+    if (!page) {
+      page = 1
     }
 
     const limit = 9
-    const offset = (page || 0) * limit
+    const offset = (page - 1) * limit
 
     return {
       limit,
       offset,
+      page,
       isUser,
-      searchString
+      searchString,
+      total: 0
     }
   },
   components: {
     SetOfQuizzes
+  },
+  methods: {
+    setTotal(total) {
+      this.total = total
+    },
+    setPage(page) {
+      this.$router.push({ query: { page } })
+    }
   }
 }
 </script>
