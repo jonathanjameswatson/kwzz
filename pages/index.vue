@@ -49,12 +49,22 @@
       </div>
     </div>
     <hr>
-    <p class="title has-text-centered">Get started by pressing the sign in button in the top right!</p>
+    <br>
+    <div class="has-text-centered">
+      <h2 class="title">Get started!</h2>
+      <div class="buttons is-block">
+        <k-link link="/auth/register" key="register">Register</k-link>
+        <k-link link="/auth/signin" key="signin">Sign in</k-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import kLink from '~/components/kLink'
+
 export default {
-  auth: 'guest'
+  auth: 'guest',
+  components: { kLink }
 }
 </script>
