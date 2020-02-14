@@ -19,12 +19,10 @@
             </p>
 
             <div class="message is-primary">
-              <div class="message-body">Your answer was: {{ formattedAnswers[i].userAnswer }}</div>
+              <div class="message-body">Your answer was: {{ attempt[i].userAnswer }}</div>
             </div>
             <div class="message is-success" v-if="attempt[i].correctAnswer !== true">
-              <div
-                class="message-body"
-              >The correct answer was: {{ formattedAnswers[i].correctAnswer }}</div>
+              <div class="message-body">The correct answer was: {{ attempt[i].correctAnswer }}</div>
             </div>
           </div>
         </div>
@@ -47,39 +45,6 @@ export default {
       attempt,
       id,
       quizId
-    }
-  },
-  computed: {
-    formattedAnswers() {
-      return this.questions.map((question, i) => {
-        if (question.type === 'Single answer question') {
-          const userAnswer = question.answers[this.attempt[i].userAnswer]
-          if (this.attempt[i].correctAnswer === true) {
-            return { userAnswer }
-          } else {
-            return {
-              userAnswer,
-              correctAnswer: question.answers[this.attempt[i].correctAnswer]
-            }
-          }
-        } else if (question.type === 'Multiple answer question') {
-          const userAnswer = this.attempt[i].userAnswer
-            .map((userAnswer) => question.answers[userAnswer])
-            .join(', ')
-          if (this.attempt[i].correctAnswer === true) {
-            return { userAnswer }
-          } else {
-            return {
-              userAnswer,
-              correctAnswer: this.attempt[i].correctAnswer
-                .map((userAnswer) => question.answers[userAnswer])
-                .join(', ')
-            }
-          }
-        } else {
-          return this.attempt[i]
-        }
-      })
     }
   }
 }

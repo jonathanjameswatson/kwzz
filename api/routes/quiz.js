@@ -15,28 +15,26 @@ router.get(
 
     const db = await database.get()
 
-    let quizzes = null
+    const where = SQL`
+      FROM quiz WHERE Title LIKE ${`%${searchString}%`} AND `
 
     if (isUser === 'true') {
-      quizzes = await db.all(SQL`
-        SELECT Id, Title, Owner, IsPublished
-        FROM quiz
-        WHERE Owner = ${req.user.id}
-          AND Title LIKE ${`%${searchString}%`}
-        ORDER BY MAX(MadeTimestamp, IFNULL(PublishedTimestamp, 0)) DESC
-        LIMIT ${limit} OFFSET ${offset}`)
+      where.append(SQL`Owner = ${req.user.id}`)
     } else {
-      quizzes = await db.all(SQL`
-        SELECT Id, Title, Owner, IsPublished
-        FROM quiz
-        WHERE (IsPublished = 1
-          OR Owner = ${req.user.id})
-          AND Title LIKE ${`%${searchString}%`}
-        ORDER BY MAX(MadeTimestamp, IFNULL(PublishedTimestamp, 0)) DESC
-        LIMIT ${limit} OFFSET ${offset}`)
+      where.append(SQL`(IsPublished = 1 OR Owner = ${req.user.id})`)
     }
 
-    const { total } = await db.get('SELECT COUNT(1) AS total FROM quiz')
+    const quizzes = await db.all(
+      SQL`
+      SELECT Id, Title, Owner, IsPublished`.append(where).append(SQL`
+      ORDER BY MAX(MadeTimestamp, IFNULL(PublishedTimestamp, 0)) DESC
+      LIMIT ${limit} OFFSET ${offset}`)
+    )
+
+    const { total } = await db.get(
+      SQL`
+      SELECT COUNT(1) AS total`.append(where)
+    )
 
     res.json({ quizzes, total })
 
@@ -175,10 +173,12 @@ router.get(
 
     const justQuestions = questions.map((question) => {
       if (question.type !== 'Text answer question') {
-        const newAnswers = question.answers.map((answer) => answer.answer)
+        const newAnswers = question.answers.map((answer, i) => [
+          answer.answer,
+          i
+        ])
 
-        if (false) {
-          // !question.shuffle) {
+        if (question.shuffle === false) {
           shuffle(newAnswers)
         }
 

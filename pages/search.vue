@@ -52,7 +52,7 @@ export default {
       this.total = total
     },
     setPage(page) {
-      this.$router.push({ query: { page } })
+      this.$router.push({ query: { page, isUser: this.isUser, searchString: this.searchString } })
     }
   }
 }

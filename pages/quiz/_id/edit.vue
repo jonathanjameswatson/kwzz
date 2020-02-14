@@ -62,7 +62,11 @@
                 rounded
               />
 
-              <b-checkbox-button type="is-primary" v-model="question.shuffle" v-show="false">
+              <b-checkbox-button
+                v-if="question.type !== 'Text answer question'"
+                type="is-primary"
+                v-model="question.shuffle"
+              >
                 <b-icon :icon="question.shuffle ? 'close' : 'check'"/>
                 <span>Shuffle answers?</span>
               </b-checkbox-button>

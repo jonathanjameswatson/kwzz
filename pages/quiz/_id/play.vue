@@ -25,9 +25,9 @@
               <b-dropdown-item
                 v-for="(answer, j) in question.answers"
                 :key="j"
-                :value="j"
+                :value="answer[1]"
                 aria-role="listitem"
-              >{{ answer }}</b-dropdown-item>
+              >{{ answer[0] }}</b-dropdown-item>
             </b-dropdown>
 
             <b-input
@@ -43,7 +43,13 @@
       </div>
     </div>
     <hr>
-    <b-button type="is-primary" rounded outlined @click="submit()" :disabled="submittable">Submit quiz</b-button>
+    <b-button
+      type="is-primary"
+      rounded
+      outlined
+      @click="submit()"
+      :disabled="submittable"
+    >Submit quiz</b-button>
   </div>
 </template>
 
@@ -64,7 +70,12 @@ export default {
     dropdowns() {
       return this.questions.map((question, i) => {
         if (question.type === 'Single answer question') {
-          return question.answers[this.answers[i]] || 'Select answer'
+          if (question.answers[this.answers[i]] !== undefined) {
+            return question.answers.find(
+              (answer) => answer[1] === this.answers[i]
+            )[0]
+          }
+          return 'Select answer'
         } else if (question.type === 'Multiple answer question') {
           if (!this.answers[i]) {
             return 'Select answers'

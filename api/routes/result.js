@@ -156,17 +156,29 @@ router.get(
     const answers = JSON.parse(results.Answers)
     const questions = JSON.parse(results.Questions)
 
-    const correctAnswers = answers.map((answer, i) => {
+    const attempt = answers.map((answer, i) => {
+      const userAnswer = [answer.answer]
+        .reduce((acc, val) => acc.concat(val), [])
+        .map((answer) => {
+          if (answer !== 'Text answer question') {
+            return questions[i].answers[answer].answer
+          } else {
+            return answer
+          }
+        })
+        .join(', ')
+
       let correctAnswer = true
       if (!answer.isCorrect) {
         if (questions[i].type === 'Single answer question') {
-          correctAnswer = questions[i].answers.findIndex(
+          correctAnswer = questions[i].answers.find(
             (possibleAnswer) => possibleAnswer.isCorrect
-          )
+          ).answer
         } else if (questions[i].type === 'Multiple answer question') {
           correctAnswer = questions[i].answers
-            .map((possibleAnswer, i) => (possibleAnswer.isCorrect ? i : null))
-            .filter((possibleAnswer) => possibleAnswer !== null)
+            .filter((possibleAnswer) => possibleAnswer.isCorrect)
+            .map((answer) => answer.answer)
+            .join(', ')
         } else {
           correctAnswer = questions[i].answers.find(
             (possibleAnswer) => possibleAnswer.isCorrect
@@ -175,12 +187,12 @@ router.get(
       }
 
       return {
-        userAnswer: answer.answer,
+        userAnswer,
         correctAnswer
       }
     })
 
-    res.json({ attempt: correctAnswers, quizId: results.Quiz })
+    res.json({ attempt, quizId: results.Quiz })
 
     await db.close()
   })

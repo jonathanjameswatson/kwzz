@@ -85,7 +85,7 @@ export default {
           }
         })
       } catch (e) {
-        this.error = e.response.data.error.message
+        this.error = e.response.data.message || e.response.data.error.message
         this.loading = false
       }
     }

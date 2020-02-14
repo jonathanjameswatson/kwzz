@@ -14,7 +14,8 @@ With kwzz, quizzes can be made quickly and easily and shared so that anyone play
 ## Setup
 
 Make sure you have [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) installed.
-``` bash
+
+```bash
 $ git clone https://github.com/jonathanjameswatson/kwzz.git # or clone your own fork
 $ cd kwzz
 $ yarn install
@@ -22,7 +23,7 @@ $ yarn install
 
 ## Usage
 
-``` bash
+```bash
 # To run in development at localhost:3000
 $ yarn run dev
 
@@ -30,6 +31,10 @@ $ yarn run dev
 $ yarn run build
 $ yarn run deploy
 ```
+
+## Secrets
+
+Set the environment variable JWT_SECRET to a secret key before deploying the website in production.
 
 ## Website
 
