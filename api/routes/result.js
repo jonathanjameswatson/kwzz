@@ -160,7 +160,7 @@ router.get(
       const userAnswer = [answer.answer]
         .reduce((acc, val) => acc.concat(val), [])
         .map((answer) => {
-          if (answer !== 'Text answer question') {
+          if (questions[i].type !== 'Text answer question') {
             return questions[i].answers[answer].answer
           } else {
             return answer
