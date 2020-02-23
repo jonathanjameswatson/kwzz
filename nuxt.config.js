@@ -6,8 +6,6 @@ export default {
   css: ['~/assets/scss/main.scss'],
 
   modules: [
-    // TODO: Remove it if you want to eject from codeSandbox
-    './codesandbox',
     '@nuxtjs/pwa',
     ['nuxt-buefy', { css: false }],
     '@nuxtjs/axios',
