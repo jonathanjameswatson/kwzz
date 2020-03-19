@@ -36,6 +36,14 @@ $ yarn run deploy
 
 Set the environment variable JWT_SECRET to a secret key before deploying the website in production.
 
+There are five secrets that should be set relating to PostgreSQL database connections. These are:
+
+- KWZZ_DB_HOST
+- KWZZ_DB_PORT
+- KWZZ_DB_DATABASE
+- KWZZ_DB_USER
+- KWZZ_DB_PASSWORD
+
 ## Website
 
 [Visit the website here](https://kwzz.xyz/)

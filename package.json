@@ -27,9 +27,7 @@
     "nuxt": "^2.12.0",
     "nuxt-buefy": "0.3.24",
     "pg-promise": "^10.4.4",
-    "sass-loader": "8.0.2",
-    "sql-template-strings": "2.2.2",
-    "sqlite": "3.0.3"
+    "sass-loader": "8.0.2"
   },
   "keywords": [],
   "devDependencies": {
