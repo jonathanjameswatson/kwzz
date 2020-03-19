@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <b-loading :active="loading"/>
+    <b-loading :active="$fetchState.pending"/>
   </div>
 </template>
 
@@ -45,11 +45,10 @@ export default {
   },
   data() {
     return {
-      quizzes: [],
-      loading: true
+      quizzes: []
     }
   },
-  async mounted() {
+  async fetch() {
     const { quizzes, total } = await this.$axios.$get('/api/quiz', {
       params: {
         offset: this.offset,
@@ -60,7 +59,6 @@ export default {
     })
 
     this.quizzes = quizzes
-    this.loading = false
     this.$emit('total', total)
   }
 }
