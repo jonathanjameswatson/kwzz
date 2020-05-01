@@ -1,12 +1,11 @@
+import quiz from './routes/quiz.js'
+import result from './routes/result.js'
+import user from './routes/user.js'
+
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import jwt from 'express-jwt'
-
-import db from './db.js'
-import quiz from './routes/quiz.js'
-import result from './routes/result.js'
-import user from './routes/user.js'
 
 // Create the api
 const api = express()
@@ -16,9 +15,6 @@ api.use(cookieParser())
 
 // Add bodyparser to see the contents of request bodies
 api.use(bodyParser.json())
-
-// Initialise database
-db.initialise()
 
 // Require JWT authentication for all routes except some
 api.use(
