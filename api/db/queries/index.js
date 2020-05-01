@@ -2,7 +2,7 @@ import path from 'path'
 import { QueryFile } from 'pg-promise'
 
 const sql = (file) => {
-  const fullPath = path.join(__dirname, file) // generating full path;
+  const fullPath = path.join(__dirname, `${file}.sql`) // generating full path;
 
   const options = { minify: true }
 
@@ -33,8 +33,8 @@ export const queries = {
     fetchPlayers: sql('result/fetchPlayers')
   },
   topicResult: {
-    createTopicResults: sql('topicResult/createTopicResults'),
-    fetchTopicResult: sql('topicResult/fetchTopicResult')
+    createTopicResult: sql('topicResult/createTopicResult'),
+    fetchTopicResults: sql('topicResult/fetchTopicResults')
   },
   user: {
     createUser: sql('user/createUser'),

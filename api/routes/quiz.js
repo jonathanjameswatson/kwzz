@@ -1,4 +1,4 @@
-import { db, queries } from '../db.js'
+import { db, queries } from '../db'
 import { shuffle } from '../utilities.js'
 
 import express from 'express'

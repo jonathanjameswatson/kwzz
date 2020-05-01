@@ -12,6 +12,7 @@ const connection = {
 }
 
 const pgp = pgPromise()
-const db = pgp(connection)
+export const db = pgp(connection)
+export { queries }
 
 export default { db, queries }

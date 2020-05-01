@@ -1,4 +1,4 @@
-import { db, queries } from '../db.js'
+import { db, queries } from '../db'
 
 import express from 'express'
 import asyncHandler from 'express-async-handler'
