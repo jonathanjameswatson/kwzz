@@ -1,42 +1,29 @@
+import { database, queries } from '../db.js'
+import { shuffle } from '../utilities.js'
+
 import express from 'express'
 import asyncHandler from 'express-async-handler'
-import SQL from 'sql-template-strings'
-
-import database from '../db.js'
-import { shuffle } from '../utilities.js'
 
 const router = new express.Router()
 
 // This route will fetch a set of quizzes
 router.get(
   '/',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { offset, limit, isUser, searchString } = req.query
 
     const db = await database.get()
+    const userId = req.user.id
 
-    const where = SQL`
-      FROM quiz WHERE Title LIKE ${`%${searchString}%`} AND `
+    const quizzes = await db.any(queries.quiz.fetchQuizzes, {
+      offset,
+      limit,
+      isUser,
+      searchString,
+      userId
+    })
 
-    if (isUser === 'true') {
-      where.append(SQL`Owner = ${req.user.id}`)
-    } else {
-      where.append(SQL`(IsPublished = 1 OR Owner = ${req.user.id})`)
-    }
-
-    const quizzes = await db.all(
-      SQL`
-      SELECT Id, Title, Owner, IsPublished`.append(where).append(SQL`
-      ORDER BY MAX(MadeTimestamp, IFNULL(PublishedTimestamp, 0)) DESC
-      LIMIT ${limit} OFFSET ${offset}`)
-    )
-
-    const { total } = await db.get(
-      SQL`
-      SELECT COUNT(1) AS total`.append(where)
-    )
-
-    res.json({ quizzes, total })
+    res.json({ quizzes, total: quizzes[0].total })
 
     await db.close()
   })
@@ -45,7 +32,7 @@ router.get(
 // This route will fetch a single quiz from its ID
 router.get(
   '/:id',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { id } = req.params
 
     if (id === '0') {
@@ -72,13 +59,9 @@ router.get(
       })
     } else {
       const db = await database.get()
+      const userId = req.user.id
 
-      const quiz = await db.get(SQL`
-        SELECT Title, Questions
-        FROM quiz
-        WHERE Owner = ${req.user.id}
-          AND Id = ${id}
-          AND IsPublished = 0`)
+      const quiz = await db.one(queries.quiz.fetchQuiz, { userId, id })
 
       res.json({
         title: quiz.Title,
@@ -94,32 +77,32 @@ router.get(
 // or create the quiz and give it an ID
 router.put(
   '/:id',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { id } = req.params
     const { title, questions } = req.body
 
     const questionsJson = JSON.stringify(questions)
 
     const db = await database.get()
+    const userId = req.user.id
 
     if (id === '0') {
-      const { lastID } = await db.run(SQL`
-        INSERT INTO quiz
-        (Title, Questions, Owner)
-        VALUES
-        (${title}, ${questionsJson}, ${req.user.id})`)
+      const { lastId } = await db.one(queries.quiz.createQuiz, {
+        title,
+        questionsJson,
+        userId
+      })
 
       res.json({
-        id: lastID
+        id: lastId
       })
     } else {
-      await db.run(SQL`
-        UPDATE quiz
-        SET Title = ${title},
-          Questions = ${questionsJson}
-        WHERE Owner = ${req.user.id}
-          AND Id = ${id}
-          AND IsPublished = 0`)
+      await db.none(queries.quiz.updateQuiz, {
+        title,
+        questionsJson,
+        userId,
+        id
+      })
 
       res.json({
         id: null
@@ -133,18 +116,13 @@ router.put(
 // This route will publish the quiz at the given ID
 router.post(
   '/:id',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { id } = req.params
 
     const db = await database.get()
+    const userId = req.user.id
 
-    await db.run(SQL`
-      UPDATE quiz
-      SET IsPublished = 1,
-        PublishedTimestamp = CURRENT_TIMESTAMP
-      WHERE Owner = ${req.user.id}
-        AND Id = ${id}
-        AND IsPublished = 0`)
+    await db.none(queries.quiz.publishQuiz, { userId, id })
 
     res.json({
       done: true
@@ -158,16 +136,13 @@ router.post(
 // at a given ID
 router.get(
   '/:id/questions',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { id } = req.params
 
     const db = await database.get()
+    const userId = req.user.id
 
-    const quiz = await db.get(SQL`
-      SELECT Title, Questions
-      FROM quiz
-      WHERE Id = ${id}
-        AND (Owner = ${req.user.id} OR IsPublished = 1)`)
+    const quiz = await db.one(queries.quiz.fetchQuestions, { id, userId })
 
     const questions = JSON.parse(quiz.Questions)
 

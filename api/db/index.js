@@ -1,3 +1,5 @@
+import { queries } from './queries'
+
 import pgPromise from 'pg-promise'
 
 // Database connection details
@@ -12,4 +14,4 @@ const connection = {
 const pgp = pgPromise()
 const db = pgp(connection)
 
-export default db
+export default { db, queries }

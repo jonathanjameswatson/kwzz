@@ -16,9 +16,10 @@ const sql = (file) => {
   return queryFile
 }
 
-export default {
+export const queries = {
   quiz: {
-    editFetchQuiz: sql('quiz/editFetchQuiz'),
+    fetchQuizzes: sql('quiz/fetchQuizzes'),
+    editFetchQuiz: sql('quiz/fetchQuiz'),
     createQuiz: sql('quiz/createQuiz'),
     updateQuiz: sql('quiz/updateQuiz'),
     publishQuiz: sql('quiz/publishQuiz'),
