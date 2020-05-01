@@ -19,7 +19,7 @@ const sql = (file) => {
 export const queries = {
   quiz: {
     fetchQuizzes: sql('quiz/fetchQuizzes'),
-    editFetchQuiz: sql('quiz/fetchQuiz'),
+    fetchQuiz: sql('quiz/fetchQuiz'),
     createQuiz: sql('quiz/createQuiz'),
     updateQuiz: sql('quiz/updateQuiz'),
     publishQuiz: sql('quiz/publishQuiz'),
@@ -33,7 +33,7 @@ export const queries = {
     fetchPlayers: sql('result/fetchPlayers')
   },
   topicResult: {
-    createTopicResult: sql('topicResult/createTopicResult'),
+    createTopicResults: sql('topicResult/createTopicResults'),
     fetchTopicResult: sql('topicResult/fetchTopicResult')
   },
   user: {

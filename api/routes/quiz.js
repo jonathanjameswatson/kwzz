@@ -64,8 +64,8 @@ router.get(
       const quiz = await db.one(queries.quiz.fetchQuiz, { userId, id })
 
       res.json({
-        title: quiz.Title,
-        questions: JSON.parse(quiz.Questions)
+        title: quiz.title,
+        questions: JSON.parse(quiz.questions)
       })
 
       await db.close()
@@ -144,7 +144,7 @@ router.get(
 
     const quiz = await db.one(queries.quiz.fetchQuestions, { id, userId })
 
-    const questions = JSON.parse(quiz.Questions)
+    const questions = JSON.parse(quiz.questions)
 
     const justQuestions = questions.map((question) => {
       if (question.type !== 'Text answer question') {

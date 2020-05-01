@@ -1,28 +1,24 @@
+import { database, queries } from '../db.js'
+import { getPercentage } from '../utilities.js'
+
 import express from 'express'
 import asyncHandler from 'express-async-handler'
-import SQL from 'sql-template-strings'
-
-import database from '../db.js'
-import { getPercentage } from '../utilities.js'
 
 const router = new express.Router()
 
 // This route will save a user's attempt at a quiz
 router.post(
   '/:id',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { id } = req.params
     const { answers, timeTaken } = req.body
 
     const db = await database.get()
+    const userId = req.user.id
 
-    const quiz = await db.get(SQL`
-      SELECT Questions
-      FROM quiz
-      WHERE Id = ${id}
-        AND (Owner = ${req.user.id} OR IsPublished = 1)`)
+    const quiz = await db.one(queries.quiz.fetchQuestions, { id, userId })
 
-    const questions = JSON.parse(quiz.Questions)
+    const questions = JSON.parse(quiz.questions)
 
     let totalCorrectCount = 0
     const topicCorrectCounts = {}
@@ -64,36 +60,31 @@ router.post(
     const totalScore = getPercentage(totalCorrectCount, questions.length)
 
     let improvement = null
-    const lastResult = await db.get(SQL`
-      SELECT Score
-      FROM result
-      WHERE Quiz = ${id}
-        AND User = ${req.user.id}
-      ORDER BY MadeTimestamp DESC`)
+    const lastResult = await db.oneOrNone(queries.result.fetchLastScore, {
+      id,
+      userId
+    })
 
     if (lastResult) {
-      improvement = getPercentage(totalScore, lastResult.Score) - 100
+      improvement = getPercentage(totalScore, lastResult.score) - 100
     }
-
-    const result = await db.run(SQL`
-      INSERT INTO result
-      (Quiz, User, Answers, Score, TimeTaken, Improvement)
-      VALUES
-      (${id},
-        ${req.user.id},
-        ${JSON.stringify(newAnswers)},
-        ${totalScore},
-        ${timeTaken},
-        ${improvement})`)
+    const { resultId } = await db.one(queries.result.createResult, {
+      id,
+      userId,
+      newAnswers: JSON.stringify(newAnswers),
+      totalScore,
+      timeTaken,
+      improvement
+    })
 
     await Promise.all(
-      Object.entries(topicCorrectCounts).map(async ([topic, correctCount]) => {
+      Object.entries(topicCorrectCounts).map(([topic, correctCount]) => {
         const topicScore = getPercentage(correctCount, topicLengths[topic])
-        return await db.run(SQL`
-          INSERT INTO topicResult
-          (Result, Topic, Score)
-          VALUES
-          (${result.lastID}, ${topic}, ${topicScore})`)
+        return db.none(queries.topicResult.createTopicResult, {
+          resultId,
+          topic,
+          topicScore
+        })
       })
     )
 
@@ -108,25 +99,20 @@ router.post(
 // This route will fetch all results of a quiz from its ID
 router.get(
   '/quiz/:id',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { id } = req.params
 
     const db = await database.get()
+    const userId = req.user.id
 
-    const results = await db.all(SQL`
-      SELECT Id, Score, TimeTaken, Improvement
-      FROM result
-      WHERE Quiz = ${id}
-        AND (User = ${req.user.id}
-        OR (SELECT Owner FROM quiz WHERE Id=${id}) = ${req.user.id})
-      ORDER BY MadeTimestamp DESC`)
+    const results = await db.one(queries.result.fetchResult, { id, userId })
 
     await Promise.all(
       results.map(async (result) => {
-        result.topics = await db.all(SQL`
-          SELECT Topic, Score
-          FROM topicResult
-          WHERE Result = ${result.Id}`)
+        const { id: resultId } = result
+        result.topics = await db.one(queries.topicResult.fetchTopicResults, {
+          resultId
+        })
         return true
       })
     )
@@ -140,21 +126,16 @@ router.get(
 // This route will fetch an attempt from its ID
 router.get(
   '/attempt/:id',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { id } = req.params
 
     const db = await database.get()
+    const userId = req.user.id
 
-    const results = await db.get(SQL`
-      SELECT Answers, Quiz, (SELECT Questions FROM quiz WHERE quiz.Id=result.Quiz) Questions
-      FROM result
-      WHERE Id = ${id}
-        AND (User = ${req.user.id}
-        OR (SELECT Owner FROM quiz WHERE quiz.Id=result.Quiz) = ${req.user.id})
-      ORDER BY MadeTimestamp DESC`)
+    const results = await db.one(queries.result.fetchAttempt, { id, userId })
 
-    const answers = JSON.parse(results.Answers)
-    const questions = JSON.parse(results.Questions)
+    const answers = JSON.parse(results.answers)
+    const questions = JSON.parse(results.questions)
 
     const attempt = answers.map((answer, i) => {
       const userAnswer = [answer.answer]
@@ -202,17 +183,13 @@ router.get(
 // from all players on a quiz from its ID
 router.get(
   '/players/:id',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { id } = req.params
 
     const db = await database.get()
+    const userId = req.user.id
 
-    const attempts = await db.all(SQL`
-      SELECT Id, Score, TimeTaken, (SELECT Username FROM user WHERE user.Id=result.User) Username
-      FROM result
-      WHERE Quiz = ${id}
-        AND (SELECT Owner FROM quiz WHERE Id=${id}) = ${req.user.id}
-      ORDER BY MadeTimestamp DESC`)
+    const attempts = await db.any(queries.result.fetchPlayers, { id, userId })
 
     res.json({ attempts })
 
