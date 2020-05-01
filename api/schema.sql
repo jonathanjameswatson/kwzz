@@ -1,9 +1,7 @@
-
 CREATE TABLE "User"(
     id SERIAL PRIMARY KEY,
-    email VARCHAR(254) UNIQUE NOT NULL,
     username VARCHAR(30) UNIQUE NOT NULL,
-    password_hash CHAR(30) NOT NULL
+    passwordHash CHAR(60) NOT NULL
 );
 
 CREATE TABLE "Quiz"(
@@ -11,7 +9,7 @@ CREATE TABLE "Quiz"(
     title VARCHAR(50) NOT NULL,
     questions TEXT NOT NULL,
     owner INTEGER NOT NULL REFERENCES "User"(id),
-    is_published BOOLEAN DEFAULT TRUE NOT NULL,
+    isPublished BOOLEAN DEFAULT TRUE NOT NULL,
     views INTEGER DEFAULT 0 NOT NULL,
     madeTimestamp TIMESTAMPTZ DEFAULT NOW(),
     publishedTimestamp TIMESTAMPTZ

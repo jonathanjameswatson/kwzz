@@ -1,3 +1,3 @@
 SELECT id, passwordHash
-FROM User
+FROM "User"
 WHERE username = ${username}

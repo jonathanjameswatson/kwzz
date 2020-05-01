@@ -1,9 +1,9 @@
 <template>
   <div class="columns is-multiline is-vcentered">
-    <div class="column is-4" v-for="quiz in quizzes" :key="quiz.id">
+    <div v-for="quiz in quizzes" :key="quiz.id" class="column is-4">
       <quizCard :id="quiz.id" :title="quiz.title" :owner="quiz.owner" />
     </div>
-    <b-loading :active="$fetchState.pending"/>
+    <b-loading :active="$fetchState.pending" />
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import quizCard from '~/components/quizCard'
 
 export default {
   components: {
-    kLink
+    quizCard
   },
   props: {
     limit: {

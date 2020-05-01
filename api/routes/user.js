@@ -15,7 +15,7 @@ router.post(
     const passwordHash = await bcrypt.hash(password, 12)
 
     try {
-      await await db.none(queries.user.createUser, { username, passwordHash })
+      await db.none(queries.user.createUser, { username, passwordHash })
     } catch (e) {
       throw new Error('This username is already taken.')
     }
@@ -40,7 +40,7 @@ router.post(
       throw new Error('Invalid username or password')
     }
 
-    const valid = await bcrypt.compare(password, user.passwordHash)
+    const valid = await bcrypt.compare(password, user.passwordhash)
     if (!valid) {
       throw new Error('Invalid username or password')
     }

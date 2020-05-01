@@ -1,4 +1,4 @@
-INSERT INTO User
+INSERT INTO "User"
 (username, passwordHash)
 VALUES
 (${username}, ${passwordHash})

@@ -38,11 +38,6 @@ export default {
       default: ''
     }
   },
-  data() {
-    return {
-      quizzes: []
-    }
-  },
   async fetch() {
     const { quizzes, total } = await this.$axios.$get('/api/quiz', {
       params: {
@@ -55,6 +50,11 @@ export default {
 
     this.quizzes = quizzes
     this.$emit('total', total)
+  },
+  data() {
+    return {
+      quizzes: []
+    }
   }
 }
 </script>
