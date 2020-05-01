@@ -19,9 +19,24 @@ const sql = (file) => {
 export default {
   quiz: {
     editFetchQuiz: sql('quiz/editFetchQuiz'),
-    createQuiz: sql('quiz/createQuiz')
+    createQuiz: sql('quiz/createQuiz'),
+    updateQuiz: sql('quiz/updateQuiz'),
+    publishQuiz: sql('quiz/publishQuiz'),
+    fetchQuestions: sql('quiz/fetchQuestions')
   },
-  result: {},
-  topicResult: {},
-  user: {}
+  result: {
+    fetchLastScore: sql('result/fetchLastScore'),
+    createResult: sql('result/createResult'),
+    fetchResult: sql('result/fetchResult'),
+    fetchAttempt: sql('result/fetchAttempt'),
+    fetchPlayers: sql('result/fetchPlayers')
+  },
+  topicResult: {
+    createTopicResult: sql('topicResult/createTopicResult'),
+    fetchTopicResult: sql('topicResult/fetchTopicResult')
+  },
+  user: {
+    createUser: sql('user/createUser'),
+    fetchUser: sql('user/fetchUser')
+  }
 }
