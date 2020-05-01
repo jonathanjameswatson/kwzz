@@ -1,14 +1,20 @@
 <template>
-  <div class="columns is-multiline is-vcentered">
-    <div class="column is-4" v-for="quiz in quizzes" :key="quiz.id">
-      <quizCard :id="quiz.id" :title="quiz.title" :owner="quiz.owner" />
+  <div class="card">
+    <div class="card-content">
+      <p class="title">{{ quiz.Title }}</p>
+      <div class="buttons">
+        <template v-if="quiz.owner === $auth.user.id">
+          <k-link v-if="quiz.isPublished === 1" :link="`/quiz/${quiz.id}/players`">Players</k-link>
+          <k-link v-else :link="`/quiz/${quiz.id}/edit`">Edit</k-link>
+        </template>
+        <k-link v-if="quiz.IsPublished === 1" :link="`/quiz/${quiz.Id}/play`">Play</k-link>
+      </div>
     </div>
-    <b-loading :active="$fetchState.pending"/>
   </div>
 </template>
 
 <script>
-import quizCard from '~/components/quizCard'
+import kLink from '~/components/kLink'
 
 export default {
   components: {
