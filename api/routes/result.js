@@ -1,4 +1,4 @@
-import { database, queries } from '../db.js'
+import { db, queries } from '../db.js'
 import { getPercentage } from '../utilities.js'
 
 import express from 'express'
@@ -12,8 +12,6 @@ router.post(
   asyncHandler(async (req, res) => {
     const { id } = req.params
     const { answers, timeTaken } = req.body
-
-    const db = await database.get()
     const userId = req.user.id
 
     const quiz = await db.one(queries.quiz.fetchQuestions, { id, userId })
@@ -91,8 +89,6 @@ router.post(
     res.json({
       done: true
     })
-
-    await db.close()
   })
 )
 
@@ -101,8 +97,6 @@ router.get(
   '/quiz/:id',
   asyncHandler(async (req, res) => {
     const { id } = req.params
-
-    const db = await database.get()
     const userId = req.user.id
 
     const results = await db.one(queries.result.fetchResult, { id, userId })
@@ -118,8 +112,6 @@ router.get(
     )
 
     res.json({ results })
-
-    await db.close()
   })
 )
 
@@ -128,8 +120,6 @@ router.get(
   '/attempt/:id',
   asyncHandler(async (req, res) => {
     const { id } = req.params
-
-    const db = await database.get()
     const userId = req.user.id
 
     const results = await db.one(queries.result.fetchAttempt, { id, userId })
@@ -174,8 +164,6 @@ router.get(
     })
 
     res.json({ attempt, quizId: results.Quiz })
-
-    await db.close()
   })
 )
 
@@ -185,15 +173,11 @@ router.get(
   '/players/:id',
   asyncHandler(async (req, res) => {
     const { id } = req.params
-
-    const db = await database.get()
     const userId = req.user.id
 
     const attempts = await db.any(queries.result.fetchPlayers, { id, userId })
 
     res.json({ attempts })
-
-    await db.close()
   })
 )
 

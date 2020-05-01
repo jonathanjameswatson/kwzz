@@ -1,4 +1,4 @@
-import { database, queries } from '../db.js'
+import { db, queries } from '../db.js'
 
 import express from 'express'
 import asyncHandler from 'express-async-handler'
@@ -14,8 +14,6 @@ router.post(
     const { username, password } = req.body
     const passwordHash = await bcrypt.hash(password, 12)
 
-    const db = await database.get()
-
     try {
       await await db.none(queries.user.createUser, { username, passwordHash })
     } catch (e) {
@@ -25,8 +23,6 @@ router.post(
     res.json({
       done: true
     })
-
-    await db.close()
   })
 )
 
@@ -37,8 +33,6 @@ router.post(
     const secret = process.env.JWT_SECRET || 'jwtSecret'
 
     const { username, password } = req.body
-
-    const db = await database.get()
 
     const user = await db.oneOrNone(queries.user.fetchUser, { username })
 
@@ -64,8 +58,6 @@ router.post(
         accessToken
       }
     })
-
-    await db.close()
   })
 )
 

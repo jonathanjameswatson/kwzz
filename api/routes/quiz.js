@@ -1,4 +1,4 @@
-import { database, queries } from '../db.js'
+import { db, queries } from '../db.js'
 import { shuffle } from '../utilities.js'
 
 import express from 'express'
@@ -11,8 +11,6 @@ router.get(
   '/',
   asyncHandler(async (req, res) => {
     const { offset, limit, isUser, searchString } = req.query
-
-    const db = await database.get()
     const userId = req.user.id
 
     const quizzes = await db.any(queries.quiz.fetchQuizzes, {
@@ -24,8 +22,6 @@ router.get(
     })
 
     res.json({ quizzes, total: quizzes[0].total })
-
-    await db.close()
   })
 )
 
@@ -58,7 +54,6 @@ router.get(
         ]
       })
     } else {
-      const db = await database.get()
       const userId = req.user.id
 
       const quiz = await db.one(queries.quiz.fetchQuiz, { userId, id })
@@ -67,8 +62,6 @@ router.get(
         title: quiz.title,
         questions: JSON.parse(quiz.questions)
       })
-
-      await db.close()
     }
   })
 )
@@ -80,11 +73,9 @@ router.put(
   asyncHandler(async (req, res) => {
     const { id } = req.params
     const { title, questions } = req.body
+    const userId = req.user.id
 
     const questionsJson = JSON.stringify(questions)
-
-    const db = await database.get()
-    const userId = req.user.id
 
     if (id === '0') {
       const { lastId } = await db.one(queries.quiz.createQuiz, {
@@ -108,8 +99,6 @@ router.put(
         id: null
       })
     }
-
-    await db.close()
   })
 )
 
@@ -118,8 +107,6 @@ router.post(
   '/:id',
   asyncHandler(async (req, res) => {
     const { id } = req.params
-
-    const db = await database.get()
     const userId = req.user.id
 
     await db.none(queries.quiz.publishQuiz, { userId, id })
@@ -127,8 +114,6 @@ router.post(
     res.json({
       done: true
     })
-
-    await db.close()
   })
 )
 
@@ -138,8 +123,6 @@ router.get(
   '/:id/questions',
   asyncHandler(async (req, res) => {
     const { id } = req.params
-
-    const db = await database.get()
     const userId = req.user.id
 
     const quiz = await db.one(queries.quiz.fetchQuestions, { id, userId })
@@ -170,8 +153,6 @@ router.get(
     })
 
     res.json({ title: quiz.Title, questions: justQuestions })
-
-    await db.close()
   })
 )
 
