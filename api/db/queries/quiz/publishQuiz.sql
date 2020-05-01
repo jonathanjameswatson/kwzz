@@ -1,4 +1,4 @@
-UPDATE Quiz
+UPDATE "Quiz"
 SET isPublished = 1,
   publishedTimestamp = NOW()
 WHERE owner = ${userId}

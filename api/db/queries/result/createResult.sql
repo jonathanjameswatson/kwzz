@@ -1,5 +1,5 @@
-INSERT INTO Result
-  (quiz, user, answers, score, timeTaken, improvement)
+INSERT INTO "Result"
+  (quiz, "user", answers, score, timeTaken, improvement)
 VALUES
   (${id},
   ${userId},

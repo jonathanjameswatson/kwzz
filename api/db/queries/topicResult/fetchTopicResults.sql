@@ -1,3 +1,3 @@
 SELECT topic, score
-FROM TopicResult
+FROM "TopicResult"
 WHERE result = ${resultId}`)

@@ -1,4 +1,4 @@
-UPDATE Quiz
+UPDATE "Quiz"
 SET title = ${title},
   questions = ${questionsJson}
 WHERE owner = ${userId}

@@ -1,5 +1,5 @@
 SELECT score
-FROM Result
+FROM "Result"
 WHERE quiz = ${id}
 AND user = ${userId}
 ORDER BY madeTimestamp DESC

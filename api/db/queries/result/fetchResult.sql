@@ -1,6 +1,6 @@
 SELECT id, score, timeTaken, improvement
-FROM Result
+FROM "Result"
 WHERE quiz = ${id}
-  AND (user = ${userId}
-  OR (SELECT owner FROM Quiz WHERE id=${id}) = ${userId})
+  AND ("user" = ${userId}
+  OR (SELECT owner FROM "Quiz" WHERE id=${id}) = ${userId})
 ORDER BY madeTimestamp DESC

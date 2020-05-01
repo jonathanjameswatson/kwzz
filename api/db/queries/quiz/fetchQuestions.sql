@@ -1,4 +1,4 @@
 SELECT title, questions
-FROM Quiz
+FROM "Quiz"
 WHERE id = ${id}
   AND (owner = ${userId} OR isPublished = 1)

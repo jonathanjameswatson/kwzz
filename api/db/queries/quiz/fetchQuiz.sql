@@ -1,5 +1,5 @@
 SELECT title, questions
-FROM Quiz
+FROM "Quiz"
 WHERE owner = ${userId}
   AND id = ${quizId}
   AND isPublished = 0
