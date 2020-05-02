@@ -82,14 +82,14 @@ router.put(
     const questionsJson = JSON.stringify(questions)
 
     if (id === '0') {
-      const { lastId } = await db.one(queries.quiz.createQuiz, {
+      const { lastid } = await db.one(queries.quiz.createQuiz, {
         title,
-        questionsJson,
+        questions: questionsJson,
         userId
       })
 
       res.json({
-        id: lastId
+        id: lastid
       })
     } else {
       await db.none(queries.quiz.updateQuiz, {

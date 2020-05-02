@@ -1,6 +1,6 @@
 UPDATE "Quiz"
-SET isPublished = 1,
+SET isPublished = TRUE,
   publishedTimestamp = NOW()
 WHERE owner = ${userId}
   AND id = ${id}
-  AND isPublished = 0
+  AND isPublished = FALSE
