@@ -1,7 +1,7 @@
 import api from './api'
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
 
   css: ['~/assets/scss/main.scss'],
 

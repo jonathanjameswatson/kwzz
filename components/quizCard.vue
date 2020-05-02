@@ -1,13 +1,15 @@
 <template>
   <div class="card">
     <div class="card-content">
-      <p class="title">{{ quiz.Title }}</p>
+      <p class="title">{{ title }}</p>
       <div class="buttons">
-        <template v-if="quiz.owner === $auth.user.id">
-          <k-link v-if="quiz.isPublished === 1" :link="`/quiz/${quiz.id}/players`">Players</k-link>
+        <template v-if="owner === $auth.user.id">
+          <k-link v-if="isPublished" :link="`/quiz/${id}/players`">
+            Players
+          </k-link>
           <k-link v-else :link="`/quiz/${quiz.id}/edit`">Edit</k-link>
         </template>
-        <k-link v-if="quiz.IsPublished === 1" :link="`/quiz/${quiz.Id}/play`">Play</k-link>
+        <k-link v-if="isPublished" :link="`/quiz/${id}/play`">Play</k-link>
       </div>
     </div>
   </div>
@@ -21,39 +23,21 @@ export default {
     kLink
   },
   props: {
-    limit: {
+    id: {
       type: Number,
-      default: 3
+      required: true
     },
-    offset: {
-      type: Number,
-      default: 0
-    },
-    isUser: {
-      type: Boolean,
-      default: false
-    },
-    searchString: {
+    title: {
       type: String,
-      default: ''
-    }
-  },
-  async fetch() {
-    const { quizzes, total } = await this.$axios.$get('/api/quiz', {
-      params: {
-        offset: this.offset,
-        limit: this.limit,
-        isUser: this.isUser,
-        searchString: this.searchString
-      }
-    })
-
-    this.quizzes = quizzes
-    this.$emit('total', total)
-  },
-  data() {
-    return {
-      quizzes: []
+      required: true
+    },
+    owner: {
+      type: Number,
+      required: true
+    },
+    isPublished: {
+      type: Boolean,
+      required: true
     }
   }
 }

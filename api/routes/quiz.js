@@ -21,7 +21,11 @@ router.get(
       userId
     })
 
-    res.json({ quizzes, total: quizzes[0].total })
+    if (quizzes.length === 0) {
+      res.json({ quizzes, total: 0 })
+    } else {
+      res.json({ quizzes, total: quizzes[0].total })
+    }
   })
 )
 
