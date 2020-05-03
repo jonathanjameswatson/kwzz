@@ -18,7 +18,7 @@ export default {
     proxy: true
   },
 
-  proxy: ['http://localhost:3000/api'],
+  proxy: ['http://localhost:3000/api', 'https://kwzz.herokuapp.com/api'],
 
   auth: {
     redirect: {
