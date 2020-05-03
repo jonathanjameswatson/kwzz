@@ -32,6 +32,10 @@ $ yarn run build
 $ yarn run deploy
 ```
 
+## Database setup
+
+Before starting the server, connect to the database and execute the contents of the schema.sql file found in the api/db directory.
+
 ## Environment variables
 
 Set the environment variable JWT_SECRET to a secret key before deploying the website in production.
