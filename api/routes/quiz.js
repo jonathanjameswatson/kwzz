@@ -1,8 +1,8 @@
-import { db, queries } from '../db'
-import { shuffle } from '../utilities.js'
-
 import express from 'express'
 import asyncHandler from 'express-async-handler'
+
+import { db, queries } from '../db'
+import { shuffle } from '../utilities.js'
 
 const router = new express.Router()
 

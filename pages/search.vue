@@ -2,14 +2,19 @@
   <div class="section">
     <h1 class="title">Search</h1>
     <set-of-quizzes
+      :key="`${searchString}${offset}`"
       :limit="limit"
       :offset="offset"
-      :isUser="isUser"
-      :searchString="searchString"
-      :key="`${searchString}${offset}`"
+      :is-user="isUser"
+      :search-string="searchString"
       @total="setTotal"
     />
-    <b-pagination :total="total" :per-page="limit" :current.sync="page" @change="setPage"/>
+    <b-pagination
+      :total="total"
+      :per-page="limit"
+      :current.sync="page"
+      @change="setPage"
+    />
   </div>
 </template>
 
@@ -18,6 +23,9 @@ import SetOfQuizzes from '~/components/setOfQuizzes'
 
 export default {
   watchQuery: true,
+  components: {
+    SetOfQuizzes
+  },
   asyncData({ query }) {
     const { searchString } = query
     let { page, isUser } = query
@@ -44,15 +52,14 @@ export default {
       total: 0
     }
   },
-  components: {
-    SetOfQuizzes
-  },
   methods: {
     setTotal(total) {
       this.total = total
     },
     setPage(page) {
-      this.$router.push({ query: { page, isUser: this.isUser, searchString: this.searchString } })
+      this.$router.push({
+        query: { page, isUser: this.isUser, searchString: this.searchString }
+      })
     }
   }
 }

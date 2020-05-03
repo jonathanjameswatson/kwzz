@@ -1,9 +1,9 @@
-import { db, queries } from '../db'
-
 import express from 'express'
 import asyncHandler from 'express-async-handler'
 import jsonwebtoken from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+
+import { db, queries } from '../db'
 
 const router = new express.Router()
 

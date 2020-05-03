@@ -1,6 +1,6 @@
-import { queries } from './queries'
-
 import pgPromise from 'pg-promise'
+
+import { queries } from './queries'
 
 // Database connection details
 const connection = {

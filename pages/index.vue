@@ -12,12 +12,16 @@
       <div class="tile is-parent is-5">
         <div class="tile is-child">
           <figure class="image is-3by2">
-            <img src="~/assets/kwzz.png" alt="Preview Image" draggable="false">
+            <img
+              src="~/assets/kwzz.png"
+              alt="Preview Image"
+              draggable="false"
+            />
           </figure>
         </div>
       </div>
     </div>
-    <hr>
+    <hr />
     <div class="columns">
       <div class="column has-text-centered is-2 is-offset-1">
         <div>
@@ -28,33 +32,47 @@
       </div>
       <div class="column has-text-centered is-2 is-offset-1">
         <div>
-          <b-icon icon="share-variant" size="is-large" type="is-primary"></b-icon>
+          <b-icon
+            icon="share-variant"
+            size="is-large"
+            type="is-primary"
+          ></b-icon>
           <p class="title">Share</p>
           <p class="subtitle">Easily share your quizzes with a simple URL.</p>
         </div>
       </div>
       <div class="column has-text-centered is-2 is-offset-1">
         <div>
-          <b-icon icon="checkbox-multiple-marked" size="is-large" type="is-primary"></b-icon>
+          <b-icon
+            icon="checkbox-multiple-marked"
+            size="is-large"
+            type="is-primary"
+          ></b-icon>
           <p class="title">Play</p>
-          <p class="subtitle">Test yourself with quizzes from a variety of topics.</p>
+          <p class="subtitle">
+            Test yourself with quizzes from a variety of topics.
+          </p>
         </div>
       </div>
       <div class="column has-text-centered is-2 is-offset-1">
         <div>
-          <b-icon icon="account-check" size="is-large" type="is-primary"></b-icon>
+          <b-icon
+            icon="account-check"
+            size="is-large"
+            type="is-primary"
+          ></b-icon>
           <p class="title">Test</p>
           <p class="subtitle">See how individual players do on your quizzes.</p>
         </div>
       </div>
     </div>
-    <hr>
-    <br>
+    <hr />
+    <br />
     <div class="has-text-centered">
       <h2 class="title">Get started!</h2>
       <div class="buttons is-block">
-        <k-link link="/auth/register" key="register">Register</k-link>
-        <k-link link="/auth/signin" key="signin">Sign in</k-link>
+        <k-link key="register" link="/auth/register">Register</k-link>
+        <k-link key="signin" link="/auth/signin">Sign in</k-link>
       </div>
     </div>
   </div>
