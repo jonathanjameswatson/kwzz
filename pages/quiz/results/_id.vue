@@ -2,7 +2,7 @@
   <div class="section">
     <h1 class="title is-1">{{ title }}</h1>
     <h2 class="subtitle is-3">Attempt</h2>
-    <hr>
+    <hr />
     <div class="columns is-multiline">
       <div v-for="(question, i) in questions" :key="i" class="column is-full">
         <div class="card">
@@ -15,14 +15,21 @@
                 type="is-success"
                 size="is-medium"
               />
-              <b-icon v-else icon="close" type="is-danger" size="is-medium"/>
+              <b-icon v-else icon="close" type="is-danger" size="is-medium" />
             </p>
 
             <div class="message is-primary">
-              <div class="message-body">Your answer was: {{ attempt[i].userAnswer }}</div>
+              <div class="message-body">
+                Your answer was: {{ attempt[i].userAnswer }}
+              </div>
             </div>
-            <div class="message is-success" v-if="attempt[i].correctAnswer !== true">
-              <div class="message-body">The correct answer was: {{ attempt[i].correctAnswer }}</div>
+            <div
+              v-if="attempt[i].correctAnswer !== true"
+              class="message is-success"
+            >
+              <div class="message-body">
+                The correct answer was: {{ attempt[i].correctAnswer }}
+              </div>
             </div>
           </div>
         </div>

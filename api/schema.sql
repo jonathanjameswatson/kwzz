@@ -22,7 +22,7 @@ CREATE TABLE "Result"(
     answers TEXT NOT NULL,
     score INTEGER NOT NULL,
     timeTaken INTEGER NOT NULL,
-    improvement INTEGER NOT NULL,
+    improvement INTEGER,
     madeTimestamp TIMESTAMPTZ DEFAULT NOW()
 );
 

@@ -28,7 +28,7 @@ export const queries = {
   result: {
     fetchLastScore: sql('result/fetchLastScore'),
     createResult: sql('result/createResult'),
-    fetchResult: sql('result/fetchResult'),
+    fetchResults: sql('result/fetchResults'),
     fetchAttempt: sql('result/fetchAttempt'),
     fetchPlayers: sql('result/fetchPlayers')
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <h1 class="title">Results</h1>
-    <hr>
+    <hr />
     <div class="columns is-multiline">
       <div v-for="(result, i) in results" :key="i" class="column is-full">
         <div class="card">
@@ -12,27 +12,36 @@
               <div class="level-item has-text-centered">
                 <div>
                   <p class="heading">Score</p>
-                  <p class="title">{{ result.Score }}%</p>
+                  <p class="title">{{ result.score }}%</p>
                 </div>
               </div>
               <div class="level-item has-text-centered">
                 <div>
                   <p class="heading">Time taken</p>
-                  <p class="title">{{ result.TimeTaken | formatTime }}</p>
+                  <p class="title">{{ result.timetaken | formatTime }}</p>
                 </div>
               </div>
-              <div class="level-item has-text-centered" v-if="i !== results.length - 1">
+              <div
+                v-if="i !== results.length - 1"
+                class="level-item has-text-centered"
+              >
                 <div>
                   <p class="heading">Improvement</p>
-                  <p class="title">{{ result.Improvement | formatImprovement }}</p>
+                  <p class="title">
+                    {{ result.improvement | formatImprovement }}
+                  </p>
                 </div>
               </div>
             </div>
 
-            <b-table v-if="result.topics.length !== 0" :data="result.topics" :columns="columns"/>
+            <b-table
+              v-if="result.topics.length !== 0"
+              :data="result.topics"
+              :columns="columns"
+            />
 
-            <br>
-            <k-link :link="`/quiz/results/${result.Id}`">View answers</k-link>
+            <br />
+            <k-link :link="`/quiz/results/${result.id}`">View answers</k-link>
           </div>
         </div>
       </div>
@@ -44,6 +53,7 @@
 import kLink from '~/components/kLink'
 
 export default {
+  components: { kLink },
   async asyncData({ params, $axios }) {
     const id = params.id
     const { results } = await $axios.$get(`/api/result/quiz/${id}`)
@@ -52,18 +62,17 @@ export default {
       id,
       columns: [
         {
-          field: 'Topic',
+          field: 'topic',
           label: 'Topic',
           centered: true
         },
         {
-          field: 'Score',
+          field: 'score',
           label: 'Score',
           centered: true
         }
       ]
     }
-  },
-  components: { kLink }
+  }
 }
 </script>

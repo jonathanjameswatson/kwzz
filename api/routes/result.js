@@ -66,6 +66,7 @@ router.post(
     if (lastResult) {
       improvement = getPercentage(totalScore, lastResult.score) - 100
     }
+
     const { resultId } = await db.one(queries.result.createResult, {
       id,
       userId,
@@ -99,12 +100,12 @@ router.get(
     const { id } = req.params
     const userId = req.user.id
 
-    const results = await db.one(queries.result.fetchResult, { id, userId })
+    const results = await db.any(queries.result.fetchResults, { id, userId })
 
     await Promise.all(
       results.map(async (result) => {
         const { id: resultId } = result
-        result.topics = await db.one(queries.topicResult.fetchTopicResults, {
+        result.topics = await db.any(queries.topicResult.fetchTopicResults, {
           resultId
         })
         return true
@@ -163,7 +164,7 @@ router.get(
       }
     })
 
-    res.json({ attempt, quizId: results.Quiz })
+    res.json({ attempt, quizId: results.quiz })
   })
 )
 

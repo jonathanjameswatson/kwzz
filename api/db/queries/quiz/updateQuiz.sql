@@ -3,4 +3,4 @@ SET title = ${title},
   questions = ${questionsJson}
 WHERE owner = ${userId}
   AND id = ${id}
-  AND isPublished = TRUE
+  AND isPublished = FALSE
