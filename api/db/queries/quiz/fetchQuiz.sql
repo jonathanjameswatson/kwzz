@@ -2,4 +2,4 @@ SELECT title, questions
 FROM "Quiz"
 WHERE owner = ${userId}
   AND id = ${id}
-  AND isPublished = TRUE
+  AND isPublished = FALSE

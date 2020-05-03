@@ -7,7 +7,7 @@
           <k-link v-if="isPublished" :link="`/quiz/${id}/players`">
             Players
           </k-link>
-          <k-link v-else :link="`/quiz/${quiz.id}/edit`">Edit</k-link>
+          <k-link v-else :link="`/quiz/${id}/edit`">Edit</k-link>
         </template>
         <k-link v-if="isPublished" :link="`/quiz/${id}/play`">Play</k-link>
       </div>
