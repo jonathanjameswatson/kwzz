@@ -4,11 +4,9 @@ import { queries } from './queries'
 
 // Database connection details
 const connection = {
-  host: process.env.KWZZ_DB_HOST || 'localhost',
-  port: process.env.KWZZ_DB_PORT || 5432,
-  database: process.env.KWZZ_DB_DATABASE || 'kwzz',
-  user: process.env.KWZZ_DB_USER || 'kwzz',
-  password: process.env.KWZZ_DB_PASSWORD || 'password'
+  connectionString:
+    process.env.DATABASE_URL || 'postgres://kwzz:password@localhost:5432/kwzz',
+  ssl: process.env.DATABASE_SSL || false
 }
 
 const pgp = pgPromise()
