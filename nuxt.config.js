@@ -12,13 +12,13 @@ export default {
     '@nuxtjs/auth'
   ],
 
-  plugins: ['~plugins/filters.js', '~plugins/axios.js'],
+  plugins: ['~plugins/filters.js'],
 
   axios: {
     proxy: true
   },
 
-  proxy: ['http://localhost:3000/api', 'https://kwzz.herokuapp.com/api'],
+  proxy: ['http://localhost:3000/api'],
 
   auth: {
     redirect: {
