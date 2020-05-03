@@ -1,11 +1,11 @@
-import quiz from './routes/quiz.js'
-import result from './routes/result.js'
-import user from './routes/user.js'
-
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import jwt from 'express-jwt'
+
+import quiz from './routes/quiz.js'
+import result from './routes/result.js'
+import user from './routes/user.js'
 
 // Create the api
 const api = express()

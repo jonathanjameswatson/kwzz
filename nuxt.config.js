@@ -12,7 +12,7 @@ export default {
     '@nuxtjs/auth'
   ],
 
-  plugins: ['~plugins/filters.js'],
+  plugins: ['~plugins/filters.js', '~plugins/axios.js'],
 
   axios: {
     proxy: true
