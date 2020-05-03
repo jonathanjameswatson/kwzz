@@ -40,6 +40,7 @@ Before starting the server, connect to the database and execute the contents of 
 
 - JWT_SECRET - A secret key that should be set before deploying the website in production.
 - DATABASE_URL - PostgreSQL database connection string
+- DATABASE_SSL - Boolean describing whether or not SSL is required to access the database.
 
 ## Website
 

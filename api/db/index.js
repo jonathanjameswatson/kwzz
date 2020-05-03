@@ -6,7 +6,7 @@ import { queries } from './queries'
 const connection = {
   connectionString:
     process.env.DATABASE_URL || 'postgres://kwzz:password@localhost:5432/kwzz',
-  ssl: { rejectUnauthorized: false }
+  ssl: process.env.DATABASE_SSL ? { rejectUnauthorized: false } : false
 }
 
 const pgp = pgPromise()
