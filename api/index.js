@@ -20,7 +20,8 @@ api.use(bodyParser.json())
 api.use(
   '/',
   jwt({
-    secret: process.env.JWT_SECRET || 'jwtSecret'
+    secret: process.env.JWT_SECRET || 'jwtSecret',
+    algorithms: ['HS256']
   }).unless({
     path: ['/api/user/register', '/api/user/signin']
   })
