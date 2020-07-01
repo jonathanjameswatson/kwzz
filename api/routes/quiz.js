@@ -156,7 +156,7 @@ router.get(
       }
     })
 
-    res.json({ title: quiz.Title, questions: justQuestions })
+    res.json({ title: quiz.title, questions: justQuestions })
   })
 )
 
