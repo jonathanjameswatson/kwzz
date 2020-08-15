@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <h1 class="title is-1">{{ title }}</h1>
-    <hr>
+    <hr />
     <div class="columns is-multiline">
       <div v-for="(question, i) in questions" :key="i" class="column is-full">
         <div class="card">
@@ -9,25 +9,29 @@
             <p class="title">{{ question.question }}</p>
 
             <b-dropdown
-              v-if="question.type !== 'Text answer question' "
+              v-if="question.type !== 'Text answer question'"
               v-model="answers[i]"
               :multiple="question.type === 'Multiple answer question'"
               aria-role="list"
             >
               <b-button
+                slot="trigger"
                 type="is-primary"
                 rounded
                 outlined
                 icon-right="menu-down"
-                slot="trigger"
-              >{{ dropdowns[i] }}</b-button>
+              >
+                {{ dropdowns[i] }}
+              </b-button>
 
               <b-dropdown-item
                 v-for="(answer, j) in question.answers"
                 :key="j"
                 :value="answer[1]"
                 aria-role="listitem"
-              >{{ answer[0] }}</b-dropdown-item>
+              >
+                {{ answer[0] }}
+              </b-dropdown-item>
             </b-dropdown>
 
             <b-input
@@ -42,14 +46,16 @@
         </div>
       </div>
     </div>
-    <hr>
+    <hr />
     <b-button
       type="is-primary"
       rounded
       outlined
-      @click="submit()"
       :disabled="submittable"
-    >Submit quiz</b-button>
+      @click="submit()"
+    >
+      Submit quiz
+    </b-button>
   </div>
 </template>
 

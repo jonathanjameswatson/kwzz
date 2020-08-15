@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <b-field label="Quiz title">
-      <b-input size="is-large" maxlength="50" v-model="title" required/>
+      <b-input v-model="title" size="is-large" maxlength="50" required />
     </b-field>
 
     <div class="columns is-multiline">
@@ -10,46 +10,55 @@
           <div class="card-content">
             <b-field :label="`Question ${i + 1}`">
               <b-input
+                v-model="question.question"
                 size="is-medium"
                 type="textarea"
                 maxlength="200"
-                v-model="question.question"
               />
             </b-field>
 
             <b-field grouped group-multiline>
               <div class="control">
-                <b-dropdown aria-role="list" v-model="question.type">
+                <b-dropdown v-model="question.type" aria-role="list">
                   <b-tooltip
+                    slot="trigger"
                     label="Single answer requires one correct answer to be picked. Multiple answer requires each correct answer to be picked. Text answer requires one answer to be typed in."
                     multilined
                     animated
-                    slot="trigger"
                   >
                     <b-button
                       type="is-primary"
                       icon-right="menu-down"
                       rounded
                       outlined
-                    >{{ question.type }}</b-button>
+                    >
+                      {{ question.type }}
+                    </b-button>
                   </b-tooltip>
 
                   <b-dropdown-item
                     aria-role="listitem"
                     value="Single answer question"
-                  >Single answer question</b-dropdown-item>
+                  >
+                    Single answer question
+                  </b-dropdown-item>
                   <b-dropdown-item
                     aria-role="listitem"
                     value="Multiple answer question"
-                  >Multiple answer action</b-dropdown-item>
+                  >
+                    Multiple answer action
+                  </b-dropdown-item>
                   <b-dropdown-item
                     aria-role="listitem"
                     value="Text answer question"
-                  >Text answer question</b-dropdown-item>
+                  >
+                    Text answer question
+                  </b-dropdown-item>
                 </b-dropdown>
               </div>
 
               <b-taginput
+                v-model="question.topics"
                 ellipsis
                 icon="label"
                 placeholder="Add a topic and press enter"
@@ -58,16 +67,15 @@
                 maxlength="30"
                 maxtags="10"
                 :has-counter="false"
-                v-model="question.topics"
                 rounded
               />
 
               <b-checkbox-button
                 v-if="question.type !== 'Text answer question'"
-                type="is-primary"
                 v-model="question.shuffle"
+                type="is-primary"
               >
-                <b-icon :icon="question.shuffle ? 'close' : 'check'"/>
+                <b-icon :icon="question.shuffle ? 'close' : 'check'" />
                 <span>Shuffle answers?</span>
               </b-checkbox-button>
             </b-field>
@@ -81,17 +89,17 @@
                   centered
                   :visible="question.type !== 'Text answer question'"
                 >
-                  <b-checkbox size="is-medium" v-model="props.row.isCorrect"/>
+                  <b-checkbox v-model="props.row.isCorrect" size="is-medium" />
                 </b-table-column>
 
                 <b-table-column field="answer" label="Answer">
                   <b-input
+                    v-model="props.row.answer"
                     placeholder="Answer"
                     rounded
                     expanded
                     maxlength="50"
                     :has-counter="false"
-                    v-model="props.row.answer"
                   />
                 </b-table-column>
 
@@ -116,28 +124,36 @@
                     rounded
                     outlined
                     @click="addAnswer(i)"
-                  >Add answer</b-button>
+                  >
+                    Add answer
+                  </b-button>
                   <b-button
                     type="is-primary"
                     icon-right="arrow-up"
                     rounded
                     outlined
                     @click="swapQuestions(i - 1)"
-                  >Move up</b-button>
+                  >
+                    Move up
+                  </b-button>
                   <b-button
                     type="is-primary"
                     icon-right="arrow-down"
                     rounded
                     outlined
                     @click="swapQuestions(i)"
-                  >Move down</b-button>
+                  >
+                    Move down
+                  </b-button>
                   <b-button
                     type="is-primary"
                     icon-right="minus"
                     rounded
                     outlined
                     @click="removeQuestion(i)"
-                  >Delete question</b-button>
+                  >
+                    Delete question
+                  </b-button>
                 </div>
               </template>
             </b-table>
@@ -146,36 +162,42 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
-    <div class="buttons" ref="bottom">
+    <div ref="bottom" class="buttons">
       <b-button
         type="is-primary"
         icon-right="plus"
         rounded
         outlined
         @click="addQuestion()"
-      >Add question</b-button>
+      >
+        Add question
+      </b-button>
       <b-button
         type="is-primary"
         icon-right="content-save"
         rounded
         outlined
-        @click="save()"
         :disabled="saved"
-      >Save quiz</b-button>
+        @click="save()"
+      >
+        Save quiz
+      </b-button>
       <k-link link="play" :broken="id === '0'">
         <span>View quiz</span>
-        <b-icon icon="eye" size="is-small"/>
+        <b-icon icon="eye" size="is-small" />
       </k-link>
       <b-button
         type="is-primary"
         icon-right="publish"
         rounded
         outlined
-        @click="publish()"
         :disabled="!saved || id === '0'"
-      >Publish quiz</b-button>
+        @click="publish()"
+      >
+        Publish quiz
+      </b-button>
     </div>
   </div>
 </template>
@@ -184,6 +206,7 @@
 import kLink from '~/components/kLink'
 
 export default {
+  components: { kLink },
   async asyncData({ params, $axios }) {
     const id = params.id
     const quiz = await $axios.$get(`/api/quiz/${id}`)
@@ -194,7 +217,21 @@ export default {
       saved: true
     }
   },
-  components: { kLink },
+  watch: {
+    questions: {
+      deep: true,
+      handler() {
+        if (this.saved) {
+          this.saved = false
+        }
+      }
+    },
+    title() {
+      if (this.saved) {
+        this.saved = false
+      }
+    }
+  },
   methods: {
     addQuestion() {
       if (this.questions.length === 30) {
@@ -311,21 +348,6 @@ export default {
             isUser: 'true'
           }
         })
-      }
-    }
-  },
-  watch: {
-    questions: {
-      deep: true,
-      handler() {
-        if (this.saved) {
-          this.saved = false
-        }
-      }
-    },
-    title() {
-      if (this.saved) {
-        this.saved = false
       }
     }
   }

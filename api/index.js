@@ -3,7 +3,6 @@ import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import jwt from 'express-jwt'
 
-import db from './db.js'
 import quiz from './routes/quiz.js'
 import result from './routes/result.js'
 import user from './routes/user.js'
@@ -17,14 +16,12 @@ api.use(cookieParser())
 // Add bodyparser to see the contents of request bodies
 api.use(bodyParser.json())
 
-// Initialise database
-db.initialise()
-
 // Require JWT authentication for all routes except some
 api.use(
   '/',
   jwt({
-    secret: process.env.JWT_SECRET || 'jwtSecret'
+    secret: process.env.JWT_SECRET || 'jwtSecret',
+    algorithms: ['HS256']
   }).unless({
     path: ['/api/user/register', '/api/user/signin']
   })

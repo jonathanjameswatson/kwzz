@@ -1,29 +1,23 @@
 <template>
   <div class="columns is-multiline is-vcentered">
-    <div class="column is-4" v-for="quiz in quizzes" :key="quiz.Id">
-      <div class="card">
-        <div class="card-content">
-          <p class="title">{{ quiz.Title }}</p>
-          <div class="buttons">
-            <template v-if="quiz.Owner === $auth.user.id">
-              <k-link v-if="quiz.IsPublished === 1" :link="`/quiz/${quiz.Id}/players`">Players</k-link>
-              <k-link v-else :link="`/quiz/${quiz.Id}/edit`">Edit</k-link>
-            </template>
-            <k-link v-if="quiz.IsPublished === 1" :link="`/quiz/${quiz.Id}/play`">Play</k-link>
-          </div>
-        </div>
-      </div>
+    <div v-for="quiz in quizzes" :key="quiz.id" class="column is-4">
+      <quizCard
+        :id="quiz.id"
+        :title="quiz.title"
+        :owner="quiz.owner"
+        :is-published="quiz.ispublished"
+      />
     </div>
-    <b-loading :active="loading"/>
+    <b-loading :active="$fetchState.pending" />
   </div>
 </template>
 
 <script>
-import kLink from '~/components/kLink'
+import quizCard from '~/components/quizCard'
 
 export default {
   components: {
-    kLink
+    quizCard
   },
   props: {
     limit: {
@@ -43,13 +37,7 @@ export default {
       default: ''
     }
   },
-  data() {
-    return {
-      quizzes: [],
-      loading: true
-    }
-  },
-  async mounted() {
+  async fetch() {
     const { quizzes, total } = await this.$axios.$get('/api/quiz', {
       params: {
         offset: this.offset,
@@ -60,8 +48,12 @@ export default {
     })
 
     this.quizzes = quizzes
-    this.loading = false
     this.$emit('total', total)
+  },
+  data() {
+    return {
+      quizzes: []
+    }
   }
 }
 </script>

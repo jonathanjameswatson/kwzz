@@ -1,68 +1,54 @@
 import express from 'express'
 import asyncHandler from 'express-async-handler'
-import SQL from 'sql-template-strings'
 import jsonwebtoken from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
-import database from '../db.js'
+import { db, queries } from '../db'
 
 const router = new express.Router()
 
 // This route will fetch the user's data
 router.post(
   '/register',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { username, password } = req.body
     const passwordHash = await bcrypt.hash(password, 12)
 
-    const db = await database.get()
-
     try {
-      await db.run(SQL`
-        INSERT INTO user
-        (Username, PasswordHash)
-        VALUES
-        (${username}, ${passwordHash})`)
+      await db.none(queries.user.createUser, { username, passwordHash })
     } catch (e) {
-      throw new Error('An user with this username already exists.')
+      throw new Error('This username is already taken.')
     }
 
     res.json({
       done: true
     })
-
-    await db.close()
   })
 )
 
 // This route will verify the user and give them a JWT
 router.post(
   '/signin',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const secret = process.env.JWT_SECRET || 'jwtSecret'
 
     const { username, password } = req.body
 
-    const db = await database.get()
+    const user = await db.oneOrNone(queries.user.fetchUser, { username })
 
-    const user = await db.get(SQL`
-      SELECT Id, PasswordHash
-      FROM user
-      WHERE Username = ${username}`)
-
-    if (user === undefined) {
+    if (user === null) {
       throw new Error('Invalid username or password')
     }
 
-    const valid = await bcrypt.compare(password, user.PasswordHash)
+    const valid = await bcrypt.compare(password, user.passwordhash)
     if (!valid) {
       throw new Error('Invalid username or password')
     }
 
     const accessToken = jsonwebtoken.sign(
       {
-        username: username,
-        id: user.Id
+        username,
+        id: user.id
       },
       secret
     )
@@ -72,13 +58,11 @@ router.post(
         accessToken
       }
     })
-
-    await db.close()
   })
 )
 
 // This route will fetch the user's data
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.json({ user: req.user })
 })
 
