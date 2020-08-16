@@ -1,28 +1,33 @@
 <template>
   <div>
-    <b-navbar wrapper-class="container" transparent :close-on-click="false" shadow>
+    <b-navbar
+      wrapper-class="container"
+      transparent
+      :close-on-click="false"
+      shadow
+    >
       <template slot="brand">
         <b-navbar-item tag="nuxt-link" to="/">
           <figure class="image is-64x64">
-            <img src="~/assets/logo.png">
+            <img src="~/assets/logo.png" />
           </figure>
         </b-navbar-item>
       </template>
 
-      <template slot="start" v-if="this.$auth.loggedIn">
+      <template v-if="this.$auth.loggedIn" slot="start">
         <b-navbar-item tag="div">
           <b-field>
             <b-input
+              v-model="searchString"
               type="search"
               icon="magnify"
               icon-clickable
-              v-model="searchString"
-              @keyup.enter.native="search"
-              @icon-click="search"
               maxlength="50"
               :has-counter="false"
               placeholder="Search"
               rounded
+              @keyup.enter.native="search"
+              @icon-click="search"
             />
           </b-field>
         </b-navbar-item>
@@ -33,20 +38,46 @@
 
       <template slot="end">
         <b-navbar-item tag="div">
-          <div class="buttons" v-if="this.$auth.loggedIn">
-            <b-button type="is-primary" rounded outlined @click="signOut" key="signout">Sign out</b-button>
+          <div v-if="this.$auth.loggedIn" class="buttons">
+            <b-button
+              key="signout"
+              type="is-primary"
+              rounded
+              outlined
+              @click="signOut"
+              >Sign out</b-button
+            >
           </div>
-          <div class="buttons" v-else>
-            <k-link link="/auth/register" key="register">Register</k-link>
-            <k-link link="/auth/signin" key="signin">Sign in</k-link>
+          <div v-else class="buttons">
+            <k-link key="register" link="/auth/register">Register</k-link>
+            <k-link key="signin" link="/auth/signin">Sign in</k-link>
           </div>
         </b-navbar-item>
       </template>
     </b-navbar>
 
     <div class="container">
-      <nuxt/>
+      <nuxt />
     </div>
+
+    <footer class="footer">
+      <div class="columns is-centered has-text-centered">
+        <div class="column content is-3">
+          <p><nuxt-link to="/">Home</nuxt-link></p>
+          <p>About</p>
+        </div>
+        <div class="column content is-3">
+          <p><nuxt-link to="/privacypolicy">Privacy policy</nuxt-link></p>
+          <p><nuxt-link to="/termsofservice">Terms of service</nuxt-link></p>
+        </div>
+        <div class="column content is-3">
+          <p><a href="https://jonathanjameswatson.com">More websites</a></p>
+          <p>
+            <a href="https://github.com/jonathanjameswatson/kwzz">GitHub</a>
+          </p>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 

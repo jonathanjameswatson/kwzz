@@ -8,6 +8,7 @@ $primary: $purple;
 $family-primary: $family-serif;
 
 $card-shadow: none;
+$footer-background-color: white;
 
 @import '~bulma';
 @import "~buefy/src/scss/buefy";
@@ -39,4 +40,8 @@ $card-shadow: none;
 .centered-page {
   min-height: calc(100vh - 64px - 1rem) !important;
   align-items: center;
+}
+
+.footer {
+  box-shadow: 0 -2px 0 0 whitesmoke;
 }
