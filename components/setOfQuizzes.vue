@@ -6,6 +6,7 @@
         :title="quiz.title"
         :owner="quiz.owner"
         :is-published="quiz.ispublished"
+        :show-options="quiz.showOptions"
       />
     </div>
     <b-loading :active="$fetchState.pending" />

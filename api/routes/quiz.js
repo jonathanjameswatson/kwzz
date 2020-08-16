@@ -21,6 +21,10 @@ router.get(
       userId
     })
 
+    quizzes.forEach((quiz) => {
+      quiz.showOptions = quiz.owner === userId
+    })
+
     if (quizzes.length === 0) {
       res.json({ quizzes, total: 0 })
     } else {

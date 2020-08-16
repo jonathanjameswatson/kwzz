@@ -1,12 +1,9 @@
 <template>
   <div class="section">
-    <h1 class="title">Players</h1>
+    <h1 class="title">Recent attempts</h1>
     <hr />
     <b-table :data="attempts">
       <template slot-scope="props">
-        <b-table-column field="username" label="User" centered sortable>
-          {{ props.row.username }}
-        </b-table-column>
         <b-table-column field="score" label="Score" centered sortable>
           {{ props.row.score }}%
         </b-table-column>

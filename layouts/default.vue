@@ -49,8 +49,15 @@
             >
           </div>
           <div v-else class="buttons">
-            <k-link key="register" link="/auth/register">Register</k-link>
-            <k-link key="signin" link="/auth/signin">Sign in</k-link>
+            <b-button
+              key="signout"
+              type="is-primary"
+              rounded
+              outlined
+              icon-right="google"
+              @click="$auth.loginWith('google')"
+              >Sign in</b-button
+            >
           </div>
         </b-navbar-item>
       </template>

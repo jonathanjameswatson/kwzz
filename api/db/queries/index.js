@@ -35,9 +35,5 @@ export const queries = {
   topicResult: {
     createTopicResult: sql('topicResult/createTopicResult'),
     fetchTopicResults: sql('topicResult/fetchTopicResults')
-  },
-  user: {
-    createUser: sql('user/createUser'),
-    fetchUser: sql('user/fetchUser')
   }
 }

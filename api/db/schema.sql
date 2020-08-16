@@ -1,14 +1,8 @@
-CREATE TABLE "User"(
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(30) UNIQUE NOT NULL,
-    passwordHash CHAR(60) NOT NULL
-);
-
 CREATE TABLE "Quiz"(
     id SERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
     questions TEXT NOT NULL,
-    owner INTEGER NOT NULL REFERENCES "User"(id),
+    owner TEXT NOT NULL,
     isPublished BOOLEAN DEFAULT FALSE NOT NULL,
     views INTEGER DEFAULT 0 NOT NULL,
     madeTimestamp TIMESTAMPTZ DEFAULT NOW(),
@@ -18,7 +12,7 @@ CREATE TABLE "Quiz"(
 CREATE TABLE "Result"(
     id SERIAL PRIMARY KEY,
     quiz INTEGER NOT NULL REFERENCES "Quiz"(id),
-    "user" INTEGER NOT NULL REFERENCES "User"(id),
+    "user" TEXT NOT NULL,
     answers TEXT NOT NULL,
     score INTEGER NOT NULL,
     timeTaken INTEGER NOT NULL,

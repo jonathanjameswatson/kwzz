@@ -28,20 +28,11 @@ export default {
       home: '/home'
     },
     strategies: {
-      local: {
-        endpoints: {
-          login: {
-            url: '/api/user/signin',
-            method: 'post',
-            propertyName: 'token.accessToken'
-          },
-          logout: false,
-          user: {
-            url: '/api/user',
-            method: 'get',
-            propertyName: 'user'
-          }
-        }
+      google: {
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        response_type: 'token id_token',
+        token_key: 'id_token',
+        userinfo_endpoint: undefined
       }
     },
     localStorage: false

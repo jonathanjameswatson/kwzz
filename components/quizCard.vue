@@ -3,9 +3,9 @@
     <div class="card-content">
       <p class="title">{{ title }}</p>
       <div class="buttons">
-        <template v-if="owner === $auth.user.id">
+        <template v-if="showOptions">
           <k-link v-if="isPublished" :link="`/quiz/${id}/players`">
-            Players
+            Recent attempts
           </k-link>
           <k-link v-else :link="`/quiz/${id}/edit`">Edit</k-link>
         </template>
@@ -32,12 +32,17 @@ export default {
       required: true
     },
     owner: {
-      type: Number,
+      type: String,
       required: true
     },
     isPublished: {
       type: Boolean,
       required: true
+    },
+    showOptions: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   }
 }
