@@ -22,7 +22,7 @@ export default {
 
   auth: {
     redirect: {
-      login: '/auth/signin',
+      login: '/',
       logout: '/',
       callback: '/loading',
       home: '/home'

@@ -4,7 +4,7 @@
       <p class="title">{{ title }}</p>
       <div class="buttons">
         <template v-if="showOptions">
-          <k-link v-if="isPublished" :link="`/quiz/${id}/players`">
+          <k-link v-if="isPublished" :link="`/quiz/${id}/recentattempts`">
             Recent attempts
           </k-link>
           <k-link v-else :link="`/quiz/${id}/edit`">Edit</k-link>

@@ -6,9 +6,10 @@
     tag="nuxt-link"
     :disabled="broken"
     :to="broken ? '/' : link"
-    :event="broken ? '' : 'click'"
+    :event="broken || back ? '' : 'click'"
+    @click.native="goBack"
   >
-    <slot/>
+    <slot />
   </b-button>
 </template>
 
@@ -22,6 +23,17 @@ export default {
     link: {
       type: String,
       default: '/'
+    },
+    back: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    goBack() {
+      if (this.back && !this.disabled) {
+        this.$router.back()
+      }
     }
   }
 }

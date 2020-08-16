@@ -34,6 +34,7 @@
           </div>
         </div>
       </div>
+      <k-link back>Go back</k-link>
     </div>
   </div>
 </template>
