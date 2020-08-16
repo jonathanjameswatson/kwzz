@@ -71,18 +71,21 @@
     <div class="has-text-centered">
       <h2 class="title">Get started!</h2>
       <div class="buttons is-block">
-        <k-link key="register" link="/auth/register">Register</k-link>
-        <k-link key="signin" link="/auth/signin">Sign in</k-link>
+        <b-button
+          type="is-primary"
+          rounded
+          outlined
+          icon-right="google"
+          @click="$auth.loginWith('google')"
+          >Sign in</b-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import kLink from '~/components/kLink'
-
 export default {
-  auth: 'guest',
-  components: { kLink }
+  auth: 'guest'
 }
 </script>

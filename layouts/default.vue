@@ -50,7 +50,7 @@
           </div>
           <div v-else class="buttons">
             <b-button
-              key="signout"
+              key="signin"
               type="is-primary"
               rounded
               outlined
