@@ -16,7 +16,7 @@
 
       <template v-if="this.$auth.loggedIn" slot="start">
         <b-navbar-item tag="div">
-          <b-field>
+          <b-field type="is-primary">
             <b-input
               v-model="searchString"
               type="search"

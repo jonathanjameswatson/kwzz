@@ -1,14 +1,19 @@
-@import '~bulma/sass/utilities/initial-variables';
 @import url('https://fonts.googleapis.com/css?family=Literata&display=swap');
 
 $purple: #962865;
 $family-serif: 'Literata', serif;
 
+@import '~bulma/sass/utilities/initial-variables';
+
 $primary: $purple;
 $family-primary: $family-serif;
 
+@import '~bulma/sass/utilities/_all';
+
 $card-shadow: none;
-$footer-background-color: white;
+$footer-background-color: $scheme-main;
+$checkbox-border-color: $primary;
+$checkbox-border-width: 1px;
 
 @import '~bulma';
 @import "~buefy/src/scss/buefy";
@@ -43,5 +48,22 @@ $footer-background-color: white;
 }
 
 .footer {
-  box-shadow: 0 -2px 0 0 whitesmoke;
+  box-shadow: 0 -2px 0 0 $scheme-main-ter;
+}
+
+.taginput-container {
+  min-height: 2.5rem;
+}
+
+.is-primary.input ~ .icon.is-left {
+  color: $primary;
+}
+
+.is-primary.input:focus ~ .icon.is-left {
+  color: $primary-dark;
+}
+
+.checkbox.button:not(.is-primary) {
+  border-color: $primary;
+  color: $primary;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <b-field label="Quiz title">
+    <b-field label="Quiz title" type="is-primary">
       <b-input v-model="title" size="is-large" maxlength="50" required />
     </b-field>
 
@@ -8,7 +8,7 @@
       <div v-for="(question, i) in questions" :key="i" class="column is-full">
         <div class="card">
           <div class="card-content">
-            <b-field :label="`Question ${i + 1}`">
+            <b-field :label="`Question ${i + 1}`" type="is-primary">
               <b-input
                 v-model="question.question"
                 size="is-medium"
@@ -26,12 +26,7 @@
                     multilined
                     animated
                   >
-                    <b-button
-                      type="is-primary"
-                      icon-right="menu-down"
-                      rounded
-                      outlined
-                    >
+                    <b-button type="is-primary" icon-right="menu-down" outlined>
                       {{ question.type }}
                     </b-button>
                   </b-tooltip>
@@ -57,18 +52,19 @@
                 </b-dropdown>
               </div>
 
-              <b-taginput
-                v-model="question.topics"
-                ellipsis
-                icon="label"
-                placeholder="Add a topic and press enter"
-                type="is-primary"
-                expanded
-                maxlength="30"
-                maxtags="10"
-                :has-counter="false"
-                rounded
-              />
+              <b-field type="is-primary" expanded class="mb-3">
+                <b-taginput
+                  v-model="question.topics"
+                  ellipsis
+                  icon="label"
+                  placeholder="Add a topic and press enter"
+                  maxlength="30"
+                  maxtags="10"
+                  :has-counter="false"
+                  rounded
+                  type="is-primary"
+                />
+              </b-field>
 
               <b-checkbox-button
                 v-if="question.type !== 'Text answer question'"
@@ -81,39 +77,40 @@
             </b-field>
 
             <b-table :data="question.answers">
-                <b-table-column
+              <b-table-column
                 v-slot="props"
-                  field="isCorrect"
-                  label="Correct?"
-                  width="0"
-                  centered
-                  :visible="question.type !== 'Text answer question'"
-                >
-                  <b-checkbox v-model="props.row.isCorrect" size="is-medium" />
-                </b-table-column>
+                field="isCorrect"
+                label="Correct?"
+                width="0"
+                centered
+                :visible="question.type !== 'Text answer question'"
+              >
+                <b-checkbox v-model="props.row.isCorrect" size="is-medium" />
+              </b-table-column>
 
               <b-table-column v-slot="props" field="answer" label="Answer">
+                <b-field type="is-primary" expanded>
                   <b-input
                     v-model="props.row.answer"
                     placeholder="Answer"
                     rounded
-                    expanded
                     maxlength="50"
                     :has-counter="false"
                   />
-                </b-table-column>
+                </b-field>
+              </b-table-column>
 
               <b-table-column v-slot="props" label="Delete" width="0" centered>
-                  <span>
-                    <b-button
-                      type="is-primary"
-                      outlined
-                      icon-right="minus"
-                      size="is-default"
-                      @click="removeAnswer(i, props.index)"
-                    />
-                  </span>
-                </b-table-column>
+                <span>
+                  <b-button
+                    type="is-primary"
+                    outlined
+                    icon-right="minus"
+                    size="is-default"
+                    @click="removeAnswer(i, props.index)"
+                  />
+                </span>
+              </b-table-column>
 
               <template slot="footer">
                 <div class="buttons">
