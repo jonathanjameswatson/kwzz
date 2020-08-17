@@ -85,12 +85,7 @@
 </template>
 
 <script>
-import kLink from '~/components/kLink'
-
 export default {
-  auth: 'guest',
-  components: {
-    kLink
-  }
+  auth: 'guest'
 }
 </script>

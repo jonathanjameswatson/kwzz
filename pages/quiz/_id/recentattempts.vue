@@ -3,19 +3,31 @@
     <h1 class="title">Recent attempts</h1>
     <hr />
     <b-table :data="attempts">
-      <template slot-scope="props">
-        <b-table-column field="score" label="Score" centered sortable>
-          {{ props.row.score }}%
-        </b-table-column>
-        <b-table-column field="timetaken" label="Time Taken" centered sortable>
-          {{ props.row.timetaken | formatTime }}
-        </b-table-column>
-        <b-table-column label centered>
-          <k-link :link="`/quiz/results/${props.row.id}`">
-            View attempt
-          </k-link>
-        </b-table-column>
-      </template>
+      <b-table-column
+        v-slot="props"
+        field="score"
+        label="Score"
+        centered
+        sortable
+        width="40%"
+      >
+        {{ props.row.score }}%
+      </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="timetaken"
+        label="Time Taken"
+        centered
+        sortable
+        width="40%"
+      >
+        {{ props.row.timetaken | formatTime }}
+      </b-table-column>
+      <b-table-column v-slot="props" label centered width="20%">
+        <k-link :link="`/quiz/results/${props.row.id}`">
+          View attempt
+        </k-link>
+      </b-table-column>
     </b-table>
     <br />
     <k-link link="/">Back to home</k-link>
@@ -34,6 +46,6 @@ export default {
       attempts,
       id
     }
-  }
+  },
 }
 </script>

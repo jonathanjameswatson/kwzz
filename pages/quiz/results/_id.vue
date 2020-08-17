@@ -40,7 +40,12 @@
 </template>
 
 <script>
+import kLink from '~/components/kLink'
+
 export default {
+  components: {
+    kLink
+  },
   async asyncData({ params, $axios }) {
     const id = params.id
     const { attempt, quizId } = await $axios.$get(`/api/result/attempt/${id}`)
