@@ -81,8 +81,8 @@
             </b-field>
 
             <b-table :data="question.answers">
-              <template slot-scope="props">
                 <b-table-column
+                v-slot="props"
                   field="isCorrect"
                   label="Correct?"
                   width="0"
@@ -92,7 +92,7 @@
                   <b-checkbox v-model="props.row.isCorrect" size="is-medium" />
                 </b-table-column>
 
-                <b-table-column field="answer" label="Answer">
+              <b-table-column v-slot="props" field="answer" label="Answer">
                   <b-input
                     v-model="props.row.answer"
                     placeholder="Answer"
@@ -103,7 +103,7 @@
                   />
                 </b-table-column>
 
-                <b-table-column label="Delete" width="0" centered>
+              <b-table-column v-slot="props" label="Delete" width="0" centered>
                   <span>
                     <b-button
                       type="is-primary"
@@ -114,7 +114,6 @@
                     />
                   </span>
                 </b-table-column>
-              </template>
 
               <template slot="footer">
                 <div class="buttons">
