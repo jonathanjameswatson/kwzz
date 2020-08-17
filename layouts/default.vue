@@ -48,17 +48,7 @@
               >Sign out</b-button
             >
           </div>
-          <div v-else class="buttons">
-            <b-button
-              key="signin"
-              type="is-primary"
-              rounded
-              outlined
-              icon-right="google"
-              @click="$auth.loginWith('google')"
-              >Sign in</b-button
-            >
-          </div>
+          <sign-in v-else />
         </b-navbar-item>
       </template>
     </b-navbar>
@@ -90,10 +80,12 @@
 
 <script>
 import kLink from '~/components/kLink'
+import signIn from '~/components/signIn'
 
 export default {
   components: {
-    kLink
+    kLink,
+    signIn
   },
   data() {
     return {

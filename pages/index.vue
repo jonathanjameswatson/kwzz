@@ -71,21 +71,19 @@
     <div class="has-text-centered">
       <h2 class="title">Get started!</h2>
       <div class="buttons is-block">
-        <b-button
-          type="is-primary"
-          rounded
-          outlined
-          icon-right="google"
-          @click="$auth.loginWith('google')"
-          >Sign in</b-button
-        >
+        <sign-in />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import signIn from '~/components/signIn'
+
 export default {
+  components: {
+    signIn
+  },
   auth: 'guest'
 }
 </script>

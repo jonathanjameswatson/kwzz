@@ -68,3 +68,33 @@ $input-placeholder-color: bulmaRgba($text-strong, 0.6);
   border-color: $primary;
   color: $primary;
 }
+
+.google-button {
+  width: 191px;
+  height: 46px;
+  display: inline-block;
+  background-image: url('~assets/google/normal.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+
+  &:focus {
+    background-image: url('~assets/google/focus.png')
+  }
+
+  &:active {
+    background-image: url('~assets/google/pressed.png')
+  }
+
+  &::after {
+    position:absolute;
+    width:0;
+    height:0;
+    overflow:hidden;
+    z-index:-1;
+    content: url('~assets/google/focus.png') url('~assets/google/pressed.png');
+  }
+}
