@@ -107,7 +107,7 @@
                     outlined
                     icon-right="minus"
                     size="is-default"
-                    @click="removeAnswer(i, props.index)"
+                    @click.native="removeAnswer(i, props.index)"
                   />
                 </span>
               </b-table-column>
