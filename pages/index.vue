@@ -25,18 +25,14 @@
     <div class="columns">
       <div class="column has-text-centered is-2 is-offset-1">
         <div>
-          <b-icon icon="pencil" size="is-large" type="is-primary"></b-icon>
+          <b-icon icon="pencil" size="is-large" type="is-primary" />
           <p class="title">Create</p>
           <p class="subtitle">Design quizzes to test students or friends.</p>
         </div>
       </div>
       <div class="column has-text-centered is-2 is-offset-1">
         <div>
-          <b-icon
-            icon="share-variant"
-            size="is-large"
-            type="is-primary"
-          ></b-icon>
+          <b-icon icon="share" size="is-large" type="is-primary" />
           <p class="title">Share</p>
           <p class="subtitle">Easily share your quizzes with a simple URL.</p>
         </div>
@@ -47,7 +43,7 @@
             icon="checkbox-multiple-marked"
             size="is-large"
             type="is-primary"
-          ></b-icon>
+          />
           <p class="title">Play</p>
           <p class="subtitle">
             Test yourself with quizzes from a variety of topics.
@@ -56,11 +52,7 @@
       </div>
       <div class="column has-text-centered is-2 is-offset-1">
         <div>
-          <b-icon
-            icon="account-check"
-            size="is-large"
-            type="is-primary"
-          ></b-icon>
+          <b-icon icon="account-check" size="is-large" type="is-primary" />
           <p class="title">Test</p>
           <p class="subtitle">See how individual players do on your quizzes.</p>
         </div>
