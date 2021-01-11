@@ -5,7 +5,7 @@
         <h1>Website Terms and Conditions of Use</h1>
         <h2>1. Terms</h2>
         <p>
-          By accessing this Website, accessible from https://kwzz.xyz, you are
+          By accessing this Website, accessible from https://kwzz.jonathanjameswatson.com, you are
           agreeing to be bound by these Website Terms and Conditions of Use and
           agree that you are responsible for the agreement with any applicable
           local laws. If you disagree with any of these terms, you are

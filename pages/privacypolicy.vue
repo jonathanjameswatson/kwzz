@@ -4,7 +4,7 @@
       <div class="column is-7 content">
         <h1>Privacy Policy for kwzz.xyz</h1>
         <p>
-          At kwzz, accessible from https://kwzz.xyz, one of our main priorities
+          At kwzz, accessible from https://kwzz.jonathanjameswatson.com, one of our main priorities
           is the privacy of our visitors. This Privacy Policy document contains
           types of information that is collected and recorded by kwzz and how we
           use it.

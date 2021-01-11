@@ -44,7 +44,7 @@ Before starting the server, connect to the database and execute the contents of 
 
 ## Website
 
-[Visit the website here](https://kwzz.xyz/)
+[Visit the website here](https://kwzz.jonathanjameswatson.com/)
 
 ## License
 
