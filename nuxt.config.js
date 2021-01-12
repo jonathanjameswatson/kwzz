@@ -33,7 +33,8 @@ export default {
         clientId: process.env.GOOGLE_CLIENT_ID,
         responseType: 'token id_token',
         token: 'id_token',
-        redirectUri: 'https://jonathanjameswatson.com/kwzzredirect'
+        redirectUri: 'https://jonathanjameswatson.com/kwzzredirect',
+        codeChallengeMethod: ''
       }
     },
     localStorage: false
