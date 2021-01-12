@@ -9,7 +9,7 @@ export default {
     '@nuxtjs/pwa',
     ['nuxt-buefy', { css: false }],
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth-next'
   ],
 
   plugins: ['~plugins/filters.js'],
@@ -21,13 +21,10 @@ export default {
   proxy: ['http://localhost:3000/api'],
 
   auth: {
-    proxy: {
-      '/basesite': 'https://jonathanjameswatson.com/kwzzredirect'
-    },
     redirect: {
       login: '/',
       logout: '/',
-      callback: '/basesite',
+      callback: '/loading',
       home: '/home'
     },
     // fullPathRedirect: true,
@@ -36,7 +33,7 @@ export default {
         client_id: process.env.GOOGLE_CLIENT_ID,
         response_type: 'token id_token',
         token_key: 'id_token',
-        userinfo_endpoint: undefined
+        redirectUri: 'https://jonathanjameswatson.com/kwzzredirect'
       }
     },
     localStorage: false
