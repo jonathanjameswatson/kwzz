@@ -30,9 +30,9 @@ export default {
     // fullPathRedirect: true,
     strategies: {
       google: {
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        response_type: 'token id_token',
-        token_key: 'id_token',
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        responseType: 'token id_token',
+        token: 'id_token',
         redirectUri: 'https://jonathanjameswatson.com/kwzzredirect'
       }
     },
