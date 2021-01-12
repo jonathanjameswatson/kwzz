@@ -27,6 +27,7 @@ export default {
       callback: 'https://jonathanjameswatson.com/kwzzredirect',
       home: '/home'
     },
+    fullPathRedirect: true,
     strategies: {
       google: {
         client_id: process.env.GOOGLE_CLIENT_ID,
