@@ -21,13 +21,16 @@ export default {
   proxy: ['http://localhost:3000/api'],
 
   auth: {
+    proxy: {
+      '/basesite': 'https://jonathanjameswatson.com/kwzzredirect'
+    },
     redirect: {
       login: '/',
       logout: '/',
-      callback: 'https://jonathanjameswatson.com/kwzzredirect',
+      callback: '/basesite',
       home: '/home'
     },
-    fullPathRedirect: true,
+    // fullPathRedirect: true,
     strategies: {
       google: {
         client_id: process.env.GOOGLE_CLIENT_ID,
