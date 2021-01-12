@@ -24,7 +24,7 @@ export default {
     redirect: {
       login: '/',
       logout: '/',
-      callback: '/loading',
+      callback: 'https://jonathanjameswatson.com/kwzzredirect',
       home: '/home'
     },
     strategies: {
