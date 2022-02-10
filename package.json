@@ -23,7 +23,7 @@
     "express-async-handler": "1.1.4",
     "google-auth-library": "7.0.4",
     "jsonwebtoken": "8.5.1",
-    "node-sass": "5.0.0",
+    "node-sass": "7.0.0",
     "nuxt": "2.15.4",
     "nuxt-buefy": "0.4.7",
     "pg-promise": "10.10.1",
