@@ -1,23 +1,26 @@
-@import url('https://fonts.googleapis.com/css?family=Literata&display=swap');
+@use 'bulma/sass/utilities/functions' as functions;
+@use 'bulma/sass/utilities/derived-variables' as derived-variables;
 
-$purple: #962865;
+$-purple: #962865;
 $family-serif: 'Literata', serif;
 
-@import '~bulma/sass/utilities/initial-variables';
+@use 'bulma/bulma' as * with (
+  $purple: $-purple,
+  $primary: $-purple,
+  $family-primary: $family-serif,
+  $card-shadow: none,
+  $footer-background-color: derived-variables.$scheme-main,
+  $input-placeholder-color:
+    functions.bulmaRgba(derived-variables.$text-strong, 0.6)
+);
 
-$primary: $purple;
-$family-primary: $family-serif;
-
-@import '~bulma/sass/utilities/_all';
-
-$card-shadow: none;
-$footer-background-color: $scheme-main;
-$checkbox-border-color: $primary;
+$checkbox-border-color: $purple;
 $checkbox-border-width: 1px;
-$input-placeholder-color: bulmaRgba($text-strong, 0.6);
 
-@import '~bulma';
-@import "~buefy/src/scss/buefy";
+/* change to @use when possible */
+@import '@oruga-ui/theme-bulma/dist/scss/bulma';
+
+@import url('https://fonts.googleapis.com/css?family=Literata&display=swap');
 
 .navbar-item img {
   max-height: 64px;
@@ -69,32 +72,33 @@ $input-placeholder-color: bulmaRgba($text-strong, 0.6);
   color: $primary;
 }
 
-.google-button {
-  width: 191px;
-  height: 46px;
-  display: inline-block;
-  background-image: url('~assets/google/normal.png');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  cursor: pointer;
-  background-color: transparent;
-  padding: 0;
-  border: none;
+.columns.is-space-around {
+  justify-content: space-around;
+}
 
-  &:focus {
-    background-image: url('~assets/google/focus.png')
-  }
+/* based on Buefy's toast */
+.toast {
+  display: inline-flex;
+  animation-duration: $speed-slow;
+  margin: 0.5em 0;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  border-radius: 2em;
+  padding: 0.75em 1.5em;
+  pointer-events: auto;
+  opacity: 0.92;
+  align-self: center;
 
-  &:active {
-    background-image: url('~assets/google/pressed.png')
+  @each $name, $pair in $notification-colors {
+    $color: nth($pair, 1);
+    $color-invert: nth($pair, 2);
+    &.is-#{$name} {
+      color: $color-invert;
+      background: $color;
+    }
   }
+}
 
-  &::after {
-    position:absolute;
-    width:0;
-    height:0;
-    overflow:hidden;
-    z-index:-1;
-    content: url('~assets/google/focus.png') url('~assets/google/pressed.png');
-  }
+.section.has-shadow {
+  box-shadow: 0 2px 0 0 $background;
 }

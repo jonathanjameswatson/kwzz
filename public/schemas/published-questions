@@ -1,0 +1,32 @@
+{
+  "id": "https://kwzz.jonathanjameswatson.com/schemas/published-questions",
+  "$schema": "https://json-schema.org/draft-04/schema#",
+  "description": "A published sequence of questions",
+  "title": "Published Questions",
+  "type": "array",
+  "allOf": [
+    {
+      "$ref": "https://kwzz.jonathanjameswatson.com/schemas/questions"
+    },
+    {
+      "items": {
+        "properties": {
+          "question": {
+            "minLength": 1
+          },
+          "answers": {
+            "items": {
+              "properties": {
+                "answer": {
+                  "minLength": 1
+                }
+              }
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "minItems": 1
+    }
+  ]
+}

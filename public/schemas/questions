@@ -1,0 +1,67 @@
+{
+  "id": "https://kwzz.jonathanjameswatson.com/schemas/questions",
+  "$schema": "https://json-schema.org/draft-04/schema#",
+  "description": "A sequence of questions",
+  "title": "Questions",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "maxLength": 50
+      },
+      "topics": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "maxItems": 10,
+        "uniqueItems": true
+      },
+      "answerType": {
+        "type": "string",
+        "enum": [
+          "singleChoice",
+          "multipleChoice",
+          "text"
+        ]
+      },
+      "answers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "maxLength": 30
+            },
+            "isCorrect": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "answer",
+            "isCorrect"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 10
+      },
+      "shouldShuffle": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "question",
+      "topics",
+      "answerType",
+      "answers",
+      "shouldShuffle"
+    ],
+    "additionalProperties": false
+  },
+  "maxItems": 25
+}

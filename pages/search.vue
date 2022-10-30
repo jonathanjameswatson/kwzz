@@ -1,66 +1,53 @@
 <template>
-  <div class="section">
-    <h1 class="title">Search</h1>
-    <set-of-quizzes
+  <KwzzSection>
+    <KwzzHeader>Search</KwzzHeader>
+    <QuizSet
       :key="`${searchString}${offset}`"
       :limit="limit"
       :offset="offset"
       :is-user="isUser"
       :search-string="searchString"
+      fetch-key="search"
       @total="setTotal"
     />
-    <b-pagination
+    <OPagination
       :total="total"
       :per-page="limit"
       :current.sync="page"
       @change="setPage"
     />
-  </div>
+  </KwzzSection>
 </template>
 
-<script>
-import SetOfQuizzes from '~/components/setOfQuizzes'
+<script setup lang="ts">
+import { stringArrayOrStringToString } from '~/utils/stringArrayOrStringToString'
 
-export default {
-  watchQuery: true,
-  components: {
-    SetOfQuizzes
-  },
-  asyncData({ query }) {
-    const { searchString } = query
-    let { page, isUser } = query
+const route = useRoute()
 
-    if (isUser) {
-      isUser = true
-    } else {
-      isUser = false
-    }
+const limit = 9
+const page = computed(() => {
+  const parsedInt = parseInt(stringArrayOrStringToString(route.query.page), 10)
+  return isNaN(parsedInt) || parsedInt < 1 ? 1 : parsedInt
+})
+const offset = computed(() => (page.value - 1) * limit)
+const isUser = computed(() => route.query.user !== '')
+const searchString = computed(() =>
+  stringArrayOrStringToString(route.query.searchString)
+)
 
-    if (!page) {
-      page = 1
-    }
+const total = useState('searchTotal', () => 0)
 
-    const limit = 9
-    const offset = (page - 1) * limit
+const setTotal = (newTotal: number) => {
+  total.value = newTotal
+}
 
-    return {
-      limit,
-      offset,
-      page,
-      isUser,
-      searchString,
-      total: 0
-    }
-  },
-  methods: {
-    setTotal(total) {
-      this.total = total
+const setPage = (page: number) => {
+  navigateTo({
+    query: {
+      page: page.toString(),
+      searchString: searchString.value,
+      user: isUser.value ? '' : undefined,
     },
-    setPage(page) {
-      this.$router.push({
-        query: { page, isUser: this.isUser, searchString: this.searchString }
-      })
-    }
-  }
+  })
 }
 </script>

@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "types": [
+      "nuxt-supabase"
+    ]
+  },
+  "extends": "./.nuxt/tsconfig.json"
+}

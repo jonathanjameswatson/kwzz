@@ -1,49 +1,28 @@
 <template>
-  <div class="card">
+  <article class="card">
     <div class="card-content">
-      <p class="title">{{ title }}</p>
+      <h3 class="title">{{ title }}</h3>
       <div class="buttons">
-        <template v-if="showOptions">
-          <k-link v-if="isPublished" :link="`/quiz/${id}/recentattempts`">
+        <template v-if="isOwnQuiz">
+          <KwzzLink v-if="isPublished" :link="`/quiz/${id}/recentattempts`">
             Recent attempts
-          </k-link>
-          <k-link v-else :link="`/quiz/${id}/edit`">Edit</k-link>
+          </KwzzLink>
+          <KwzzLink v-else :link="`/quiz/${id}/edit`">Edit</KwzzLink>
         </template>
-        <k-link v-if="isPublished" :link="`/quiz/${id}/play`">Play</k-link>
+        <KwzzLink v-if="isPublished" :link="`/quiz/${id}/play`">Play</KwzzLink>
       </div>
     </div>
-  </div>
+  </article>
 </template>
 
-<script>
-import kLink from '~/components/kLink'
+<script setup lang="ts">
+const props = defineProps<{
+  id: number
+  title: string
+  creatorId: string
+  isPublished: boolean
+}>()
 
-export default {
-  components: {
-    kLink
-  },
-  props: {
-    id: {
-      type: Number,
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    owner: {
-      type: String,
-      required: true
-    },
-    isPublished: {
-      type: Boolean,
-      required: true
-    },
-    showOptions: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  }
-}
+const user = useSupabaseUser()
+const isOwnQuiz = computed(() => props.creatorId === user.value.id)
 </script>
