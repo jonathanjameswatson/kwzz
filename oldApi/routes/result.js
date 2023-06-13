@@ -60,7 +60,7 @@ router.post(
     let improvement = null
     const lastResult = await db.oneOrNone(queries.result.fetchLastScore, {
       id,
-      userId
+      userId,
     })
 
     if (lastResult) {
@@ -73,7 +73,7 @@ router.post(
       newAnswers: JSON.stringify(newAnswers),
       totalScore,
       timeTaken,
-      improvement
+      improvement,
     })
 
     await Promise.all(
@@ -82,13 +82,13 @@ router.post(
         return db.none(queries.topicResult.createTopicResult, {
           resultId,
           topic,
-          topicScore
+          topicScore,
         })
       })
     )
 
     res.json({
-      done: true
+      done: true,
     })
   })
 )
@@ -106,7 +106,7 @@ router.get(
       results.map(async (result) => {
         const { id: resultId } = result
         result.topics = await db.any(queries.topicResult.fetchTopicResults, {
-          resultId
+          resultId,
         })
         return true
       })
@@ -160,7 +160,7 @@ router.get(
 
       return {
         userAnswer,
-        correctAnswer
+        correctAnswer,
       }
     })
 

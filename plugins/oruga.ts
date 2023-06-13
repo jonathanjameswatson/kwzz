@@ -3,7 +3,7 @@ import { bulmaConfig } from '@oruga-ui/theme-bulma'
 
 const makeInvertPropsConfiguration = (
   baseClass: string,
-  propertyToChange: string = 'rootClass'
+  propertyToChange = 'rootClass'
 ) => {
   return {
     [propertyToChange](_: string, { props }: any) {

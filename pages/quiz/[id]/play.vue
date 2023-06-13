@@ -56,7 +56,7 @@ export default {
       title: quiz.title,
       questions: quiz.questions,
       id,
-      answers: quiz.questions.map((question) => null),
+      answers: quiz.questions.map(() => null),
       startTime: 0,
     }
   },
@@ -80,7 +80,7 @@ export default {
       })
     },
     submittable() {
-      return this.answers.some((answer) => answer === null)
+      return this.answers.includes(null)
     },
   },
   mounted() {

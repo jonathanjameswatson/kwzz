@@ -28,11 +28,11 @@ api.use(
 
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: clientId
+      audience: clientId,
     })
     const payload = ticket.getPayload()
     req.user = {
-      id: payload.sub
+      id: payload.sub,
     }
     next()
   })

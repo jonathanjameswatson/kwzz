@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware((to, _from) => {
+export default defineNuxtRouteMiddleware((to) => {
   const user = useSupabaseUser()
   const visibility = to.meta.isVisibleTo || 'signedIn'
   if (!user.value && visibility === 'signedIn') {

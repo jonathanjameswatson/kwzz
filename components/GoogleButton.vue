@@ -48,16 +48,15 @@
 </template>
 
 <script setup lang="ts">
-const supabaseClient = useSupabaseClient()
+const client = useSupabaseAuthClient()
 
-const signIn = () => {
-  supabaseClient.auth.signIn(
-    { provider: 'google' },
-    {
+const signIn = () =>
+  client.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
       redirectTo: `${window.location.origin}/loading`,
-    }
-  )
-}
+    },
+  })
 </script>
 
 <style scoped lang="scss">

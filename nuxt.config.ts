@@ -1,14 +1,9 @@
-import { defineNuxtConfig } from 'nuxt'
-
 export default defineNuxtConfig({
-  // Loading bar
-  loading: { color: '#962865' },
-
   // CSS
   css: ['~/assets/scss/main.scss', '@mdi/font/css/materialdesignicons.css'],
 
   // Modules
-  modules: ['@nuxtjs/supabase'],
+  modules: ['@nuxtjs/eslint-module', '@nuxtjs/supabase'],
 
   /*
   PWA settings
@@ -27,7 +22,17 @@ export default defineNuxtConfig({
   }
   */
 
-  meta: {
-    link: [{ rel: 'icon', href: 'data:;base64,iVBORw0KGgo=' }],
+  app: {
+    head: {
+      link: [{ rel: 'icon', href: 'data:;base64,iVBORw0KGgo=' }],
+    },
+  },
+
+  typescript: {
+    shim: false,
+  },
+
+  devtools: {
+    enabled: true,
   },
 })

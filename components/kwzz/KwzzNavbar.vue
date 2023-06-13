@@ -15,7 +15,7 @@
       </div>
 
       <div class="navbar-menu">
-        <div class="navbar-start" v-if="user">
+        <div v-if="user" class="navbar-start">
           <div class="navbar-item">
             <OField>
               <OInput
@@ -25,7 +25,7 @@
                 maxlength="50"
                 :has-counter="false"
                 placeholder="Search"
-                @keyup.enter.native="search"
+                @keyup.enter="search"
                 @icon-click="search"
               />
             </OField>

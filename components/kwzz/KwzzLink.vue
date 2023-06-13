@@ -4,7 +4,7 @@
     :disabled="linkType === 'none'"
     :to="linkType !== 'nuxtLink' ? '/' : link"
     :event="linkType === 'nuxtLink' ? 'click' : ''"
-    @click.native="handleClick"
+    @click="handleClick"
   >
     <slot />
   </OButton>

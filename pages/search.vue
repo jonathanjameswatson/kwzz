@@ -11,9 +11,9 @@
       @total="setTotal"
     />
     <OPagination
+      v-model:current="page"
       :total="total"
       :per-page="limit"
-      :current.sync="page"
       @change="setPage"
     />
   </KwzzSection>

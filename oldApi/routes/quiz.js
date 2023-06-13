@@ -18,7 +18,7 @@ router.get(
       limit,
       isUser,
       searchString,
-      userId
+      userId,
     })
 
     quizzes.forEach((quiz) => {
@@ -50,16 +50,16 @@ router.get(
             answers: [
               {
                 answer: '',
-                isCorrect: true
+                isCorrect: true,
               },
               {
                 answer: '',
-                isCorrect: false
-              }
+                isCorrect: false,
+              },
             ],
-            topics: []
-          }
-        ]
+            topics: [],
+          },
+        ],
       })
     } else {
       const userId = req.user.id
@@ -68,7 +68,7 @@ router.get(
 
       res.json({
         title: quiz.title,
-        questions: JSON.parse(quiz.questions)
+        questions: JSON.parse(quiz.questions),
       })
     }
   })
@@ -89,22 +89,22 @@ router.put(
       const { lastid } = await db.one(queries.quiz.createQuiz, {
         title,
         questions: questionsJson,
-        userId
+        userId,
       })
 
       res.json({
-        id: lastid
+        id: lastid,
       })
     } else {
       await db.none(queries.quiz.updateQuiz, {
         title,
         questionsJson,
         userId,
-        id
+        id,
       })
 
       res.json({
-        id: null
+        id: null,
       })
     }
   })
@@ -120,7 +120,7 @@ router.post(
     await db.none(queries.quiz.publishQuiz, { userId, id })
 
     res.json({
-      done: true
+      done: true,
     })
   })
 )
@@ -141,7 +141,7 @@ router.get(
       if (question.type !== 'Text answer question') {
         const newAnswers = question.answers.map((answer, i) => [
           answer.answer,
-          i
+          i,
         ])
 
         if (question.shuffle === false) {
@@ -151,12 +151,12 @@ router.get(
         return {
           question: question.question,
           type: question.type,
-          answers: newAnswers
+          answers: newAnswers,
         }
       }
       return {
         question: question.question,
-        type: question.type
+        type: question.type,
       }
     })
 

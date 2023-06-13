@@ -23,17 +23,17 @@ export const queries = {
     createQuiz: sql('quiz/createQuiz'),
     updateQuiz: sql('quiz/updateQuiz'),
     publishQuiz: sql('quiz/publishQuiz'),
-    fetchQuestions: sql('quiz/fetchQuestions')
+    fetchQuestions: sql('quiz/fetchQuestions'),
   },
   result: {
     fetchLastScore: sql('result/fetchLastScore'),
     createResult: sql('result/createResult'),
     fetchResults: sql('result/fetchResults'),
     fetchAttempt: sql('result/fetchAttempt'),
-    fetchPlayers: sql('result/fetchPlayers')
+    fetchPlayers: sql('result/fetchPlayers'),
   },
   topicResult: {
     createTopicResult: sql('topicResult/createTopicResult'),
-    fetchTopicResults: sql('topicResult/fetchTopicResults')
-  }
+    fetchTopicResults: sql('topicResult/fetchTopicResults'),
+  },
 }

@@ -23,7 +23,7 @@
             </template>
 
             <ODropdownItem
-              v-for="answerType in Object.keys(answerTypeToDescription)"
+              v-for="answerType in answerTypes"
               :key="answerType"
               aria-role="listitem"
               :value="answerType"
@@ -38,7 +38,7 @@
             v-model="question.topics"
             ellipsis
             icon="label"
-            closeIcon=""
+            close-icon=""
             placeholder="Add a topic and press enter"
             aria-close-label="Delete this tag"
             maxlength="30"
@@ -60,20 +60,20 @@
 
       <OTable :data="question.answers">
         <OTableColumn
-          v-slot="props"
+          v-slot="{ row }"
           field="isCorrect"
           label="Correct?"
           width="0"
           centered
           :visible="question.answerType !== 'text'"
         >
-          <OCheckbox v-model="props.row.isCorrect" size="large" />
+          <OCheckbox v-model="row.isCorrect" size="large" />
         </OTableColumn>
 
-        <OTableColumn v-slot="props" field="answer" label="Answer">
+        <OTableColumn v-slot="{ row }" field="answer" label="Answer">
           <OField expanded>
             <OInput
-              v-model="props.row.answer"
+              v-model="row.answer"
               placeholder="Answer"
               maxlength="50"
               :has-counter="false"
@@ -81,13 +81,9 @@
           </OField>
         </OTableColumn>
 
-        <OTableColumn v-slot="props" label="Delete" width="0" centered>
+        <OTableColumn v-slot="{ index }" label="Delete" width="0" centered>
           <span>
-            <OButton
-              icon-right="minus"
-              rounded
-              @click.native="removeAnswer(props.index)"
-            />
+            <OButton icon-right="minus" rounded @click="removeAnswer(index)" />
           </span>
         </OTableColumn>
 
@@ -122,29 +118,39 @@
 import type { Questions } from '~/types/database.generated'
 
 const props = defineProps<{
-  question: Questions[0]
+  modelValue: Questions[0]
   number: number
 }>()
 
-const emits = defineEmits<{
-  (e: 'swapQuestion', shouldSwapDown: boolean): void
-  (e: 'removeQuestion'): void
+const emit = defineEmits<{
+  'update:modelValue': [value: Questions[0]]
+  swapQuestion: [shouldSwapDown: boolean]
+  removeQuestion: []
 }>()
+
+const question = ref(props.modelValue)
+watch(question, () => emit('update:modelValue', question.value), {
+  deep: true,
+})
 
 const answerTypeToDescription = {
   singleChoice: 'Pick one answer',
-  multipleAnswer: 'Pick all answers',
+  multipleChoice: 'Pick all answers',
   text: 'Type an answer',
-}
+} as const
+
+const answerTypes = Object.keys(
+  answerTypeToDescription
+) as (keyof typeof answerTypeToDescription)[]
 
 const formattedAnswerType = computed(
-  () => answerTypeToDescription[props.question.answerType]
+  () => answerTypeToDescription[props.modelValue.answerType]
 )
 
 const oruga = useOruga()
 
 const addAnswer = () => {
-  if (props.question.answers.length === 10) {
+  if (question.value.answers.length === 10) {
     oruga.notification.open({
       message:
         'You have reached the maximum number of answers for this question.',
@@ -153,14 +159,14 @@ const addAnswer = () => {
     })
     return false
   }
-  props.question.answers.push({
+  question.value.answers.push({
     answer: '',
     isCorrect: false,
   })
 }
 
 const removeAnswer = (i: number) => {
-  props.question.answers.splice(i, 1)
+  question.value.answers.splice(i, 1)
 }
 
 const tooltip = `

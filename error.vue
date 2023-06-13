@@ -9,8 +9,13 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  error: Object,
+defineProps({
+  error: {
+    type: Object,
+    default() {
+      return Object.create(null)
+    },
+  },
 })
 
 const handleError = () => clearError({ redirect: '/' })

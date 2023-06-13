@@ -1,15 +1,15 @@
 <template>
   <OButton
     :outlined="!modelValue"
-    @click="$emit('update:modelValue', !modelValue)"
     v-bind="$attrs"
+    @click="$emit('update:modelValue', !modelValue)"
   >
     <slot />
   </OButton>
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(
+withDefaults(
   defineProps<{
     modelValue: boolean
   }>(),
@@ -18,7 +18,7 @@ const props = withDefaults(
   }
 )
 
-const emits = defineEmits<{
+defineEmits<{
   (e: 'update:modelValue', value: boolean): void
 }>()
 </script>
