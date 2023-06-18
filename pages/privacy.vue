@@ -2,7 +2,7 @@
   <div class="section">
     <div class="tile is-child columns is-vcentered is-centered">
       <div class="column is-7 content">
-        <h1>Privacy Policy for kwzz.xyz</h1>
+        <h1>Privacy Policy for kwzz.jonathanjameswatson.com</h1>
         <p>
           At kwzz, accessible from https://kwzz.jonathanjameswatson.com, one of
           our main priorities is the privacy of our visitors. This Privacy
@@ -96,10 +96,10 @@
           >.
         </p>
         <h2>Advertising Partners Privacy Policies</h2>
-        <P
-          >You may consult this list to find the Privacy Policy for each of the
-          advertising partners of kwzz.</P
-        >
+        <p>
+          You may consult this list to find the Privacy Policy for each of the
+          advertising partners of kwzz.
+        </p>
         <p>
           Third-party ad servers or ad networks uses technologies like cookies,
           JavaScript, or Web Beacons that are used in their respective

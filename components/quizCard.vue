@@ -24,5 +24,10 @@ const props = defineProps<{
 }>()
 
 const user = useSupabaseUser()
-const isOwnQuiz = computed(() => props.creatorId === user.value.id)
+const isOwnQuiz = computed(() => {
+  if (user.value === null) {
+    return false
+  }
+  return props.creatorId === user.value.id
+})
 </script>

@@ -3,7 +3,7 @@
     <div class="card-content">
       <OField :label="`Question ${number}`">
         <OInput
-          v-model="question.question"
+          v-model="questionText"
           size="medium"
           type="textarea"
           maxlength="200"
@@ -13,7 +13,7 @@
 
       <OField grouped group-multiline>
         <div class="control">
-          <ODropdown v-model="question.answerType" aria-role="list">
+          <ODropdown v-model="answerType" aria-role="list">
             <template #trigger>
               <OTooltip :label="tooltip" multiline animated>
                 <OButton rounded icon-right="menu-down">
@@ -23,19 +23,19 @@
             </template>
 
             <ODropdownItem
-              v-for="answerType in answerTypes"
-              :key="answerType"
+              v-for="answerTypeOption in answerTypes"
+              :key="answerTypeOption"
               aria-role="listitem"
-              :value="answerType"
+              :value="answerTypeOption"
             >
-              {{ answerTypeToDescription[answerType] }}
+              {{ answerTypeToDescription[answerTypeOption] }}
             </ODropdownItem>
           </ODropdown>
         </div>
 
         <OField class="mb-3 is-expanded">
           <OInputitems
-            v-model="question.topics"
+            v-model="topics"
             ellipsis
             icon="label"
             close-icon=""
@@ -49,34 +49,43 @@
         </OField>
 
         <ToggleButton
-          v-if="question.answerType !== 'text'"
-          v-model="question.shouldShuffle"
+          v-if="answerType !== 'text'"
+          v-model="shouldShuffle"
           rounded
         >
-          <OIcon :icon="question.shouldShuffle ? 'close' : 'check'" />
+          <OIcon :icon="shouldShuffle ? 'close' : 'check'" />
           <span>Shuffle answers?</span>
         </ToggleButton>
       </OField>
 
       <OTable :data="question.answers">
         <OTableColumn
-          v-slot="{ row }"
+          v-slot="{ row, index }"
           field="isCorrect"
           label="Correct?"
           width="0"
           centered
-          :visible="question.answerType !== 'text'"
+          :visible="answerType !== 'text'"
         >
-          <OCheckbox v-model="row.isCorrect" size="large" />
+          <OCheckbox
+            :model-value="row.isCorrect"
+            size="large"
+            @update:model-value="
+              (isCorrect: boolean) => updateIsCorrect(index, isCorrect)
+            "
+          />
         </OTableColumn>
 
-        <OTableColumn v-slot="{ row }" field="answer" label="Answer">
+        <OTableColumn v-slot="{ row, index }" field="answer" label="Answer">
           <OField expanded>
             <OInput
-              v-model="row.answer"
+              :model-value="row.answer"
               placeholder="Answer"
               maxlength="50"
               :has-counter="false"
+              @update:model-value="
+                (answer: string) => updateAnswerText(index, answer)
+              "
             />
           </OField>
         </OTableColumn>
@@ -115,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Questions } from '~/types/database.generated'
+import type { Questions } from '~/types/questions.generated'
 
 const props = defineProps<{
   modelValue: Questions[0]
@@ -128,9 +137,19 @@ const emit = defineEmits<{
   removeQuestion: []
 }>()
 
-const question = ref(props.modelValue)
-watch(question, () => emit('update:modelValue', question.value), {
-  deep: true,
+const [question, setQuestion] = useImmer(props.modelValue)
+watch(props.modelValue, () => setQuestion(() => props.modelValue))
+watch(question, () => emit('update:modelValue', question.value))
+
+const questionText = computed({
+  get() {
+    return question.value.question
+  },
+  set(question: string) {
+    setQuestion((draft) => {
+      draft.question = question
+    })
+  },
 })
 
 const answerTypeToDescription = {
@@ -143,8 +162,19 @@ const answerTypes = Object.keys(
   answerTypeToDescription
 ) as (keyof typeof answerTypeToDescription)[]
 
+const answerType = computed({
+  get() {
+    return question.value.answerType
+  },
+  set(answerType: (typeof answerTypes)[number]) {
+    setQuestion((draft) => {
+      draft.answerType = answerType
+    })
+  },
+})
+
 const formattedAnswerType = computed(
-  () => answerTypeToDescription[props.modelValue.answerType]
+  () => answerTypeToDescription[answerType.value]
 )
 
 const oruga = useOruga()
@@ -159,14 +189,19 @@ const addAnswer = () => {
     })
     return false
   }
-  question.value.answers.push({
-    answer: '',
-    isCorrect: false,
+  setQuestion((draft) => {
+    draft.answers.push({
+      answer: '',
+      isCorrect: false,
+    })
   })
+  return true
 }
 
 const removeAnswer = (i: number) => {
-  question.value.answers.splice(i, 1)
+  setQuestion((draft) => {
+    draft.answers.splice(i, 1)
+  })
 }
 
 const tooltip = `
@@ -174,4 +209,38 @@ const tooltip = `
   "Pick all answers" requires all correct answers to be picked.
   "Type an answer" requires the user to type in one of the answers.
 `
+
+const topics = computed({
+  get() {
+    return question.value.topics
+  },
+  set(topics: string[]) {
+    setQuestion((draft) => {
+      draft.topics = topics
+    })
+  },
+})
+
+const shouldShuffle = computed({
+  get() {
+    return question.value.shouldShuffle
+  },
+  set(shouldShuffle: boolean) {
+    setQuestion((draft) => {
+      draft.shouldShuffle = shouldShuffle
+    })
+  },
+})
+
+const updateIsCorrect = (i: number, isCorrect: boolean) => {
+  setQuestion((draft) => {
+    draft.answers[i].isCorrect = isCorrect
+  })
+}
+
+const updateAnswerText = (i: number, answer: string) => {
+  setQuestion((draft) => {
+    draft.answers[i].answer = answer
+  })
+}
 </script>

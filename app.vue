@@ -13,6 +13,6 @@
 const router = useRouter()
 const user = useSupabaseUser()
 watch(user, () => {
-  router.go(0)
+  // router.go(0)
 })
 </script>

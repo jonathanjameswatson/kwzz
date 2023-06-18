@@ -20,19 +20,19 @@
 </template>
 
 <script setup lang="ts">
-import { stringArrayOrStringToString } from '~/utils/stringArrayOrStringToString'
+import { locationQueriesToString } from '~/utils/locationQuery'
 
 const route = useRoute()
 
 const limit = 9
 const page = computed(() => {
-  const parsedInt = parseInt(stringArrayOrStringToString(route.query.page), 10)
+  const parsedInt = parseInt(locationQueriesToString(route.query.page), 10)
   return isNaN(parsedInt) || parsedInt < 1 ? 1 : parsedInt
 })
 const offset = computed(() => (page.value - 1) * limit)
 const isUser = computed(() => route.query.user !== '')
 const searchString = computed(() =>
-  stringArrayOrStringToString(route.query.searchString)
+  locationQueriesToString(route.query.searchString)
 )
 
 const total = useState('searchTotal', () => 0)

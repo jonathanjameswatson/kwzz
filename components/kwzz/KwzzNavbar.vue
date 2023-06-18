@@ -49,10 +49,10 @@
 </template>
 
 <script setup lang="ts">
-import type { Quizzes } from '~/types/database.generated'
+import type { Database } from '~/types/database.generated'
 
 const user = useSupabaseUser()
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient<Database>()
 const signOut = () => supabase.auth.signOut()
 
 const searchString = ref('')
@@ -64,10 +64,20 @@ const search = () => {
 }
 
 const createQuiz = async () => {
-  const { data } = await supabase
-    .from<Quizzes>('quizzes')
-    .insert([{ title: 'Untitled Quiz', creator_id: user.value.id }])
+  if (user.value === null) {
+    return
+  }
+
+  const { data, error } = await supabase
+    .from('quizzes')
+    .insert({ title: 'Untitled Quiz', creator_id: user.value.id })
+    .select()
     .single()
+
+  if (error !== null) {
+    return
+  }
+
   navigateTo({
     path: `/quiz/${data.id}/edit`,
   })
