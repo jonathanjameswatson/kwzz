@@ -8,5 +8,13 @@
 <script setup lang="ts">
 definePageMeta({
   isVisibleTo: 'signedOut',
+  layout: 'empty',
+})
+
+const user = useSupabaseUser()
+watchEffect(() => {
+  if (user.value) {
+    navigateTo('/home')
+  }
 })
 </script>

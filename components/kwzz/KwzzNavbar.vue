@@ -53,7 +53,10 @@ import type { Database } from '~/types/database.generated'
 
 const user = useSupabaseUser()
 const supabase = useSupabaseClient<Database>()
-const signOut = () => supabase.auth.signOut()
+const signOut = async () => {
+  await supabase.auth.signOut()
+  navigateTo('/')
+}
 
 const searchString = ref('')
 const search = () => {

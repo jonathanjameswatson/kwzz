@@ -49,14 +49,25 @@
 
 <script setup lang="ts">
 const client = useSupabaseAuthClient()
+const oruga = useOruga()
 
-const signIn = () =>
-  client.auth.signInWithOAuth({
+const signIn = async () => {
+  const { error } = await client.auth.signInWithOAuth({
     provider: 'google',
     options: {
       redirectTo: `${window.location.origin}/loading`,
     },
   })
+  if (error !== null) {
+    const statusMessage =
+      error.status === undefined ? ` (status code ${error.status})` : ``
+    oruga.notification.open({
+      message: `Sign in failed with authentication error${statusMessage}.`,
+      position: 'bottom-right',
+      variant: 'warning',
+    })
+  }
+}
 </script>
 
 <style scoped lang="scss">
