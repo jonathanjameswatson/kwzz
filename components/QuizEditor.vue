@@ -15,9 +15,7 @@
         <QuestionEditor
           :model-value="question"
           :number="i + 1"
-          @update:model-value="
-            (value) => setQuiz((draft) => (draft.questions[i] = value))
-          "
+          @update:model-value="(value) => setQuestion(i, value)"
           @remove-question="removeQuestion(i)"
           @swap-question="
             (shouldSwapDown) => swapQuestions(shouldSwapDown ? i : i - 1)
@@ -33,7 +31,7 @@
       <OButton icon-right="content-save" :disabled="isSaved" @click="save()">
         Save quiz
       </OButton>
-      <KwzzLink link="play">
+      <KwzzLink link="play" disabled>
         <span>View quiz</span>
         <OIcon icon="eye" size="small" />
       </KwzzLink>
@@ -65,6 +63,12 @@ const emit = defineEmits<{
 const [quiz, setQuiz] = useImmer(props.modelValue)
 watch(props.modelValue, () => setQuiz(() => props.modelValue))
 watch(quiz, () => emit('update:modelValue', quiz.value))
+
+const setQuestion = (i: number, value: Questions[number]) => {
+  setQuiz((draft) => {
+    draft.questions[i] = value
+  })
+}
 
 const removeQuestion = (i: number) => {
   setQuiz((draft) => {
