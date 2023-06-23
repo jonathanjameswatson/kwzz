@@ -9,7 +9,7 @@
     <KwzzSection>
       <KwzzHeader>My Quizzes</KwzzHeader>
       <QuizSet :is-user="true" fetch-key="homeMyQuizzes" />
-      <KwzzLink link="/search?isUser=true">View more</KwzzLink>
+      <KwzzLink link="/search?user=">View more</KwzzLink>
     </KwzzSection>
   </div>
 </template>

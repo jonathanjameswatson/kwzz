@@ -186,10 +186,10 @@ const publish = async () => {
     .match({ id: props.id })
 
   if (!error) {
-    navigateTo({
+    await navigateTo({
       path: `/search`,
       query: {
-        isUser: 'true',
+        user: '',
       },
     })
   }

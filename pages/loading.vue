@@ -12,9 +12,9 @@ definePageMeta({
 })
 
 const user = useSupabaseUser()
-watchEffect(() => {
+watchEffect(async () => {
   if (user.value) {
-    navigateTo('/home')
+    await navigateTo('/home')
   }
 })
 </script>

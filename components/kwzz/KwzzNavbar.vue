@@ -55,16 +55,15 @@ const user = useSupabaseUser()
 const supabase = useSupabaseClient<Database>()
 const signOut = async () => {
   await supabase.auth.signOut()
-  navigateTo('/')
+  await navigateTo('/')
 }
 
 const searchString = ref('')
-const search = () => {
+const search = () =>
   navigateTo({
     path: '/search',
-    query: { searchString: searchString.value },
+    query: { q: searchString.value },
   })
-}
 
 const createQuiz = async () => {
   if (user.value === null) {
@@ -81,7 +80,7 @@ const createQuiz = async () => {
     return
   }
 
-  navigateTo({
+  await navigateTo({
     path: `/quiz/${data.id}/edit`,
   })
 }
