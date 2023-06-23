@@ -45,6 +45,7 @@
 <script setup lang="ts">
 import type { Questions } from '~/types/questions.generated'
 import type { Database } from '~/types/database.generated'
+import type { Updater } from '~/composables/useImmer'
 
 interface Quiz {
   title: string
@@ -60,9 +61,12 @@ const emit = defineEmits<{
   'update:modelValue': [value: Quiz]
 }>()
 
-const [quiz, setQuiz] = useImmer(props.modelValue)
-watch(props.modelValue, () => setQuiz(() => props.modelValue))
-watch(quiz, () => emit('update:modelValue', quiz.value))
+const [quiz, internalSetQuiz] = useImmer(props.modelValue)
+watch(props.modelValue, () => internalSetQuiz(() => props.modelValue))
+const setQuiz = (f: Updater<Quiz>) => {
+  internalSetQuiz(f)
+  emit('update:modelValue', quiz.value)
+}
 
 const setQuestion = (i: number, value: Questions[number]) => {
   setQuiz((draft) => {

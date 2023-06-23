@@ -125,6 +125,7 @@
 
 <script setup lang="ts">
 import type { Questions } from '~/types/questions.generated'
+import type { Updater } from '~/composables/useImmer'
 
 const props = defineProps<{
   modelValue: Questions[0]
@@ -137,9 +138,12 @@ const emit = defineEmits<{
   removeQuestion: []
 }>()
 
-const [question, setQuestion] = useImmer(props.modelValue)
-watch(props.modelValue, () => setQuestion(() => props.modelValue))
-watch(question, () => emit('update:modelValue', question.value))
+const [question, internalSetQuestion] = useImmer(props.modelValue)
+watch(props.modelValue, () => internalSetQuestion(() => props.modelValue))
+const setQuestion = (f: Updater<Questions[0]>) => {
+  internalSetQuestion(f)
+  emit('update:modelValue', question.value)
+}
 
 const questionText = computed({
   get() {
