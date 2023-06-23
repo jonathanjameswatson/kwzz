@@ -2,12 +2,13 @@
   <KwzzSection>
     <KwzzHeader>Search</KwzzHeader>
     <QuizSet
+      :page="page"
       :limit="limit"
-      :offset="offset"
       :is-user="isUser"
       :search-string="searchString"
       fetch-key="search"
-      :page="page"
+      paginate
+      @update:page="setPage"
     />
   </KwzzSection>
 </template>
@@ -17,14 +18,22 @@ import { locationQueriesToString } from '~/utils/locationQuery'
 
 const route = useRoute()
 
-console.log('rerunning setup')
-
 const limit = 9
 const page = computed(() => {
   const parsedInt = parseInt(locationQueriesToString(route.query.page), 10)
   return isNaN(parsedInt) || parsedInt < 1 ? 1 : parsedInt
 })
-const offset = computed(() => (page.value - 1) * limit)
 const isUser = computed(() => route.query.user === '')
 const searchString = computed(() => locationQueriesToString(route.query.q))
+
+const setPage = (page: number) => {
+  const { q, user } = route.query
+  navigateTo({
+    query: {
+      page: page.toString(),
+      ...(q !== undefined ? { q } : Object.create(null)),
+      ...(user !== undefined ? { user } : Object.create(null)),
+    },
+  })
+}
 </script>

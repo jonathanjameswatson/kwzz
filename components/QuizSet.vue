@@ -12,7 +12,7 @@
         </div>
       </div>
       <OPagination
-        v-if="page !== undefined"
+        v-if="paginate"
         :current="page"
         :total="data.total"
         :per-page="limit"
@@ -27,21 +27,28 @@ import type { Database } from '~/types/database.generated'
 
 const props = withDefaults(
   defineProps<{
+    page: number
     limit?: number
-    offset?: number
     onlyShowUsersQuizzes?: boolean
     searchString?: string
     fetchKey: string
-    page?: number
+    paginate: boolean
   }>(),
   {
+    page: 1,
     limit: 3,
-    offset: 0,
     onlyShowUsersQuizzes: false,
     searchString: '',
     page: undefined,
+    paginate: false,
   }
 )
+
+const emit = defineEmits<{
+  'update:page': [page: number]
+}>()
+
+const offset = computed(() => (props.page - 1) * props.limit)
 
 const supabaseClient = useSupabaseClient<Database>()
 
@@ -64,7 +71,7 @@ const { data } = await useAsyncData(
           )
     const { data, error, count } = await searchedSelectQuery
       .order('updated_at', { ascending: false })
-      .range(props.offset, props.offset + props.limit - 1)
+      .range(offset.value, offset.value + props.limit - 1)
     if (error !== null) {
       throw error
     }
@@ -75,15 +82,7 @@ const { data } = await useAsyncData(
   }
 )
 
-const route = useRoute()
-const setPage = async (page: number) => {
-  const { q, user } = route.query
-  navigateTo({
-    query: {
-      page: page.toString(),
-      ...(q !== undefined ? { q } : Object.create(null)),
-      ...(user !== undefined ? { user } : Object.create(null)),
-    },
-  })
+const setPage = (page: number) => {
+  emit('update:page', page)
 }
 </script>
