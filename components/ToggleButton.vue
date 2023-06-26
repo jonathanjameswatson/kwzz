@@ -1,7 +1,8 @@
 <template>
   <OButton
-    :outlined="!modelValue"
+    :outlined="modelValue"
     v-bind="$attrs"
+    :icon-right="modelValue ? 'check' : 'close'"
     @click="$emit('update:modelValue', !modelValue)"
   >
     <slot />

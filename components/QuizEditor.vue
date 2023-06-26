@@ -134,7 +134,7 @@ const addQuestion = () => {
         },
       ],
       shouldShuffle: true,
-    }
+    } as Questions[0]
     markRaw(newQuestion)
     markRaw(newQuestion.answers)
     draft.questions.push(newQuestion)

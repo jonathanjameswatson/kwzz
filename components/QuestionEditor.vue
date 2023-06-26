@@ -53,8 +53,7 @@
           v-model="shouldShuffle"
           rounded
         >
-          <OIcon :icon="shouldShuffle ? 'close' : 'check'" />
-          <span>Shuffle answers?</span>
+          Shuffle answers?
         </ToggleButton>
       </OField>
 
@@ -76,7 +75,7 @@
           </OTableColumn>
 
           <OTableColumn v-slot="{ row, index }" field="answer" label="Answer">
-            <OField expanded>
+            <OField class="is-expanded">
               <OInput
                 :model-value="row.answer"
                 placeholder="Answer"

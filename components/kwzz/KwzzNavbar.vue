@@ -59,11 +59,13 @@ const signOut = async () => {
 }
 
 const searchString = ref('')
-const search = () =>
-  navigateTo({
+const search = async () => {
+  await navigateTo({
     path: '/search',
     query: { q: searchString.value },
   })
+  searchString.value = ''
+}
 
 const createQuiz = async () => {
   if (user.value === null) {
