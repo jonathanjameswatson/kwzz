@@ -14,8 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { locationQueriesToString } from '~/utils/locationQuery'
-
 const route = useRoute()
 
 const limit = 9
