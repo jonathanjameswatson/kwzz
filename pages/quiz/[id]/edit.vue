@@ -28,6 +28,13 @@ const { data } = await useAsyncData('edit', async () => {
   }
 
   const { title, questions } = data
-  return { quiz: { title, questions } }
+  const quiz = { title, questions }
+  markRaw(quiz)
+  markRaw(questions)
+  questions.forEach((question) => {
+    markRaw(question)
+    markRaw(question.answers)
+  })
+  return { quiz }
 })
 </script>

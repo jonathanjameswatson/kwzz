@@ -62,7 +62,10 @@ const emit = defineEmits<{
 }>()
 
 const [quiz, internalSetQuiz] = useImmer(props.modelValue)
-watch(props.modelValue, () => internalSetQuiz(() => props.modelValue))
+watch(
+  () => props.modelValue,
+  () => internalSetQuiz(() => props.modelValue)
+)
 const setQuiz = (f: Updater<Quiz>) => {
   internalSetQuiz(f)
   emit('update:modelValue', quiz.value)
@@ -116,7 +119,7 @@ const addQuestion = () => {
     return false
   }
   setQuiz((draft) => {
-    draft.questions.push({
+    const newQuestion = {
       question: '',
       topics: [],
       answerType: 'singleChoice',
@@ -131,7 +134,10 @@ const addQuestion = () => {
         },
       ],
       shouldShuffle: true,
-    })
+    }
+    markRaw(newQuestion)
+    markRaw(newQuestion.answers)
+    draft.questions.push(newQuestion)
   })
   if (bottomButtons.value) {
     bottomButtons.value.scrollIntoView()
@@ -152,20 +158,21 @@ const publish = async () => {
   const validationTests = {
     'The title must not be empty': quiz.value.title === '',
     'There must not be any questions that are empty': quiz.value.questions.some(
-      (question) => question.question === ''
+      (question: Questions[0]) => question.question === ''
     ),
     'There must be at least one question': quiz.value.questions.length === 0,
     'Each question must have at least one answer': quiz.value.questions.some(
-      (question) => question.answers.length === 0
+      (question: Questions[0]) => question.answers.length === 0
     ),
     'Each single or multiple answer question must have at least one correct answer':
       quiz.value.questions.some(
-        (question) =>
+        (question: Questions[0]) =>
           question.answerType !== 'text' &&
           !question.answers.some((answer) => answer.isCorrect)
       ),
     'There must not be any answers that are empty': quiz.value.questions.some(
-      (question) => question.answers.some((answer) => answer.answer === '')
+      (question: Questions[0]) =>
+        question.answers.some((answer) => answer.answer === '')
     ),
   } as const
 
