@@ -1,7 +1,7 @@
 <template>
   <KwzzSection>
     <header class="block">
-      <OField label="Search" grouped group-multiline>
+      <OField label="Search" grouped>
         <div class="control is-expanded">
           <OInput
             v-model="searchString"
@@ -12,7 +12,7 @@
           />
         </div>
         <div class="control">
-          <OButton size="large" @click="search">Search</OButton>
+          <OButton size="large" icon-right="magnify" @click="search" />
         </div>
       </OField>
     </header>

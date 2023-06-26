@@ -1,24 +1,30 @@
 <template>
-  <div class="block">
-    <div v-if="data !== null">
-      <div class="columns is-multiline is-vcentered">
-        <div v-for="quiz in data.quizzes" :key="quiz.id" class="column is-4">
-          <QuizCard
-            :id="quiz.id"
-            :title="quiz.title"
-            :creator-id="quiz.creator_id"
-            :is-published="quiz.is_published"
-          />
+  <div class="block" style="position: relative">
+    <div>
+      <div v-if="data !== null && data.quizzes.length !== 0">
+        <div class="columns is-multiline is-vcentered">
+          <div v-for="quiz in data.quizzes" :key="quiz.id" class="column is-4">
+            <QuizCard
+              :id="quiz.id"
+              :title="quiz.title"
+              :creator-id="quiz.creator_id"
+              :is-published="quiz.is_published"
+            />
+          </div>
         </div>
+        <OPagination
+          v-if="paginate"
+          :current="page"
+          :total="data.total"
+          :per-page="limit"
+          @change="setPage"
+        />
       </div>
-      <OPagination
-        v-if="paginate"
-        :current="page"
-        :total="data.total"
-        :per-page="limit"
-        @change="setPage"
-      />
+      <div v-else>
+        <p class="title has-text-centered">No quizzes found for this search.</p>
+      </div>
     </div>
+    <OLoading :full-page="false" :active="status === 'pending'" />
   </div>
 </template>
 
@@ -52,7 +58,7 @@ const offset = computed(() => (props.page - 1) * props.limit)
 
 const supabaseClient = useSupabaseClient<Database>()
 
-const { data } = await useAsyncData(
+const { data, status } = await useAsyncData(
   props.fetchKey,
   async () => {
     const selectQuery = supabaseClient
