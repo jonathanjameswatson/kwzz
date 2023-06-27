@@ -58,49 +58,51 @@
       </OField>
 
       <div class="mb-3">
-        <OTable :data="question.answers">
-          <OTableColumn
-            v-slot="{ row, index }"
-            field="isCorrect"
-            label="Correct?"
-            width="0"
-            centered
-            :visible="answerType !== 'text'"
-          >
-            <OCheckbox
-              :model-value="row.isCorrect"
-              size="large"
-              @update:model-value="(x: boolean) => updateIsCorrect(index, x)"
-            />
-          </OTableColumn>
-
-          <OTableColumn v-slot="{ row, index }" field="answer" label="Answer">
-            <OField class="is-expanded">
-              <OInput
-                :model-value="row.answer"
-                placeholder="Answer"
-                maxlength="50"
-                :has-counter="false"
-                @update:model-value="(x: string) => updateAnswerText(index, x)"
+        <ClientOnly>
+          <OTable :data="question.answers">
+            <OTableColumn
+              v-slot="{ row, index }"
+              field="isCorrect"
+              label="Correct?"
+              width="0"
+              centered
+              :visible="answerType !== 'text'"
+            >
+              <OCheckbox
+                :model-value="row.isCorrect"
+                size="large"
+                @update:model-value="(x: boolean) => updateIsCorrect(index, x)"
               />
-            </OField>
-          </OTableColumn>
+            </OTableColumn>
 
-          <OTableColumn v-slot="{ index }" label="Delete" width="0" centered>
-            <span>
-              <OButton
-                icon-right="minus"
-                rounded
-                @click="removeAnswer(index)"
-              />
-            </span>
-          </OTableColumn>
-        </OTable>
+            <OTableColumn v-slot="{ row, index }" field="answer" label="Answer">
+              <OField class="is-expanded">
+                <OInput
+                  :model-value="row.answer"
+                  placeholder="Answer"
+                  maxlength="50"
+                  :has-counter="false"
+                  @update:model-value="(x: string) => updateAnswerText(index, x)"
+                />
+              </OField>
+            </OTableColumn>
+
+            <OTableColumn v-slot="{ index }" label="Delete" width="0" centered>
+              <span>
+                <OButton
+                  icon-right="minus"
+                  rounded
+                  @click="removeAnswer(index)"
+                />
+              </span>
+            </OTableColumn>
+          </OTable>
+        </ClientOnly>
       </div>
 
       <div>
         <div class="buttons">
-          <OButton icon-right="plus" @click="addAnswer()"> Add answer </OButton>
+          <OButton icon-right="plus" @click="addAnswer()">Add answer</OButton>
           <OButton icon-right="arrow-up" @click="$emit('swapQuestion', false)">
             Move up
           </OButton>

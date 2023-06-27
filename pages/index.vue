@@ -31,7 +31,9 @@
           :key="i"
           class="column has-text-centered is-2"
         >
-          <OIcon :icon="description.icon" size="large" variant="primary" />
+          <span class="icon is-large has-text-primary">
+            <i class="i-mdi i-mdi-48px" :class="`i-mdi-${description.icon}`" />
+          </span>
           <h3 class="title">
             {{ description.heading }}
           </h3>
