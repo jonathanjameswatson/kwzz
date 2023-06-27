@@ -33,19 +33,18 @@ import type { Database } from '~/types/database.generated'
 
 const props = withDefaults(
   defineProps<{
-    page: number
+    page?: number
     limit?: number
     onlyShowUsersQuizzes?: boolean
     searchString?: string
     fetchKey: string
-    paginate: boolean
+    paginate?: boolean
   }>(),
   {
     page: 1,
     limit: 3,
     onlyShowUsersQuizzes: false,
     searchString: '',
-    page: undefined,
     paginate: false,
   }
 )

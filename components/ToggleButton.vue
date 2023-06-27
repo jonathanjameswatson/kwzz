@@ -12,7 +12,7 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    modelValue: boolean
+    modelValue?: boolean
   }>(),
   {
     modelValue: true,
