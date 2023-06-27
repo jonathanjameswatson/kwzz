@@ -1,0 +1,18 @@
+export const icons = [
+  'pencil',
+  'export-variant',
+  'checkbox-multiple-marked',
+  'account-check',
+  'magnify',
+  'menu-down',
+  'label',
+  'minus',
+  'plus',
+  'arrow-up',
+  'arrow-down',
+  'content-save',
+  'eye',
+  'publish',
+  'check',
+  'close',
+]

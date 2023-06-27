@@ -56,5 +56,17 @@ export default defineNuxtPlugin(({ vueApp }) => {
         return classes.join(' ')
       },
     },
+    iconPack: 'i-mdi',
+    customIconPacks: {
+      'i-mdi': {
+        iconPrefix: 'i-mdi-',
+        sizes: {
+          default: 'i-mdi-24px',
+          small: 'i-mdi-18px',
+          medium: 'i-mdi-36px',
+          large: 'i-mdi-48px',
+        },
+      },
+    },
   })
 })

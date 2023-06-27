@@ -1,9 +1,22 @@
+import { icons } from './icons'
+
 export default defineNuxtConfig({
   // CSS
-  css: ['~/assets/scss/main.scss', '@mdi/font/css/materialdesignicons.css'],
+  css: ['~/assets/scss/main.scss'],
 
   // Modules
-  modules: ['@nuxtjs/eslint-module', '@nuxtjs/supabase'],
+  modules: [
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/supabase',
+    [
+      '@unocss/nuxt',
+      {
+        uno: false,
+        icons: true,
+        safelist: icons.map((icon) => `i-mdi-${icon}`),
+      },
+    ],
+  ],
 
   /*
   PWA settings

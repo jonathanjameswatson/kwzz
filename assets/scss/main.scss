@@ -102,3 +102,12 @@ $checkbox-border-width: 1px;
 .section.has-shadow {
   box-shadow: 0 2px 0 0 $background;
 }
+
+$sizes: 18, 24, 36, 48;
+
+@each $size in $sizes {
+  .i-mdi-#{$size}px {
+    width: #{$size}px !important;
+    height: #{$size}px !important;
+  }
+}

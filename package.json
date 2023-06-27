@@ -16,17 +16,19 @@
     "generate-types": "jiti ./scripts/generate-types.ts"
   },
   "dependencies": {
-    "@mdi/font": "^7.2.96",
     "@oruga-ui/oruga-next": "^0.6.0",
     "@oruga-ui/theme-bulma": "^0.2.11"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.1.52",
     "@nuxt/devtools": "^0.6.3",
     "@nuxtjs/eslint-config": "https://gitpkg.now.sh/nuxt/eslint-config/packages/eslint-config?24af9911de6f7af3f01a20eebc9f4a080a048c65",
     "@nuxtjs/eslint-module": "^4.1.0",
     "@nuxtjs/supabase": "^0.3.7",
     "@types/node": "^20.3.1",
     "@typescript-eslint/parser": "^5.60.0",
+    "@unocss/nuxt": "^0.53.4",
+    "@unocss/preset-icons": "^0.53.4",
     "dotenv": "^16.3.1",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
