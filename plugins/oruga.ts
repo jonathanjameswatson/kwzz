@@ -12,10 +12,10 @@ const makeInvertPropsConfiguration = (
         classes.push('is-primary')
       }
       if (!props.rounded) {
-        classes.push(`is-rounded`)
+        classes.push('is-rounded')
       }
       if (!props.outlined) {
-        classes.push(`is-outlined`)
+        classes.push('is-outlined')
       }
       return classes.join(' ')
     },
