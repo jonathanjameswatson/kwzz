@@ -28,7 +28,7 @@ const makeInvertPropsConfiguration = (
 }
 
 export default defineNuxtPlugin(({ vueApp }) => {
-  vueApp.use(Oruga, {
+  vueApp.use(Oruga.default || Oruga, {
     ...bulmaConfig,
     includeCss: false,
     button: {
