@@ -13,9 +13,11 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore --ignore-path .eslintignore .",
     "lintfix": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore --ignore-path .eslintignore --fix .",
-    "generate-types": "jiti ./scripts/generate-types.ts"
+    "generate-types": "jiti ./scripts/generate-types.ts",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/icon.png"
   },
   "dependencies": {
+    "@fontsource/literata": "^5.0.4",
     "@oruga-ui/oruga-next": "^0.6.0",
     "@oruga-ui/theme-bulma": "^0.2.11"
   },
@@ -29,6 +31,8 @@
     "@typescript-eslint/parser": "^5.61.0",
     "@unocss/nuxt": "^0.53.4",
     "@unocss/preset-icons": "^0.53.4",
+    "@vite-pwa/assets-generator": "^0.0.3",
+    "@vite-pwa/nuxt": "^0.1.0",
     "dotenv": "^16.3.1",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",

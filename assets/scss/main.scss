@@ -20,8 +20,6 @@ $checkbox-border-width: 1px;
 /* change to @use when possible */
 @import '@oruga-ui/theme-bulma/dist/scss/bulma';
 
-@import url('https://fonts.googleapis.com/css?family=Literata&display=swap');
-
 .navbar-item img {
   max-height: 64px;
 }

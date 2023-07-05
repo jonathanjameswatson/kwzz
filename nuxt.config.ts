@@ -1,12 +1,14 @@
+import { pwa, description } from './config/pwa'
 import { icons } from './icons'
 
 export default defineNuxtConfig({
   // CSS
-  css: ['~/assets/scss/main.scss'],
+  css: ['~/assets/scss/main.scss', '@fontsource/literata'],
 
   // Modules
   modules: [
     '@nuxtjs/eslint-module',
+    '@vite-pwa/nuxt',
     '@nuxtjs/supabase',
     [
       '@unocss/nuxt',
@@ -23,7 +25,6 @@ export default defineNuxtConfig({
   pwa: {
     meta: {
       description:
-        "kwzz is a new quiz website built to help people create, share and play. Quizzes can be made quickly and easily with kwzz and shared so that anyone play them. Once a user has played a quiz, they can easily review their results and receive feedback on the topics they did poorly on. Creators of quizzes can also review attempts to their quizzes to help them know other user's knowledge.",
       ogHost: 'https://kwzz.jonathanjameswatson.com',
       twitterCard: 'summary',
       twitterSite: 'https://kwzz.jonathanjameswatson.com',
@@ -37,9 +38,23 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      link: [{ rel: 'icon', href: 'data:;base64,iVBORw0KGgo=' }],
+      viewport: 'width=device-width,initial-scale=1',
+      link: [
+        { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      ],
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'description', content: description },
+        {
+          name: 'apple-mobile-web-app-status-bar-style',
+          content: 'black-translucent',
+        },
+      ],
     },
   },
+
+  pwa,
 
   typescript: {
     shim: false,
