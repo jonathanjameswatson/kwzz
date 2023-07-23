@@ -24,20 +24,34 @@
       </div>
     </div>
 
-    <hr />
-
-    <div ref="bottomButtons" class="buttons">
-      <OButton icon-right="plus" @click="addQuestion()"> Add question </OButton>
-      <OButton icon-right="content-save" :disabled="isSaved" @click="save()">
-        Save quiz
-      </OButton>
-      <KwzzLink link="play" disabled>
-        <span>View quiz</span>
-        <OIcon icon="eye" size="small" />
-      </KwzzLink>
-      <OButton icon-right="publish" :disabled="!isSaved" @click="publish()">
-        Publish quiz
-      </OButton>
+    <div class="quiz-editor-buttons-sticky">
+      <div class="quiz-editor-buttons-relative">
+        <div class="container">
+          <div ref="bottomButtons" class="buttons">
+            <OButton icon-right="plus" @click="addQuestion()">
+              Add question
+            </OButton>
+            <OButton
+              icon-right="content-save"
+              :disabled="isSaved"
+              @click="save()"
+            >
+              Save quiz
+            </OButton>
+            <KwzzLink link="play" disabled>
+              <span>View quiz</span>
+              <OIcon icon="eye" size="small" />
+            </KwzzLink>
+            <OButton
+              icon-right="publish"
+              :disabled="!isSaved"
+              @click="publish()"
+            >
+              Publish quiz
+            </OButton>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -217,3 +231,29 @@ const publish = async () => {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@use '~/assets/scss/config' as config;
+
+.quiz-editor-buttons-sticky {
+  position: sticky;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  z-index: 8;
+}
+
+.quiz-editor-buttons-relative {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  background-color: white;
+  padding: 1rem 0;
+  border-top: 1px solid config.$primary;
+}
+</style>

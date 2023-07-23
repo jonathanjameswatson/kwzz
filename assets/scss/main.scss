@@ -1,18 +1,6 @@
 @use 'bulma/sass/utilities/functions' as functions;
 @use 'bulma/sass/utilities/derived-variables' as derived-variables;
-
-$-purple: #962865;
-$family-serif: 'Literata', serif;
-
-@use 'bulma/bulma' as * with (
-  $purple: $-purple,
-  $primary: $-purple,
-  $family-primary: $family-serif,
-  $card-shadow: none,
-  $footer-background-color: derived-variables.$scheme-main,
-  $input-placeholder-color:
-    functions.bulmaRgba(derived-variables.$text-strong, 0.6)
-);
+@use '~/assets/scss/config' as *;
 
 $checkbox-border-color: $purple;
 $checkbox-border-width: 1px;

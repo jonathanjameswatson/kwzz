@@ -1,0 +1,15 @@
+@use 'bulma/sass/utilities/functions' as functions;
+@use 'bulma/sass/utilities/derived-variables' as derived-variables;
+
+$-purple: #962865;
+$family-serif: 'Literata', serif;
+
+@forward 'bulma/bulma' with (
+  $purple: $-purple,
+  $primary: $-purple,
+  $family-primary: $family-serif,
+  $card-shadow: none,
+  $footer-background-color: derived-variables.$scheme-main,
+  $input-placeholder-color:
+    functions.bulmaRgba(derived-variables.$text-strong, 0.6)
+);
