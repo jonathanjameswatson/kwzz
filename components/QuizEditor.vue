@@ -2,7 +2,7 @@
   <div>
     <header class="block">
       <OField label="Quiz title">
-        <OInput v-model="quiz.title" size="large" maxlength="50" required />
+        <OInput v-model="title" size="large" maxlength="50" required />
       </OField>
     </header>
 
@@ -70,6 +70,17 @@ const setQuiz = (f: Updater<Quiz>) => {
   internalSetQuiz(f)
   emit('update:modelValue', quiz.value)
 }
+
+const title = computed({
+  get() {
+    return quiz.value.title
+  },
+  set(value: string) {
+    setQuiz((draft) => {
+      draft.title = value
+    })
+  },
+})
 
 const setQuestion = (i: number, value: Questions[number]) => {
   setQuiz((draft) => {
