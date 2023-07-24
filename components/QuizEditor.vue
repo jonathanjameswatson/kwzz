@@ -234,26 +234,32 @@ const publish = async () => {
 
 <style scoped lang="scss">
 @use '~/assets/scss/config' as config;
+@use 'bulma/sass/utilities/mixins' as mixins;
 
 .quiz-editor-buttons-sticky {
   position: sticky;
   bottom: 0;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
   z-index: 8;
 }
 
 .quiz-editor-buttons-relative {
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
   width: 100vw;
   background-color: white;
   padding: 1rem 1.5rem;
   border-top: 1px solid config.$primary;
+  overflow-x: auto;
+
+  @include mixins.touch {
+    left: -1.5rem;
+    right: -1.5rem;
+  }
+
+  @include mixins.desktop {
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
 }
 </style>
