@@ -6,7 +6,7 @@
       </OField>
     </header>
 
-    <div class="columns is-multiline">
+    <div ref="questionCardContainer" class="columns is-multiline">
       <div
         v-for="(question, i) in quiz.questions"
         :key="i"
@@ -27,7 +27,7 @@
     <div class="quiz-editor-buttons-sticky">
       <div class="quiz-editor-buttons-relative">
         <div class="container">
-          <div ref="bottomButtons" class="buttons">
+          <div class="buttons">
             <OButton icon-right="plus" @click="addQuestion()">
               Add question
             </OButton>
@@ -131,9 +131,9 @@ watch(quiz, () => {
 })
 
 const oruga = useOruga()
-const bottomButtons = ref<HTMLDivElement>()
+const questionCardContainer = ref<HTMLDivElement>()
 
-const addQuestion = () => {
+const addQuestion = async () => {
   if (quiz.value.questions.length === 25) {
     oruga.notification.open({
       message:
@@ -143,6 +143,7 @@ const addQuestion = () => {
     })
     return false
   }
+
   setQuiz((draft) => {
     const newQuestion = {
       question: '',
@@ -164,8 +165,16 @@ const addQuestion = () => {
     markRaw(newQuestion.answers)
     draft.questions.push(newQuestion)
   })
-  if (bottomButtons.value) {
-    bottomButtons.value.scrollIntoView()
+
+  await nextTick()
+  const questionCardContainerValue = questionCardContainer.value
+  if (
+    questionCardContainerValue &&
+    questionCardContainerValue.children.length > 0
+  ) {
+    questionCardContainerValue.children[
+      questionCardContainerValue.children.length - 1
+    ].scrollIntoView({ behavior: 'smooth' })
   }
 }
 
