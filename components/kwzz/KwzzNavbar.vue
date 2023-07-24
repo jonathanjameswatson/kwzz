@@ -8,13 +8,18 @@
           </figure>
         </NuxtLink>
 
-        <a role="button" aria-label="menu" class="navbar-burger burger"
+        <a
+          role="button"
+          aria-label="menu"
+          class="navbar-burger burger"
+          :class="activeClass"
+          @click="toggleActive"
           ><span aria-hidden="true"></span><span aria-hidden="true"></span
           ><span aria-hidden="true"></span
         ></a>
       </div>
 
-      <div class="navbar-menu">
+      <div class="navbar-menu" :class="activeClass">
         <div v-if="user" class="navbar-start">
           <div class="navbar-item">
             <OField>
@@ -86,4 +91,10 @@ const createQuiz = async () => {
     path: `/quiz/${data.id}/edit`,
   })
 }
+
+const active = ref(false)
+const toggleActive = () => {
+  active.value = !active.value
+}
+const activeClass = computed(() => (active.value ? 'is-active' : ''))
 </script>
