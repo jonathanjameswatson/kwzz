@@ -15,4 +15,6 @@ export const icons = [
   'publish',
   'check',
   'close',
+  'chevron-left',
+  'chevron-right',
 ]
