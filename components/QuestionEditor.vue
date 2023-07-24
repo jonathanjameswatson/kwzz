@@ -252,6 +252,10 @@ const updateAnswerText = (i: number, answer: string) => {
 
 <style scoped lang="scss">
 .question-answer-checkbox {
-  margin-right: calc(1px + -0.75em) !important;
+  margin-right: 0 !important;
+
+  &:deep(.control-label) {
+    padding-left: 0 !important;
+  }
 }
 </style>

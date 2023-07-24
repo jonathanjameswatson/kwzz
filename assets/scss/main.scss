@@ -31,19 +31,21 @@ $checkbox-border-width: 1px;
     box-shadow: none;
     @include kwzz-border;
   }
+
+  tr:not(.detail):not(.is-empty):not(.table-footer) td:last-child {
+    border-bottom: none;
+  }
 }
 
 .b-table {
-  .table {
+  .table-wrapper {
     td {
       vertical-align: middle;
       .b-checkbox {
         vertical-align: middle;
       }
     }
-  }
 
-  .table-wrapper {
     &.is-mobile {
       @include mixins.mobile {
         @include kwzz-table-cards;
