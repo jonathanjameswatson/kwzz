@@ -73,6 +73,7 @@
               <OCheckbox
                 :model-value="row.isCorrect"
                 size="large"
+                class="question-answer-checkbox"
                 @update:model-value="(x: boolean) => updateIsCorrect(index, x)"
               />
             </OTableColumn>
@@ -248,3 +249,9 @@ const updateAnswerText = (i: number, answer: string) => {
   })
 }
 </script>
+
+<style scoped lang="scss">
+.question-answer-checkbox {
+  margin-right: calc(1px + -0.75em) !important;
+}
+</style>

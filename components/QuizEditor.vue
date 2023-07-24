@@ -232,7 +232,7 @@ const publish = async () => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @use '~/assets/scss/config' as config;
 
 .quiz-editor-buttons-sticky {
