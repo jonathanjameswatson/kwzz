@@ -56,10 +56,17 @@
 <script setup lang="ts">
 import type { Database } from '~/types/database.generated'
 
+const active = ref(false)
+const toggleActive = () => {
+  active.value = !active.value
+}
+const activeClass = computed(() => (active.value ? 'is-active' : ''))
+
 const user = useSupabaseUser()
 const supabase = useSupabaseClient<Database>()
 const signOut = async () => {
   await supabase.auth.signOut()
+  active.value = false
   await navigateTo('/')
 }
 
@@ -69,6 +76,7 @@ const search = async () => {
     path: '/search',
     query: { q: searchString.value },
   })
+  active.value = false
   searchString.value = ''
 }
 
@@ -91,10 +99,4 @@ const createQuiz = async () => {
     path: `/quiz/${data.id}/edit`,
   })
 }
-
-const active = ref(false)
-const toggleActive = () => {
-  active.value = !active.value
-}
-const activeClass = computed(() => (active.value ? 'is-active' : ''))
 </script>
