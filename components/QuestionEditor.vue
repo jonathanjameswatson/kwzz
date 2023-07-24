@@ -13,24 +13,15 @@
 
       <OField grouped group-multiline>
         <div class="control">
-          <ODropdown v-model="answerType" aria-role="list">
+          <OptionDropdown v-model="answerType" :options="answerTypeOptions">
             <template #trigger>
               <OTooltip :label="tooltip" multiline animated>
                 <OButton rounded icon-right="menu-down">
-                  {{ formattedAnswerType }}
+                  {{ answerTypeOptions.get(answerType) }}
                 </OButton>
               </OTooltip>
             </template>
-
-            <ODropdownItem
-              v-for="answerTypeOption in answerTypes"
-              :key="answerTypeOption"
-              aria-role="listitem"
-              :value="answerTypeOption"
-            >
-              {{ answerTypeToDescription[answerTypeOption] }}
-            </ODropdownItem>
-          </ODropdown>
+          </OptionDropdown>
         </div>
 
         <OField class="mb-3 is-expanded">
@@ -49,13 +40,10 @@
         </OField>
 
         <div class="control">
-          <ToggleButton
-            v-if="answerType !== 'text'"
+          <OptionDropdown
             v-model="shouldShuffle"
-            rounded
-          >
-            Shuffle answers?
-          </ToggleButton>
+            :options="shouldShuffleOptions"
+          />
         </div>
       </OField>
 
@@ -157,30 +145,22 @@ const questionText = computed({
   },
 })
 
-const answerTypeToDescription = {
-  singleChoice: 'Pick one answer',
-  multipleChoice: 'Pick all answers',
-  text: 'Type an answer',
-} as const
-
-const answerTypes = Object.keys(
-  answerTypeToDescription
-) as (keyof typeof answerTypeToDescription)[]
+const answerTypeOptions = new Map<Questions[0]['answerType'], string>([
+  ['singleChoice', 'Pick one answer'],
+  ['multipleChoice', 'Pick all answers'],
+  ['text', 'Type an answer'],
+])
 
 const answerType = computed({
   get() {
     return question.value.answerType
   },
-  set(answerType: (typeof answerTypes)[number]) {
+  set(answerType: Questions[0]['answerType']) {
     setQuestion((draft) => {
       draft.answerType = answerType
     })
   },
 })
-
-const formattedAnswerType = computed(
-  () => answerTypeToDescription[answerType.value]
-)
 
 const oruga = useOruga()
 
@@ -225,6 +205,11 @@ const topics = computed({
     })
   },
 })
+
+const shouldShuffleOptions = new Map([
+  [true, 'Shuffle answers'],
+  [false, 'Show answers in order'],
+])
 
 const shouldShuffle = computed({
   get() {
