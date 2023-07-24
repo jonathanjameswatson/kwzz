@@ -1,5 +1,6 @@
 @use 'bulma/sass/utilities/functions' as functions;
 @use 'bulma/sass/utilities/derived-variables' as derived-variables;
+@use 'bulma/sass/utilities/mixins' as mixins;
 @use '~/assets/scss/config' as *;
 
 $checkbox-border-color: $purple;
@@ -16,9 +17,20 @@ $checkbox-border-width: 1px;
   height: auto;
 }
 
-.card {
+@mixin kwzz-border {
   border-radius: $radius-large;
   border: 1px solid $primary;
+}
+
+.card {
+  @include kwzz-border;
+}
+
+@mixin kwzz-table-cards {
+  tr {
+    box-shadow: none;
+    @include kwzz-border;
+  }
 }
 
 .b-table {
@@ -30,11 +42,17 @@ $checkbox-border-width: 1px;
       }
     }
   }
-}
 
-.centered-page {
-  min-height: calc(100vh - 64px - 1rem) !important;
-  align-items: center;
+  .table-wrapper {
+    &.is-mobile {
+      @include mixins.mobile {
+        @include kwzz-table-cards;
+      }
+    }
+    &.is-card-list {
+      @include kwzz-table-cards;
+    }
+  }
 }
 
 .footer {

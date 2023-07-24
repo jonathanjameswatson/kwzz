@@ -48,16 +48,18 @@
           />
         </OField>
 
-        <ToggleButton
-          v-if="answerType !== 'text'"
-          v-model="shouldShuffle"
-          rounded
-        >
-          Shuffle answers?
-        </ToggleButton>
+        <div class="control">
+          <ToggleButton
+            v-if="answerType !== 'text'"
+            v-model="shouldShuffle"
+            rounded
+          >
+            Shuffle answers?
+          </ToggleButton>
+        </div>
       </OField>
 
-      <div class="mb-3">
+      <div class="mb-4">
         <ClientOnly>
           <OTable :data="question.answers">
             <OTableColumn

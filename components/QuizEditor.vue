@@ -253,7 +253,7 @@ const publish = async () => {
   margin-right: -50vw;
   width: 100vw;
   background-color: white;
-  padding: 1rem 0;
+  padding: 1rem 1.5rem;
   border-top: 1px solid config.$primary;
 }
 </style>
