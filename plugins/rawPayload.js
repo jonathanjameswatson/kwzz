@@ -5,6 +5,16 @@ import {
   markRaw,
 } from '#imports'
 
+const shallowCopy = (x) => {
+  if (Array.isArray(x)) {
+    return x.slice()
+  }
+  if (x instanceof Object) {
+    return Object.assign({}, x)
+  }
+  return x
+}
+
 export default definePayloadPlugin(() => {
   definePayloadReducer('Raw', (data) => {
     if (
@@ -12,14 +22,7 @@ export default definePayloadPlugin(() => {
       Object.hasOwn(data, '__v_skip') &&
       data.__v_skip === true
     ) {
-      try {
-        return structuredClone(data)
-      } catch (error) {
-        if (error instanceof DOMException && error.name === 'DataCloneError') {
-          return false
-        }
-        throw error
-      }
+      return shallowCopy(data)
     }
     return false
   })

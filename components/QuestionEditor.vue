@@ -114,29 +114,23 @@ import type { Questions } from '~/types/questions.generated'
 import type { Updater } from '~/composables/useImmer'
 
 const props = defineProps<{
-  modelValue: Questions[0]
+  question: Questions[0]
   number: number
 }>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Questions[0]]
+  updateQuestion: [updater: Updater<Questions[0]>]
   swapQuestion: [shouldSwapDown: boolean]
   removeQuestion: []
 }>()
 
-const [question, internalSetQuestion] = useImmer(props.modelValue)
-watch(
-  () => props.modelValue,
-  () => internalSetQuestion(() => props.modelValue)
-)
 const setQuestion = (f: Updater<Questions[0]>) => {
-  internalSetQuestion(f)
-  emit('update:modelValue', question.value)
+  emit('updateQuestion', f)
 }
 
 const questionText = computed({
   get() {
-    return question.value.question
+    return props.question.question
   },
   set(question: string) {
     setQuestion((draft) => {
@@ -153,7 +147,7 @@ const answerTypeOptions = new Map<Questions[0]['answerType'], string>([
 
 const answerType = computed({
   get() {
-    return question.value.answerType
+    return props.question.answerType
   },
   set(answerType: Questions[0]['answerType']) {
     setQuestion((draft) => {
@@ -165,7 +159,7 @@ const answerType = computed({
 const oruga = useOruga()
 
 const addAnswer = () => {
-  if (question.value.answers.length === 10) {
+  if (props.question.answers.length === 10) {
     oruga.notification.open({
       message:
         'You have reached the maximum number of answers for this question.',
@@ -197,7 +191,7 @@ const tooltip = `
 
 const topics = computed({
   get() {
-    return question.value.topics
+    return props.question.topics
   },
   set(topics: string[]) {
     setQuestion((draft) => {
@@ -213,7 +207,7 @@ const shouldShuffleOptions = new Map([
 
 const shouldShuffle = computed({
   get() {
-    return question.value.shouldShuffle
+    return props.question.shouldShuffle
   },
   set(shouldShuffle: boolean) {
     setQuestion((draft) => {

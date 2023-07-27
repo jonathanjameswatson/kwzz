@@ -13,9 +13,9 @@
         class="column is-full"
       >
         <QuestionEditor
-          :model-value="question"
+          :question="question"
           :number="i + 1"
-          @update:model-value="(value) => setQuestion(i, value)"
+          @update-question="(f) => updateQuestion(i, f)"
           @remove-question="removeQuestion(i)"
           @swap-question="
             (shouldSwapDown) => swapQuestions(shouldSwapDown ? i : i - 1)
@@ -75,13 +75,21 @@ const emit = defineEmits<{
   'update:modelValue': [value: Quiz]
 }>()
 
+const debounce = ref(false)
 const [quiz, internalSetQuiz] = useImmer(props.modelValue)
 watch(
   () => props.modelValue,
-  () => internalSetQuiz(() => props.modelValue)
+  () => {
+    if (debounce.value) {
+      debounce.value = false
+      return
+    }
+    internalSetQuiz(() => props.modelValue)
+  }
 )
 const setQuiz = (f: Updater<Quiz>) => {
   internalSetQuiz(f)
+  debounce.value = true
   emit('update:modelValue', quiz.value)
 }
 
@@ -96,9 +104,9 @@ const title = computed({
   },
 })
 
-const setQuestion = (i: number, value: Questions[number]) => {
+const updateQuestion = (i: number, f: Updater<Questions[0]>) => {
   setQuiz((draft) => {
-    draft.questions[i] = value
+    f(draft.questions[i])
   })
 }
 
